@@ -75,6 +75,7 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 - `test_yamnet_mapping.py` and `test_evaluation.py`: mapping labels/aggregation and provenance gates/metrics.
 - `test_app_lab_package.py`: mandatory structure, pinned dependencies, source/model/archive integrity.
 - `test_hardware_docs.py`: safe net connectivity and valid accessible schematic source.
+- `test_cad_application.py`: preliminary Fusion parameter/envelope sanity and Autodesk answer/evidence gates.
 - `test_submission_release.py`: required publication assets, video evidence labels, and deterministic sanitized source release.
 
 Compilation results are not tests of attached hardware. Physical results enter only through `HARDWARE_RESULTS.md` and the predeclared matrix.

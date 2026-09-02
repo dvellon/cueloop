@@ -53,6 +53,8 @@ class SubmissionReleaseTests(unittest.TestCase):
         self.assertIn("not a certified alarm", video)
 
     def test_source_archive_is_deterministic_and_sanitized(self) -> None:
+        if not (ROOT / ".git").is_dir():
+            self.skipTest("source packaging requires Git metadata and runs before export")
         command = [
             sys.executable,
             "scripts/package_source_release.py",

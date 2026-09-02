@@ -2,7 +2,7 @@
 
 **Updated:** 2026-09-02 EDT
 **Goal:** active
-**Phase:** App Lab release verification and physical handoff
+**Phase:** digital gate complete; physical and account-controlled handoff
 
 ## Deadline clock
 
@@ -38,11 +38,13 @@
 - Added a deterministic, secret-resistant App Lab release packager; local v0.1.0 archive SHA-256 is `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83`.
 - Completed the App Lab title/metadata, full Hackster article, source guide, troubleshooting, three-minute/short video scripts, photo list, evidence table, media attribution, final checklist, and adversarial 30/20/15/15/20 rubric audit.
 - Added a deterministic committed-tree source-release packager with a per-file manifest, exact commit identity, excluded internal brief, secret/audio/model/database guards, and SHA-256 sidecar.
-- Expanded the automated suite to 47 passing tests and retained zero Pyright errors.
+- Added automated preliminary Fusion envelope/parameter checks and Autodesk five-answer/evidence-gate checks.
+- Added one deadline-ordered operator sheet covering the Autodesk application, hardware bring-up, measurement/media, and App Lab submission.
+- Expanded the automated suite to 49 passing tests and retained zero Pyright errors.
 
 ## In progress
 
-- Clean committed-tree release archive generation, release-candidate audit, and concise physical/operator handoff.
+- Hardware-dependent, interactive Fusion, media-capture, identity/account, logged-out publication, and final submission actions listed in `user_checklists/NEXT_ACTIONS.md`.
 
 ## Not yet claimed
 
@@ -52,7 +54,7 @@
 
 ## Next checkpoint
 
-The exact-commit App Lab/source archives, final verification record, and operator action sheet are ready, leaving only physical and account-controlled evidence gates.
+Inventory, Fusion `.f3d` export/application submission, App Lab/firmware bring-up, and physical result records are returned for evidence-driven integration.
 
 ## Physical blockers
 

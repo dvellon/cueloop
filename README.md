@@ -53,7 +53,7 @@ The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffe
 
 Read [docs/safety.md](docs/safety.md) before hardware work and [docs/privacy-model.md](docs/privacy-model.md) before changing audio retention behavior.
 
-For physical work, begin with [the short hardware bring-up checklist](user_checklists/HARDWARE_BRINGUP.md), then use [the Windows flashing guide](user_checklists/WINDOWS_FLASHING.md) and [physical validation matrix](user_checklists/PHYSICAL_VALIDATION.md). The editable connectivity source and human schematic are under `hardware/schematics/`.
+For physical work, begin with [the deadline-ordered next actions](user_checklists/NEXT_ACTIONS.md), then use [the short hardware bring-up checklist](user_checklists/HARDWARE_BRINGUP.md), [Windows flashing guide](user_checklists/WINDOWS_FLASHING.md), and [physical validation matrix](user_checklists/PHYSICAL_VALIDATION.md). The editable connectivity source and human schematic are under `hardware/schematics/`.
 
 ## License
 

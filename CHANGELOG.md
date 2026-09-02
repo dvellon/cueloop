@@ -29,3 +29,4 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Complete App Lab submission copy: metadata, full project article, source/reproduction map, troubleshooting, primary and short video scripts, photo plan, evidence table, attribution ledger, final checklist, and rubric review.
 - Deterministic exact-commit source ZIP packager with per-file checksums and guards against secrets, raw audio, downloaded models, databases, and build artifacts.
 - Automated release tests for required submission material, video disclosure/timeline, and repeatable sanitized source archives.
+- Automated preliminary Fusion-parameter and Autodesk-application completeness checks, plus one deadline-ordered physical/account handoff sheet.
