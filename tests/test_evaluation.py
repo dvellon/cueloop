@@ -13,6 +13,8 @@ from cueloop.evaluation import (
     audio_windows,
     evaluate,
     load_evaluation_manifest,
+    single_window_trigger_times,
+    temporal_qualifying_times,
 )
 from cueloop.model import Classification
 
@@ -33,6 +35,15 @@ class AmplitudeClassifier:
             model_name="test-amplitude",
             evidence_tier="simulated",
         )
+
+
+class NeverCalledClassifier:
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def classify(self, samples: tuple[int, ...], sample_rate: int) -> Classification:
+        self.calls += 1
+        return AmplitudeClassifier().classify(samples, sample_rate)
 
 
 def write_wav(path: Path, value: int) -> str:
@@ -64,6 +75,17 @@ class EvaluationTests(unittest.TestCase):
                     "license": "project-owned synthetic fixture",
                     "consent_confirmed": consent,
                     "sha256": positive_sha,
+                    "environment": "unit-test-room",
+                    "distance_m": 1.0,
+                    "closed_door": False,
+                    "background_conditions": ["quiet"],
+                    "event_intervals": [
+                        {
+                            "label": "door_knock",
+                            "start_seconds": 0.0,
+                            "end_seconds": 1.5,
+                        }
+                    ],
                 },
                 {
                     "id": "negative",
@@ -74,6 +96,10 @@ class EvaluationTests(unittest.TestCase):
                     "license": "project-owned synthetic fixture",
                     "consent_confirmed": True,
                     "sha256": negative_sha,
+                    "environment": "unit-test-room",
+                    "distance_m": 1.0,
+                    "closed_door": False,
+                    "background_conditions": ["quiet"],
                 },
             ],
         }
@@ -91,8 +117,18 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(door["true_positive"], 1)
         self.assertEqual(door["false_positive"], 0)
         self.assertEqual(door["recall"], 1.0)
+        self.assertEqual(door["support"], 1)
+        self.assertEqual(door["confusion_matrix"], [[1, 0], [0, 1]])
         self.assertEqual(result["missed_event_rate"], 0.0)
         self.assertEqual(result["inference_latency_ms"]["p95"], 2.5)
+        self.assertEqual(
+            result["annotated_audio_to_decision_latency_ms"][
+                "detected_interval_count"
+            ],
+            1,
+        )
+        self.assertIn("background:quiet", result["condition_slices"])
+        self.assertIn("single_window_per_class", result["confirmation_comparison"])
 
     def test_missing_consent_is_rejected_before_inference(self) -> None:
         with tempfile.TemporaryDirectory() as directory_name:
@@ -117,7 +153,38 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(len(windows[0]), 16_000)
         self.assertEqual(windows[0][:3], source)
 
+    def test_temporal_confirmation_rejects_an_isolated_single_window_spike(self) -> None:
+        quiet = {label: 0.01 for label in (
+            "door_knock", "alarm_beep", "dog_bark", "attention_call"
+        )}
+        spike = {**quiet, "door_knock": 0.95}
+        scores = [spike, quiet, quiet]
+        self.assertTrue(single_window_trigger_times(scores)["door_knock"])
+        self.assertFalse(temporal_qualifying_times(scores)["door_knock"])
+
+    def test_invalid_event_interval_is_rejected_before_inference(self) -> None:
+        with tempfile.TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            path = self.make_manifest(directory)
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["records"][0]["event_intervals"][0]["end_seconds"] = 0.0
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaises(DatasetValidationError):
+                load_evaluation_manifest(path, split="test")
+
+    def test_interval_past_audio_end_is_rejected_before_classifier_call(self) -> None:
+        with tempfile.TemporaryDirectory() as directory_name:
+            directory = Path(directory_name)
+            path = self.make_manifest(directory)
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["records"][0]["event_intervals"][0]["end_seconds"] = 3.0
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            dataset_id, records = load_evaluation_manifest(path, split="test")
+            classifier = NeverCalledClassifier()
+            with self.assertRaises(DatasetValidationError):
+                evaluate(classifier, records, dataset_id=dataset_id)
+            self.assertEqual(classifier.calls, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -1,6 +1,6 @@
 # Audio data provenance policy
 
-CueLoop does not commit recordings, downloaded datasets, private captures, or derived audio. A filename is not provenance: every evaluated clip must have a manifest record containing a stable ID, cryptographic checksum, labels, split, source/acquisition method, exact license or ownership statement, and confirmed recording consent.
+CueLoop does not commit recordings, downloaded datasets, private captures, or derived audio. A filename is not provenance: every evaluated clip must have a manifest record containing a stable ID, cryptographic checksum, labels, split, source/acquisition method, exact license or ownership statement, confirmed recording consent, environment, distance/door condition where applicable, and explicit background categories. Add one onset/end interval per labeled class when audio-to-decision latency is reported.
 
 ## Acceptable sources
 
@@ -21,5 +21,4 @@ CueLoop does not commit recordings, downloaded datasets, private captures, or de
 
 Group variations from the same recording session/source into one split. Use `calibration` for thresholds, `validation` for mapping/model choices, and a locked `test` split exactly once for the reported result. Report counts by class and hard-negative environment, not only a pooled accuracy.
 
-The evaluator validates the manifest and file checksums before inference. Audio remains memory-only during processing, and only aggregate metrics may be committed. Physical-distance, closed-door, background-noise, and device-microphone results belong in `HARDWARE_RESULTS.md` after the corresponding real setup is observed.
-
+The evaluator validates the manifest, interval bounds, and file checksums before inference. Audio remains memory-only during processing, and only aggregate metrics may be committed. Condition slices describe only the manifest records. Physical-distance, closed-door, background-noise, device-microphone, network, Bridge, and physical-cue results belong first in `HARDWARE_TESTS.md`, then in `HARDWARE_RESULTS.md` after review.

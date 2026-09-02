@@ -20,10 +20,20 @@ from .model import AudioClassifier
 
 
 ALLOWED_SPLITS = frozenset(("calibration", "validation", "test"))
+ALLOWED_BACKGROUND_CONDITIONS = frozenset(
+    ("quiet", "speech", "television", "music", "fan", "workshop", "other")
+)
 
 
 class DatasetValidationError(ValueError):
     """Raised before inference if a dataset record is unsafe or unreproducible."""
+
+
+@dataclass(frozen=True, slots=True)
+class EventInterval:
+    label: str
+    start_seconds: float
+    end_seconds: float
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +45,11 @@ class EvaluationRecord:
     source: str
     license: str
     sha256: str
+    environment: str
+    distance_m: float | None
+    closed_door: bool | None
+    background_conditions: tuple[str, ...]
+    event_intervals: tuple[EventInterval, ...]
 
 
 def file_digest(path: Path) -> str:
@@ -111,6 +126,74 @@ def load_evaluation_manifest(
             raise DatasetValidationError(
                 f"{record_id}: SHA-256 mismatch; expected {digest}, got {actual_digest}"
             )
+        environment = raw.get("environment", "unspecified")
+        if not isinstance(environment, str) or not environment.strip():
+            raise DatasetValidationError(f"{record_id}: environment must be nonempty")
+        raw_distance = raw.get("distance_m")
+        if raw_distance is None:
+            distance_m = None
+        elif isinstance(raw_distance, bool) or not isinstance(raw_distance, (int, float)):
+            raise DatasetValidationError(f"{record_id}: distance_m must be numeric")
+        elif raw_distance < 0:
+            raise DatasetValidationError(f"{record_id}: distance_m cannot be negative")
+        else:
+            distance_m = float(raw_distance)
+        closed_door = raw.get("closed_door")
+        if closed_door is not None and not isinstance(closed_door, bool):
+            raise DatasetValidationError(f"{record_id}: closed_door must be boolean")
+        raw_backgrounds = raw.get("background_conditions", [])
+        if not isinstance(raw_backgrounds, list) or any(
+            not isinstance(condition, str)
+            or condition not in ALLOWED_BACKGROUND_CONDITIONS
+            for condition in raw_backgrounds
+        ):
+            raise DatasetValidationError(
+                f"{record_id}: unsupported background_conditions"
+            )
+        if len(raw_backgrounds) != len(set(raw_backgrounds)):
+            raise DatasetValidationError(
+                f"{record_id}: duplicate background_conditions"
+            )
+        raw_intervals = raw.get("event_intervals", [])
+        if not isinstance(raw_intervals, list):
+            raise DatasetValidationError(f"{record_id}: event_intervals must be an array")
+        intervals: list[EventInterval] = []
+        interval_labels: set[str] = set()
+        for raw_interval in raw_intervals:
+            if not isinstance(raw_interval, dict):
+                raise DatasetValidationError(
+                    f"{record_id}: event interval must be an object"
+                )
+            interval_label = raw_interval.get("label")
+            start_seconds = raw_interval.get("start_seconds")
+            end_seconds = raw_interval.get("end_seconds")
+            if not isinstance(interval_label, str) or interval_label not in labels:
+                raise DatasetValidationError(
+                    f"{record_id}: interval label must appear in record labels"
+                )
+            if interval_label in interval_labels:
+                raise DatasetValidationError(
+                    f"{record_id}: at most one interval per label is supported"
+                )
+            if (
+                isinstance(start_seconds, bool)
+                or not isinstance(start_seconds, (int, float))
+                or isinstance(end_seconds, bool)
+                or not isinstance(end_seconds, (int, float))
+                or start_seconds < 0
+                or end_seconds <= start_seconds
+            ):
+                raise DatasetValidationError(
+                    f"{record_id}: invalid event interval bounds"
+                )
+            interval_labels.add(interval_label)
+            intervals.append(
+                EventInterval(
+                    label=interval_label,
+                    start_seconds=float(start_seconds),
+                    end_seconds=float(end_seconds),
+                )
+            )
         if record_split == split:
             records.append(
                 EvaluationRecord(
@@ -121,6 +204,11 @@ def load_evaluation_manifest(
                     source=source.strip(),
                     license=license_name.strip(),
                     sha256=digest,
+                    environment=environment.strip(),
+                    distance_m=distance_m,
+                    closed_door=closed_door,
+                    background_conditions=tuple(raw_backgrounds),
+                    event_intervals=tuple(intervals),
                 )
             )
     if not records:
@@ -166,10 +254,13 @@ def audio_windows(samples: tuple[int, ...]) -> Iterable[tuple[int, ...]]:
         yield samples[start : start + WINDOW_SAMPLES]
 
 
-def temporal_triggers(window_scores: list[dict[str, float]]) -> set[str]:
-    triggered: set[str] = set()
+def temporal_qualifying_times(
+    window_scores: list[dict[str, float]],
+) -> dict[str, list[float]]:
+    qualifying = {label: [] for label in EVENT_CLASSES}
     evidence = {label: deque() for label in EVENT_CLASSES}
     stride_seconds = WINDOW_STRIDE_SAMPLES / SAMPLE_RATE_HZ
+    window_seconds = WINDOW_SAMPLES / SAMPLE_RATE_HZ
     for window_index, scores in enumerate(window_scores):
         current = window_index * stride_seconds
         for label in EVENT_CLASSES:
@@ -184,8 +275,32 @@ def temporal_triggers(window_scores: list[dict[str, float]]) -> set[str]:
             if len(queue) >= policy.minimum_hits:
                 confidence = sum(value for _, value in queue) / len(queue)
                 if confidence >= policy.alert_threshold:
-                    triggered.add(label)
-    return triggered
+                    qualifying[label].append(current + window_seconds)
+    return qualifying
+
+
+def temporal_triggers(window_scores: list[dict[str, float]]) -> set[str]:
+    return {
+        label
+        for label, times in temporal_qualifying_times(window_scores).items()
+        if times
+    }
+
+
+def single_window_trigger_times(
+    window_scores: list[dict[str, float]],
+) -> dict[str, list[float]]:
+    qualifying = {label: [] for label in EVENT_CLASSES}
+    stride_seconds = WINDOW_STRIDE_SAMPLES / SAMPLE_RATE_HZ
+    window_seconds = WINDOW_SAMPLES / SAMPLE_RATE_HZ
+    for window_index, scores in enumerate(window_scores):
+        detection_time = window_index * stride_seconds + window_seconds
+        for label in EVENT_CLASSES:
+            policy = DEFAULT_POLICIES[label]
+            score = max(0.0, min(1.0, float(scores.get(label, 0.0))))
+            if policy.enabled and score >= policy.alert_threshold:
+                qualifying[label].append(detection_time)
+    return qualifying
 
 
 def _percentile(values: list[float], percentile: float) -> float:
@@ -204,27 +319,88 @@ def _safe_ratio(numerator: float, denominator: float) -> float:
     return numerator / denominator if denominator else 0.0
 
 
+def _new_counters() -> dict[str, dict[str, int]]:
+    return {
+        label: {
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "true_negative": 0,
+        }
+        for label in EVENT_CLASSES
+    }
+
+
+def _update_counters(
+    counters: dict[str, dict[str, int]],
+    *,
+    truth: frozenset[str],
+    predicted: set[str],
+) -> None:
+    for label in EVENT_CLASSES:
+        actual = label in truth
+        detected = label in predicted
+        key = (
+            "true_positive"
+            if actual and detected
+            else "false_negative"
+            if actual
+            else "false_positive"
+            if detected
+            else "true_negative"
+        )
+        counters[label][key] += 1
+
+
+def _per_class_metrics(
+    counters: dict[str, dict[str, int]],
+) -> dict[str, dict[str, object]]:
+    metrics: dict[str, dict[str, object]] = {}
+    for label, counts in counters.items():
+        tp = counts["true_positive"]
+        fp = counts["false_positive"]
+        fn = counts["false_negative"]
+        tn = counts["true_negative"]
+        precision = _safe_ratio(tp, tp + fp)
+        recall = _safe_ratio(tp, tp + fn)
+        metrics[label] = {
+            **counts,
+            "support": tp + fn,
+            "precision": round(precision, 6),
+            "recall": round(recall, 6),
+            "f1": round(_safe_ratio(2 * precision * recall, precision + recall), 6),
+            "confusion_matrix": [[tn, fp], [fn, tp]],
+            "confusion_matrix_labels": ["negative", "positive"],
+        }
+    return metrics
+
+
 def evaluate(
     classifier: AudioClassifier,
     records: list[EvaluationRecord],
     *,
     dataset_id: str,
 ) -> dict[str, object]:
-    counters = {
-        label: {"true_positive": 0, "false_positive": 0, "false_negative": 0, "true_negative": 0}
-        for label in EVENT_CLASSES
-    }
+    temporal_counters = _new_counters()
+    single_window_counters = _new_counters()
     calibration_pairs: list[tuple[float, int]] = []
     latencies: list[float] = []
+    annotated_event_latencies_ms: list[float] = []
+    annotated_interval_count = 0
+    annotated_interval_misses = 0
+    condition_accumulators: dict[str, dict[str, float | int]] = {}
     total_seconds = 0.0
     total_windows = 0
-    missed = 0
-    false_triggers = 0
     model_name = "not-run"
     evidence_tier = "unknown"
 
     for record in records:
         samples, duration = read_pcm16_mono(record.path)
+        for interval in record.event_intervals:
+            if interval.end_seconds > duration:
+                raise DatasetValidationError(
+                    f"{record.id}: event interval ends after WAV duration"
+                )
         total_seconds += duration
         window_results = []
         for window in audio_windows(samples):
@@ -234,41 +410,97 @@ def evaluate(
             latencies.append(classification.inference_ms)
             window_results.append(classification.scores)
             total_windows += 1
-        triggered = temporal_triggers(window_results)
+        temporal_times = temporal_qualifying_times(window_results)
+        single_times = single_window_trigger_times(window_results)
+        temporal_triggered = {
+            label for label, times in temporal_times.items() if times
+        }
+        single_triggered = {label for label, times in single_times.items() if times}
+        _update_counters(
+            temporal_counters,
+            truth=record.labels,
+            predicted=temporal_triggered,
+        )
+        _update_counters(
+            single_window_counters,
+            truth=record.labels,
+            predicted=single_triggered,
+        )
+
+        record_misses = len(record.labels - temporal_triggered)
+        record_false_triggers = len(temporal_triggered - record.labels)
+        door_condition = (
+            "unspecified"
+            if record.closed_door is None
+            else "closed"
+            if record.closed_door
+            else "open"
+        )
+        distance_condition = (
+            "unspecified"
+            if record.distance_m is None
+            else f"{record.distance_m:.2f}"
+        )
+        slice_keys = {
+            f"environment:{record.environment}",
+            f"door:{door_condition}",
+            f"distance_m:{distance_condition}",
+        }
+        backgrounds = record.background_conditions or ("unspecified",)
+        slice_keys.update(f"background:{condition}" for condition in backgrounds)
+        for key in slice_keys:
+            accumulator = condition_accumulators.setdefault(
+                key,
+                {
+                    "record_count": 0,
+                    "audio_seconds": 0.0,
+                    "true_events": 0,
+                    "missed_events": 0,
+                    "false_triggers": 0,
+                },
+            )
+            accumulator["record_count"] += 1
+            accumulator["audio_seconds"] += duration
+            accumulator["true_events"] += len(record.labels)
+            accumulator["missed_events"] += record_misses
+            accumulator["false_triggers"] += record_false_triggers
+
+        for interval in record.event_intervals:
+            annotated_interval_count += 1
+            deadline = (
+                interval.end_seconds
+                + DEFAULT_POLICIES[interval.label].confirmation_seconds
+                + WINDOW_SAMPLES / SAMPLE_RATE_HZ
+            )
+            candidates = [
+                timestamp
+                for timestamp in temporal_times[interval.label]
+                if interval.start_seconds <= timestamp <= deadline
+            ]
+            if not candidates:
+                annotated_interval_misses += 1
+            else:
+                annotated_event_latencies_ms.append(
+                    (candidates[0] - interval.start_seconds) * 1000.0
+                )
+
         for label in EVENT_CLASSES:
             truth = label in record.labels
-            predicted = label in triggered
-            key = (
-                "true_positive"
-                if truth and predicted
-                else "false_negative"
-                if truth
-                else "false_positive"
-                if predicted
-                else "true_negative"
-            )
-            counters[label][key] += 1
-            if truth and not predicted:
-                missed += 1
-            if predicted and not truth:
-                false_triggers += 1
             clip_score = max(float(scores.get(label, 0.0)) for scores in window_results)
             calibration_pairs.append((max(0.0, min(1.0, clip_score)), int(truth)))
 
-    per_class: dict[str, dict[str, float | int]] = {}
-    for label, counts in counters.items():
-        tp = counts["true_positive"]
-        fp = counts["false_positive"]
-        fn = counts["false_negative"]
-        precision = _safe_ratio(tp, tp + fp)
-        recall = _safe_ratio(tp, tp + fn)
-        per_class[label] = {
-            **counts,
-            "precision": round(precision, 6),
-            "recall": round(recall, 6),
-            "f1": round(_safe_ratio(2 * precision * recall, precision + recall), 6),
-        }
-
+    per_class = _per_class_metrics(temporal_counters)
+    single_window_per_class = _per_class_metrics(single_window_counters)
+    missed = sum(counts["false_negative"] for counts in temporal_counters.values())
+    false_triggers = sum(
+        counts["false_positive"] for counts in temporal_counters.values()
+    )
+    single_missed = sum(
+        counts["false_negative"] for counts in single_window_counters.values()
+    )
+    single_false_triggers = sum(
+        counts["false_positive"] for counts in single_window_counters.values()
+    )
     total_true_events = sum(len(record.labels) for record in records)
     brier = statistics.fmean((score - truth) ** 2 for score, truth in calibration_pairs)
     ece = 0.0
@@ -296,8 +528,52 @@ def evaluate(
             }
         )
 
+    condition_slices: dict[str, dict[str, float | int]] = {}
+    for key, values in sorted(condition_accumulators.items()):
+        audio_seconds = float(values["audio_seconds"])
+        true_events = int(values["true_events"])
+        condition_slices[key] = {
+            "record_count": int(values["record_count"]),
+            "audio_hours": round(audio_seconds / 3600.0, 6),
+            "true_events": true_events,
+            "missed_events": int(values["missed_events"]),
+            "missed_event_rate": round(
+                _safe_ratio(float(values["missed_events"]), true_events), 6
+            ),
+            "false_triggers": int(values["false_triggers"]),
+            "false_triggers_per_audio_hour": round(
+                _safe_ratio(float(values["false_triggers"]), audio_seconds / 3600.0),
+                6,
+            ),
+        }
+
+    if annotated_event_latencies_ms:
+        annotated_latency: dict[str, object] = {
+            "annotated_interval_count": annotated_interval_count,
+            "detected_interval_count": len(annotated_event_latencies_ms),
+            "missed_interval_count": annotated_interval_misses,
+            "mean": round(statistics.fmean(annotated_event_latencies_ms), 3),
+            "p50": round(_percentile(annotated_event_latencies_ms, 0.50), 3),
+            "p95": round(_percentile(annotated_event_latencies_ms, 0.95), 3),
+            "maximum": round(max(annotated_event_latencies_ms), 3),
+        }
+    else:
+        annotated_latency = {
+            "annotated_interval_count": annotated_interval_count,
+            "detected_interval_count": 0,
+            "missed_interval_count": annotated_interval_misses,
+            "mean": None,
+            "p50": None,
+            "p95": None,
+            "maximum": None,
+        }
+    annotated_latency["method"] = (
+        "WAV event onset to first temporally qualifying decision window; excludes "
+        "CuePod capture, network, target scheduling, Bridge, and physical-output delay"
+    )
+
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "dataset_id": dataset_id,
         "split": records[0].split,
         "evidence_tier": evidence_tier,
@@ -316,6 +592,30 @@ def evaluate(
             "expected_calibration_error_10_bin": round(ece, 6),
             "bins": calibration_bins,
         },
+        "confirmation_comparison": {
+            "single_window_rule": "one window at the production alert threshold",
+            "single_window_per_class": single_window_per_class,
+            "temporal": {
+                "missed_events": missed,
+                "false_triggers": false_triggers,
+                "false_triggers_per_audio_hour": round(
+                    _safe_ratio(false_triggers, total_seconds / 3600.0), 6
+                ),
+            },
+            "single_window": {
+                "missed_events": single_missed,
+                "false_triggers": single_false_triggers,
+                "false_triggers_per_audio_hour": round(
+                    _safe_ratio(single_false_triggers, total_seconds / 3600.0), 6
+                ),
+            },
+            "temporal_minus_single_window": {
+                "missed_events": missed - single_missed,
+                "false_triggers": false_triggers - single_false_triggers,
+            },
+        },
+        "condition_slices": condition_slices,
+        "annotated_audio_to_decision_latency_ms": annotated_latency,
         "inference_latency_ms": {
             "mean": round(statistics.fmean(latencies), 3),
             "p50": round(_percentile(latencies, 0.50), 3),

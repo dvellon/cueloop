@@ -36,7 +36,8 @@ PYTHONPATH=linux .venv-model/bin/python models/evaluate.py \
   --split test
 ```
 
-The evaluator refuses missing provenance, consent, licenses, checksums, or unsupported WAV encodings. It reports per-class precision/recall/F1, missed-event rate, false triggers per audio hour, Brier score, calibration error, and inference latency. Do not tune on the test split; calibrate thresholds on `calibration`, select once on `validation`, and publish only the held-out `test` result.
+The evaluator refuses missing provenance, consent, licenses, checksums, malformed event intervals, or unsupported WAV encodings. It reports per-class support and 2×2 confusion matrices, precision/recall/F1, missed-event rate, false triggers per audio hour, Brier/calibration error, inference latency, condition slices, a temporal-policy versus single-window comparison, and annotated WAV-onset-to-decision latency when intervals are supplied. That annotated latency excludes CuePod capture, networking, UNO Q scheduling, Bridge, and physical cue delay; measure full end-to-end latency separately in `HARDWARE_TESTS.md`. Do not tune on the test split; calibrate thresholds on `calibration`, select once on `validation`, and publish only the held-out `test` result.
+
+This V1 deployment uses Google's already-converted, versioned LiteRT artifact. CueLoop therefore does not invent a second conversion pipeline whose output would differ from the pinned official binary. `scripts/fetch_yamnet.py` is the reproducible acquisition/checksum gate; `linux/cueloop/yamnet.py` is the documented preprocessing/tensor adapter. A future task-specific embedding head must add its own conversion/training script, source-model identity, representative data license, quantization method, tensor contract, and output checksum before it can replace this baseline.
 
 Raw audio is read window-by-window and never written by the evaluator. Generated result JSON belongs under ignored `benchmarks/results/`; curated Markdown summaries may be committed only with an explicit evidence tier.
-

@@ -15,8 +15,15 @@
       "environment": "Replace with room/noise description",
       "distance_m": 1.0,
       "closed_door": false,
+      "background_conditions": ["quiet"],
+      "event_intervals": [
+        {
+          "label": "door_knock",
+          "start_seconds": 0.5,
+          "end_seconds": 1.0
+        }
+      ],
       "notes": "Template record; it will fail checksum validation until replaced."
     }
   ]
 }
-

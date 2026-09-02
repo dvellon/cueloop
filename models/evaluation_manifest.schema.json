@@ -36,10 +36,33 @@
           "environment": {"type": "string", "maxLength": 200},
           "distance_m": {"type": "number", "minimum": 0},
           "closed_door": {"type": "boolean"},
+          "background_conditions": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "quiet", "speech", "television", "music", "fan", "workshop", "other"
+              ]
+            }
+          },
+          "event_intervals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["label", "start_seconds", "end_seconds"],
+              "properties": {
+                "label": {
+                  "enum": ["door_knock", "alarm_beep", "dog_bark", "attention_call"]
+                },
+                "start_seconds": {"type": "number", "minimum": 0},
+                "end_seconds": {"type": "number", "exclusiveMinimum": 0}
+              }
+            }
+          },
           "notes": {"type": "string", "maxLength": 500}
         }
       }
     }
   }
 }
-
