@@ -46,6 +46,12 @@ COPIES = {
     / "cue_controller_hardware.h",
     ROOT / "models" / "class_mapping.json": APP / "models" / "class_mapping.json",
     ROOT / "models" / "model_manifest.json": APP / "models" / "model_manifest.json",
+    ROOT / "models" / "requirements-unoq-cp313.lock": APP
+    / "models"
+    / "requirements-unoq-cp313.lock",
+    ROOT / "models" / "unoq_runtime_manifest.json": APP
+    / "models"
+    / "unoq_runtime_manifest.json",
 }
 
 

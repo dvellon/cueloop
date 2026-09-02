@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+import platform
 from threading import Event, Thread
 import time
 
@@ -24,8 +26,23 @@ DATA_PATH = APP_ROOT / "data" / "cueloop.sqlite3"
 HTTP_PORT = 8080
 
 
+def runtime_identity() -> str:
+    try:
+        litert_version = version("ai-edge-litert")
+    except PackageNotFoundError:
+        litert_version = "missing"
+    libc_name, libc_version = platform.libc_ver()
+    return (
+        f"CueLoop runtime: Python {platform.python_version()}; "
+        f"machine={platform.machine()}; "
+        f"libc={libc_name or 'unknown'} {libc_version or 'unknown'}; "
+        f"ai-edge-litert={litert_version}"
+    )
+
+
 class CueLoopApp:
     def __init__(self) -> None:
+        print(runtime_identity(), flush=True)
         # Missing, incompatible, or modified models intentionally stop startup;
         # the physical App never falls back to synthetic classifications.
         classifier = YamnetClassifier(

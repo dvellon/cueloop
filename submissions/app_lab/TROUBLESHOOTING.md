@@ -27,6 +27,8 @@ Diagnose from the outside inward: power/USB, board baseline, App Lab, model, Bri
 | SHA-256 mismatch | model modified, truncated, or wrong release | remove only that known artifact, re-fetch through the verifier, rebuild archive |
 | unexpected input/output tensor | incompatible model/runtime | retain error; compare pinned model/runtime; do not bypass validation |
 | cannot install `ai-edge-litert==2.2.0` | target Python/aarch64 resolver mismatch or unavailable network | record Python/OS/architecture/resolver output; evaluate a supported pinned runtime as a material decision |
+| `CueLoop runtime` differs from Python 3.13, ARM64/AArch64, or LiteRT 2.2.0 | received App Lab image differs from the audited distribution tuple | retain the full identity line and App Lab/image versions; do not force-install or relabel the audit as a target pass |
+| package installs but native import fails | libc/libstdc++/loader or image mismatch not covered by wheel-tag inspection | retain traceback and identity line; diagnose against the exact image before changing pins |
 | process exits instead of showing synthetic events | expected fail-closed behavior | fix the physical model path; never enable a synthetic fallback for a physical claim |
 
 ## Dashboard does not load

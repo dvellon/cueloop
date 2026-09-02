@@ -15,7 +15,7 @@ CueLoop is an awareness aid. It is not a safety-certified alarm, security system
 
 Development began on September 1, 2026. Hardware-dependent results are intentionally separated from simulator and development-computer results. See [STATUS.md](STATUS.md), [PLAN.md](PLAN.md), [HARDWARE_TESTS.md](HARDWARE_TESTS.md), and [HARDWARE_RESULTS.md](HARDWARE_RESULTS.md) for the live record.
 
-Both firmware targets and the exact isolated App Lab sketch profile compile on the documented Ubuntu toolchain. `./scripts/build_firmware.sh` performs clean, path-normalized, fixed-epoch builds; `./scripts/verify_clean_checkout.sh` reproduces the complete digital release path in a new local clone. The complete App Lab import archive can be generated locally with `python3 scripts/package_app_lab.py`; no claim is made that it has run on physical boards yet.
+Both firmware targets and the exact isolated App Lab sketch profile compile on the documented Ubuntu toolchain. The complete CPython 3.13/Linux ARM64 LiteRT distribution set is version/hash audited without installation, including native AArch64 ELF inspection; target App Lab loading and inference remain physical gates. `./scripts/build_firmware.sh` performs clean, path-normalized, fixed-epoch builds; `./scripts/verify_clean_checkout.sh` reproduces the complete digital release path in a new local clone. The complete App Lab import archive can be generated locally with `python3 scripts/package_app_lab.py`; no claim is made that it has run on physical boards yet.
 
 ## Quick start
 
@@ -25,7 +25,7 @@ The simulator-first path runs without boards or third-party Python packages:
 ./scripts/demo.sh
 ```
 
-The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffer, uncertainty-aware event engine, metadata-only store, API, and accessible local dashboard at `http://127.0.0.1:8080`. Every synthetic result is visibly labeled `simulated`; it is pipeline evidence, not real sound-model evidence. Run `./scripts/test.sh` for the automated suite, `./scripts/build_firmware.sh` for all three Arduino builds, and `./scripts/verify_clean_checkout.sh` for the release-grade fresh-checkout audit.
+The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffer, uncertainty-aware event engine, metadata-only store, API, and accessible local dashboard at `http://127.0.0.1:8080`. Every synthetic result is visibly labeled `simulated`; it is pipeline evidence, not real sound-model evidence. Run `./scripts/test.sh` for the automated suite, `python3 scripts/audit_unoq_runtime.py --download` for the target-distribution audit, `./scripts/build_firmware.sh` for all three Arduino builds, and `./scripts/verify_clean_checkout.sh` for the release-grade fresh-checkout audit.
 
 ## Repository map
 

@@ -39,3 +39,4 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Predeclared experiment registry/schema and complete Autodesk final-package structure for V2 development, DFM, evidence, article, and submission review.
 - Requirement-by-requirement `PROJECT_PROMPT` completion audit and automated structural/safety checks.
 - Release-grade fresh-checkout verifier covering the pinned model, tests, minimum-Python static analysis, all Arduino builds, and deterministic App/source archives.
+- Hash-locked CPython 3.13/Linux ARM64 inference dependency audit with exact wheel sizes/digests, LiteRT metadata/license/dependency checks, AArch64 ELF validation, synchronized App evidence, and target runtime identity logging.

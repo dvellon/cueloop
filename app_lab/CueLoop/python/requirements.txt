@@ -1,2 +1,11 @@
 # Arduino App Lab provides arduino-app-utils and the Router Bridge runtime.
+# This complete set is pinned to the hash-audited CPython 3.13/Linux ARM64
+# distributions recorded in models/requirements-unoq-cp313.lock.
 ai-edge-litert==2.2.0
+backports-strenum==1.2.8
+flatbuffers==25.12.19
+ml-dtypes==0.6.0
+numpy==2.5.2
+protobuf==7.36.1
+tqdm==4.70.0
+typing-extensions==4.16.0

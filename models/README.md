@@ -13,6 +13,8 @@ PYTHONPATH=linux .venv-model/bin/python models/benchmark_yamnet.py --iterations 
 
 The fetcher downloads the pinned official URL into ignored `models/artifacts/`, limits the transfer size, and refuses a size or SHA-256 mismatch. The expected digest and tensor contract are in `model_manifest.json`. Model binaries are intentionally not committed.
 
+The UNO Q distribution boundary is independently recorded in `UNOQ_RUNTIME_COMPATIBILITY.md`. `scripts/audit_unoq_runtime.py --download` resolves the complete hash-locked CPython 3.13/Linux ARM64 wheel set without installing it, checks archive metadata and hashes, and verifies that all LiteRT native objects are AArch64. This is stronger than assuming a package name is portable, but remains distribution evidence rather than an App Lab run.
+
 Run the service with real inference only when the artifact exists:
 
 ```bash

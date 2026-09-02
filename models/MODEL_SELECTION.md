@@ -10,7 +10,7 @@ Use Google YAMNet classification LiteRT v1 as the V1 baseline adapter, while kee
 - Its fixed 0.975-second input is a close match for CueLoop's 1-second / 0.5-second-hop window pipeline.
 - It exposes 521 interpretable AudioSet scores, including direct labels for knock, alarms/beeps, bark, and shouted attention sounds.
 - At 4,126,810 bytes, the downloaded fixed-window artifact is small enough for practical UNO Q deployment.
-- LiteRT 2.2.0 publishes CPython 3.13/3.14 aarch64 wheels, making an UNO Q Python adapter plausible. This is a compatibility hypothesis until installed on the board image.
+- LiteRT 2.2.0 publishes a CPython 3.13 `manylinux_2_27_aarch64` wheel. CueLoop's hash-locked target audit verifies the complete eight-wheel set and all 16 LiteRT ELF shared objects as AArch64 for Arduino's documented Python 3.13/Linux ARM64 runner tuple. Loading and inference on the received UNO Q remain target gates.
 
 ## Alternatives considered
 
@@ -29,7 +29,7 @@ Open gates:
 
 1. Run provenance-complete development-computer evaluation across all four classes and hard negatives.
 2. Calibrate mappings and temporal thresholds without touching held-out test clips.
-3. Install the exact runtime on UNO Q, measure cold/warm latency and memory, and compare the official App Lab Brick on the same clips.
+3. Resolve the audited exact runtime in App Lab on UNO Q, retain the printed Python/machine/libc/package identity, measure cold/warm latency and memory, and compare the official App Lab Brick on the same clips.
 4. If `attention_call` remains unreliable, drop or rename it rather than broadening to generic speech.
 
 Official sources checked 2026-09-01:
@@ -38,4 +38,6 @@ Official sources checked 2026-09-01:
 - <https://github.com/tensorflow/models/tree/master/research/audioset/yamnet>
 - <https://github.com/arduino/app-bricks-examples/tree/main/bricks/arduino/audio_classification/01_glass_breaking_from_file>
 - <https://docs.arduino.cc/software/app-lab/tutorials/examples/>
-
+- <https://github.com/arduino/app-bricks-py>
+- <https://github.com/arduino/arduino-app-cli/blob/main/docs/user-documentation.md>
+- <https://pypi.org/project/ai-edge-litert/2.2.0/>

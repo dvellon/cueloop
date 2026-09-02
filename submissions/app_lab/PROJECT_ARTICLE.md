@@ -100,7 +100,7 @@ python3 scripts/sync_app_lab.py --include-model
 python3 scripts/package_app_lab.py --version 0.1.0
 ```
 
-The packager refuses source/model drift, rejects secret/runtime file types, leaves App `data/` empty, and writes a SHA-256 sidecar. On Windows, verify that digest, import the ZIP in Arduino App Lab, select the UNO Q, and press **Run**. This deploys the Linux app and flashes the MCU sketch together. `user_checklists/WINDOWS_FLASHING.md` gives the full first-connection and recovery procedure.
+The packager refuses source/model drift, rejects secret/runtime file types, leaves App `data/` empty, and writes a SHA-256 sidecar. The complete inference dependency set is also pinned and hash-audited for Arduino's documented CPython 3.13/Linux ARM64 runner: eight wheel archives and 16 LiteRT AArch64 native objects pass offline inspection. This is distribution evidence, not a claim that the received UNO Q has loaded it. On Windows, verify the archive digest, import it in Arduino App Lab, select the UNO Q, and press **Run**. The App prints Python, machine, libc, and LiteRT identity before model construction; retain that line. `user_checklists/WINDOWS_FLASHING.md` gives the full first-connection and recovery procedure.
 
 Flash the XIAO from source with Arduino IDE 2 and `esp32 by Espressif Systems` 3.3.11 while the battery is detached. Select `XIAO_ESP32S3`, its COM port, verify, upload, then open Serial Monitor at 115200 baud with LF line endings.
 
@@ -135,10 +135,11 @@ The evaluation tool refuses audio without source, license/ownership, consent, ex
 
 | Result | Evidence tier | Outcome |
 |---|---|---|
-| Automated regression suite | development computer / simulation | 65 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation comparison gates, simulated transport benchmark, reproducible builds, commit-bound App/source archives, hardware-record safety, and native-CAD/reference-output/submission contracts |
+| Automated regression suite | development computer / simulation | 67 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation comparison gates, simulated transport benchmark, reproducible builds, commit-bound App/source archives, UNO Q distribution audit, hardware-record safety, and native-CAD/reference-output/submission contracts |
 | Static Python analysis | development computer | Pyright: 0 errors, 0 warnings |
 | XIAO firmware build | development computer compile | 888,480 bytes program (26%); 47,632 bytes global RAM (14%); fixed-epoch/path-normalized application and merged images match across two local checkouts |
 | UNO Q STM32 build | development computer compile | 93,304 bytes program (11%); 34,018 bytes global RAM (12%); canonical and isolated App Lab binary hashes match |
+| UNO Q Python distribution set | development computer, cross-platform download/audit | 8/8 exact-version/hash wheels pass; LiteRT metadata/version/license/dependencies match; all 16 native shared objects identify as AArch64. Target installation/loading/inference is not measured. |
 | Pinned YAMNet runtime | development computer, deterministic synthetic workload | 100 runs: 1.834 ms mean, 1.919 ms p95, 1.997 ms max; 73,384 KiB whole-process peak RSS |
 | Real-audio accuracy | not measured | No precision/recall/false-alert claim yet |
 | UNO Q inference and end-to-end latency | not measured | Physical target required |

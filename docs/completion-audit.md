@@ -20,7 +20,7 @@
 | Required behavior | Evidence | State |
 |---|---|---|
 | Detached XIAO Sense microphone and room-to-room Wi-Fi | XIAO firmware, Protocol v1, architecture/wiring | Compiles; physical pending |
-| UNO Q local edge model and focused vocabulary | pinned YAMNet adapter/manifest/mapping; four retained candidate classes | Digitally verified integration; real-audio/target pending |
+| UNO Q local edge model and focused vocabulary | pinned YAMNet adapter/manifest/mapping; four retained candidate classes; hash-audited CPython 3.13/Linux ARM64 wheel set | Digitally verified integration/distribution; real-audio/target execution pending |
 | Combine multiple windows and confirm ambiguous events | `engine.py`, evaluator comparison, unit/integration tests, dashboard states | Digitally verified |
 | Per-class threshold, importance, priority, cooldown | policies/API/UI/tests | Digitally verified |
 | Confirm, dismiss, mute and local feedback | dashboard/API/store/Bridge/tests | Digitally verified; physical control pending |
@@ -54,7 +54,7 @@
 | Supported Bridge/RPC compact MCU commands | `bridge.py`, UNO Q sketch, pinned Router Bridge profile/tests | Compiles/tests; target pending |
 | MCU LED patterns, health, acknowledgement, optional safe outputs | cue controller and hardware header; onboard LEDs minimum | Compiles/tests; physical pending |
 | Official App Lab folder/descriptor/Python/sketch/profile | `app_lab/CueLoop`, sync/packager/structure tests | Digitally verified; import/Run pending |
-| Reproducible dependencies and release | pinned requirements/profile, clean-checkout verifier, deterministic firmware/App/source outputs and manifests | Digitally verified across two local checkouts |
+| Reproducible dependencies and release | pinned requirements/profile, exact target wheel lock/manifest/auditor, clean-checkout verifier, deterministic firmware/App/source outputs and manifests | Digitally verified across two local checkouts; target dynamic loading pending |
 | Dashboard required fields | connection, pod/location, event/confidence/time/state/priority, controls/history/loss/latency/privacy/config | Present and integration-tested |
 
 ## Simulator, models, experiments, and quantitative evaluation
@@ -115,6 +115,6 @@
 
 ## Definition-of-done audit verdict
 
-Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 65 automated tests pass, Pyright reports zero errors/warnings against the minimum supported Python 3.11, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, and fixed-epoch/path-normalized XIAO images reproduce byte-for-byte in two local checkouts. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
+Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 67 automated tests pass, Pyright reports zero errors/warnings against the minimum supported Python 3.11, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, fixed-epoch/path-normalized XIAO images reproduce byte-for-byte in two local checkouts, and the complete hash-locked CPython 3.13/Linux ARM64 inference distribution set passes metadata/archive/AArch64 ELF validation. That distribution audit is not a claim of dynamic loading or inference on the received UNO Q. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
 
 The long-running product goal remains active because hardware/app/media/account claims are explicitly required for the final competitions. Their complete executable steps and record location are in `HARDWARE_TESTS.md`; no pending row is treated as a pass.

@@ -44,12 +44,17 @@ class AppLabPackageTests(unittest.TestCase):
             "python/requirements.txt",
             "sketch/sketch.ino",
             "sketch/sketch.yaml",
+            "models/requirements-unoq-cp313.lock",
+            "models/unoq_runtime_manifest.json",
         ):
             self.assertTrue((APP / relative).is_file(), relative)
         descriptor = (APP / "app.yaml").read_text(encoding="utf-8")
         self.assertIn("name: CueLoop", descriptor)
         self.assertIn("  - 8080", descriptor)
         self.assertNotIn("password", descriptor.lower())
+        entry_point = (APP / "python/main.py").read_text(encoding="utf-8")
+        self.assertIn("CueLoop runtime: Python", entry_point)
+        self.assertIn('version("ai-edge-litert")', entry_point)
 
     def test_python_entry_point_has_valid_syntax(self) -> None:
         path = APP / "python" / "main.py"
@@ -114,6 +119,7 @@ class AppLabPackageTests(unittest.TestCase):
                 "CueLoop/models/yamnet-classification-tflite-v1.tflite", names
             )
             self.assertFalse(any(name.endswith(".sqlite3") for name in names))
+            self.assertFalse(any(name.endswith(".whl") for name in names))
             self.assertFalse(any("__pycache__" in name for name in names))
             package_manifest = json.loads(
                 bundle.read("CueLoop/PACKAGE_MANIFEST.json")

@@ -31,6 +31,7 @@ class ReproducibilityContractTests(unittest.TestCase):
         )
         for token in (
             "git clone --quiet --no-hardlinks --local",
+            "scripts/audit_unoq_runtime.py --download",
             "./scripts/test.sh",
             "npx --yes pyright@1.1.413",
             "./scripts/build_firmware.sh",

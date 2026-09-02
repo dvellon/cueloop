@@ -77,13 +77,14 @@
 - A working simulator-first vertical slice covers packet generation, strict protocol, bounded buffering, classifier interface, uncertainty policy, privacy schema, REST API, dashboard, and fault injection.
 - XIAO and UNO Q firmware compile on pinned platforms; the isolated App Lab sketch produces matching deployable binary hashes.
 - The App Lab folder is self-contained, dependencies are pinned, real-model startup fails closed, and a deterministic package manifest/digest supports audit.
+- The complete Python 3.13/Linux ARM64 inference distribution set is exact-version/hash locked and audited for archive integrity, metadata, and native AArch64 ELF identity; the target log emits its actual runtime identity.
 - The model adapter verifies artifact checksum, tensor contract, and embedded labels. Evaluation refuses incomplete provenance.
 - Automated tests cover malformed data, loss/reordering/restarts, storage boundaries, Bridge faults, model mapping, packaging, and hardware document consistency.
 - MIT licensing, contribution rules, and the source guide make reuse practical.
 
 ### Remaining score risks
 
-- Target runtime dependency resolution and App Lab Router Bridge behavior remain unobserved.
+- Target dependency resolution, dynamic native loading/model inference, and App Lab Router Bridge behavior remain unobserved; the Ubuntu package audit must not be presented as an UNO Q run.
 - The private development repository cannot serve as a durable public contribution unless a judge-accessible release/archive is attached.
 - The automated fresh local checkout now reproduces tests, static analysis, firmware, model/package gates, and release creation; an independent reader/judge has not yet repeated it on a different machine.
 

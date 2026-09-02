@@ -14,6 +14,7 @@ This map is written for a reviewer or contributor starting from a clean checkout
 | Deploy UNO Q App | `app_lab/CueLoop/python/main.py` | `app.yaml`, pinned `sketch/sketch.yaml`, App README |
 | Understand physical cues | `firmware/uno_q_cue_controller/uno_q_cue_controller.ino` | `linux/cueloop/bridge.py`, Bridge tests |
 | Reproduce the model | `scripts/fetch_yamnet.py` | `models/model_manifest.json`, `requirements-model.txt` |
+| Audit UNO Q Python distributions | `scripts/audit_unoq_runtime.py` | target hash lock, runtime manifest, ELF/metadata tests |
 | Evaluate licensed audio | `models/evaluate.py` | manifest/schema, `linux/cueloop/evaluation.py` |
 | Build a release ZIP | `scripts/package_app_lab.py` | package tests and generated internal manifest |
 | Build a source release | `scripts/package_source_release.py` | committed-tree manifest, privacy guards, deterministic ZIP |
@@ -52,7 +53,7 @@ python3 scripts/sync_app_lab.py --include-model
 python3 scripts/sync_app_lab.py --check --include-model
 ```
 
-The first operation copies approved core files, dashboard assets, UNO Q sketch/header, mapping, manifest, and the ignored verified model. The second compares bytes and checksum without writing. Tests run the no-model drift check so clean clones remain testable.
+The first operation copies approved core files, dashboard assets, UNO Q sketch/header, mapping, model/runtime manifests, target dependency lock, and the ignored verified model. The second compares bytes and checksum without writing. Tests run the no-model drift check so clean clones remain testable.
 
 `scripts/package_app_lab.py` repeats the model/source gate, refuses a release archive when any packaging input differs from `HEAD`, excludes build/cache/database/audio/secret-like files, writes an empty `data/` directory, adds a per-file `PACKAGE_MANIFEST.json` with the exact source commit and clean-tree result, fixes ZIP timestamps/permissions for deterministic output, and produces a SHA-256 sidecar. The release archive and model remain ignored. `--allow-dirty` exists only for development tests; never use it for a submission archive.
 
@@ -61,7 +62,7 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 ## Reproducible dependency boundary
 
 - Desktop simulator/service: Python 3.11+ standard library.
-- Model path: `ai-edge-litert==2.2.0`; the development-host resolved lock is recorded but target aarch64 wheels must be resolved/recorded on UNO Q.
+- Model path: the complete `ai-edge-litert==2.2.0` dependency set is pinned. `models/requirements-unoq-cp313.lock` and `unoq_runtime_manifest.json` hash-audit the documented CPython 3.13/Linux ARM64 distributions; actual App Lab resolution/import/inference remains a target record.
 - XIAO: Arduino CLI 1.5.1, `esp32:esp32` 3.3.11, core libraries only.
 - UNO Q: `arduino:zephyr` 0.90.0 plus every library/version in App Lab `sketch.yaml`.
 - Downloaded YAMNet: exact URL, byte count, SHA-256, input/output contract, license, and limitations in `models/model_manifest.json`.
@@ -75,6 +76,7 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 - `test_bridge.py`: exact RPC translation, failure containment, status/restart logic.
 - `test_yamnet_mapping.py` and `test_evaluation.py`: mapping labels/aggregation and provenance gates/metrics.
 - `test_app_lab_package.py`: mandatory structure, pinned dependencies, source/model/archive integrity.
+- `test_unoq_runtime_audit.py`: target lock/manifest/App-copy integrity and downloaded wheel metadata/hash/AArch64 ELF audit.
 - `test_hardware_docs.py`: safe net connectivity and valid accessible schematic source.
 - `test_cad_application.py`: native Fusion API/export/provenance contract, critical clearances, OpenCascade STEP/STL output integrity/interference, and Autodesk answer/evidence gates.
 - `test_simulated_transport_benchmark.py`: deterministic clean/moderate/severe fault profiles and software-only claim boundary.

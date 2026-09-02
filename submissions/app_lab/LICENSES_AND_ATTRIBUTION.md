@@ -14,7 +14,7 @@ The final project photographs, narration, diagrams derived solely from repositor
 |---|---|---|---|
 | Google YAMNet classification LiteRT v1 | 521-class acoustic baseline | Google/TensorFlow Models; Apache License 2.0; exact upstream/download links and digest in `models/model_manifest.json` | Binary is ignored in source Git; verified copy is included only in the runtime App archive with manifest/attribution |
 | AudioSet ontology/class names | upstream label vocabulary | Google AudioSet; referenced through YAMNet artifact/source | small reviewed mapping is project source; retain upstream attribution |
-| `ai-edge-litert==2.2.0` | target/host LiteRT Python runtime | Google; resolved package license must be confirmed from its installed metadata at release | dependency pin only; package itself is installed by the target environment, not vendored |
+| `ai-edge-litert==2.2.0` | target/host LiteRT Python runtime | Google; PyPI wheel metadata audited as Apache 2.0 and recorded with URL/digest in `models/unoq_runtime_manifest.json`; recheck installed metadata on target | dependency pin only; package itself is installed by the target environment, not vendored |
 
 YAMNet is not presented as a model trained by CueLoop. Its AudioSet/YouTube-derived limitations, target mapping, checksum, tensors, and unmeasured real-audio quality remain explicit in the article and manifest.
 

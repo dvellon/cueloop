@@ -1,11 +1,11 @@
 # Resolved on Ubuntu x86_64 with CPython 3.14.4 on 2026-09-01.
-# Re-resolve on the UNO Q aarch64 image, then record that result; do not copy wheels.
+# This is the host lock. The separately hash-locked/audited CPython 3.13 ARM64
+# distribution set is models/requirements-unoq-cp313.lock; do not copy wheels.
 ai-edge-litert==2.2.0
-backports.strenum==1.2.8
+backports-strenum==1.2.8
 flatbuffers==25.12.19
-ml_dtypes==0.6.0
+ml-dtypes==0.6.0
 numpy==2.5.2
 protobuf==7.36.1
 tqdm==4.70.0
-typing_extensions==4.16.0
-
+typing-extensions==4.16.0

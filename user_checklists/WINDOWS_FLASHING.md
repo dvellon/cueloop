@@ -40,14 +40,14 @@ Do not reflash the UNO Q Linux image just because CueLoop fails. Use the officia
 ## B. Import and run CueLoop on UNO Q
 
 1. In App Lab, open **My Apps**, choose the Import action, and select the verified CueLoop ZIP (or its extracted `CueLoop` folder if the installed version requests a directory).
-2. Inspect before running: `app.yaml`, `python/main.py`, `python/requirements.txt`, `sketch/sketch.ino`, `sketch/sketch.yaml`, `models/class_mapping.json`, and the 4,126,810-byte `.tflite` model must be present. `data/` must contain no prior event database.
+2. Inspect before running: `app.yaml`, `python/main.py`, `python/requirements.txt`, `sketch/sketch.ino`, `sketch/sketch.yaml`, `models/class_mapping.json`, `models/requirements-unoq-cp313.lock`, `models/unoq_runtime_manifest.json`, and the 4,126,810-byte `.tflite` model must be present. `data/` must contain no prior event database.
 3. Select the connected UNO Q and press **Run**. App Lab should resolve the pinned Python requirement, deploy the Linux app, compile/flash the STM32 sketch, and start them together.
 4. Expected MCU indication after heartbeats begin: LED4 green. Before Linux/Bridge health is established, LED4 may blink red. LED3 stays off until a confirmed event.
-5. In the App Lab monitor, look for the CueLoop dashboard/UDP startup text and no model checksum/tensor error. Record all errors verbatim without credentials.
+5. In the App Lab monitor, retain the line beginning `CueLoop runtime:`. Expected values for the audited runner family are Python 3.13, an AArch64/ARM64 machine identity, and `ai-edge-litert=2.2.0`; record the actual libc rather than assuming it. Then look for the dashboard/UDP startup text and no model checksum/tensor error. Record all errors verbatim without credentials.
 6. Open `http://<UNO-Q-IP>:8080/` from the Windows browser. Expected: dashboard loads, privacy says local/no recordings, CuePod connection initially shows disconnected, and cue-output diagnostics become connected after Bridge heartbeats.
 7. Only after a complete manual run passes, optionally use the arrow beside **Run** to enable **Run at startup**. Do not enable autostart during early debugging.
 
-If `ai-edge-litert==2.2.0` cannot install on the actual UNO Q image, record the complete resolver/architecture/Python output. Do not switch to synthetic inference or silently change the pin; that is a material model/runtime decision.
+The Ubuntu audit proves the complete hash-locked wheel set exists for the officially documented Python 3.13/Linux ARM64 tuple; it does not prove the received image can load it. If the pinned set cannot install or import on the actual UNO Q image, record the complete resolver/Python/machine/libc output. Do not switch to synthetic inference or silently change a pin; that is a material model/runtime decision.
 
 ## C. Flash XIAO ESP32S3 Sense from source (recommended)
 

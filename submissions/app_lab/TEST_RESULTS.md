@@ -8,11 +8,12 @@
 
 | Area | Evidence tier | Method | Result | Claim boundary |
 |---|---|---|---|---|
-| Regression suite | Development computer / simulation | `./scripts/test.sh` | 65 tests passed at the last integrated checkpoint | Exercises software/evaluation/benchmark/reproducible-build/commit-bound packaging/native-CAD/reference-export contracts; no board or real-audio claim |
+| Regression suite | Development computer / simulation | `./scripts/test.sh` | 67 tests passed at the last integrated checkpoint | Exercises software/evaluation/benchmark/reproducible-build/commit-bound packaging/native-CAD/reference-export/runtime-audit contracts; no board or real-audio claim |
 | Python static analysis | Development computer | `npx --yes pyright@1.1.413` | 0 errors, 0 warnings | Static analysis, not runtime proof |
 | XIAO firmware | Development-computer compile | clean fixed-epoch/path-normalized build in two local checkouts; Arduino CLI 1.5.1, `esp32:esp32` 3.3.11 | 888,480 B program (26%); 47,632 B global RAM (14%); application and merged images match byte-for-byte | Reproducible compilation only; mic, Wi-Fi, NVS, and battery unobserved |
 | UNO Q firmware | Development-computer compile | Arduino CLI 1.5.1, `arduino:zephyr` 0.90.0, target `unoq` | 93,304 B program (11%); 34,018 B global RAM (12%) | Compiles only; MCU LEDs, button, and Bridge unobserved |
 | App Lab sketch reproducibility | Development-computer compile/hash | canonical versus isolated pinned App sketch profile | deployable binary hashes match | Does not prove App Lab deployment on a board |
+| UNO Q Python distributions | Development-computer package audit | exact-hash CPython 3.13/`manylinux_2_27_aarch64` download; archive/metadata/ELF checks | 8/8 wheels verified; LiteRT 2.2.0 metadata reports Apache 2.0; 16/16 native objects are AArch64 | Proves availability/integrity for Arduino's documented runner tuple, not installation, loading, or inference on the received board |
 | YAMNet adapter | Development computer / synthetic workload | checksum/tensor/label validation plus 100 timed invokes | mean 1.834 ms; p95 1.919 ms; max 1.997 ms; process peak RSS 73,384 KiB | Proves host execution only; input was not an accuracy dataset |
 | Protocol resilience | Simulation/unit tests | CRC, unknown flag/version, malformed length, loss, reorder, wrap, restart, huge jump | invalid inputs rejected; bounded cases pass | Controlled software injection, not RF performance |
 | Decision policy | Simulation/unit tests | observation, minimum evidence, confirmation interval, cooldown, mute | declared transitions pass | Synthetic scores, not calibrated model performance |
@@ -30,7 +31,7 @@ Exact build commands, full artifact hashes, builder/tool versions, and timestamp
 | Sense microphone capture | quiet/test-tone RMS, peak, clipping, capture-error record | Not observed |
 | CuePod → UNO Q transport | sent/received/ACK/loss counters under stated range/conditions | Not observed |
 | App Lab deployment | successful Run screenshot and versioned console log | Not observed |
-| UNO Q LiteRT performance | warm/cold inference timing and memory under target runtime | Not observed |
+| UNO Q LiteRT loading/performance | runtime identity, successful native import/model startup, warm/cold inference timing and memory | Distribution set audited; target execution not observed |
 | Bridge and physical cues | LED3/LED4/button timing plus disconnect/restart recovery | Not observed |
 | End-to-end alert latency | synchronized stimulus-to-cue method, distribution, and conditions | Not observed |
 | Per-class accuracy | provenance-complete calibration/validation/test audio; confusion and confidence records | Not observed |

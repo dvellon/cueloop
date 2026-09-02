@@ -1,3 +1,10 @@
 # Optional development/UNO Q inference stack. The core simulator has no third-party deps.
+# Keep this resolved set aligned with the host lock and target distribution audit.
 ai-edge-litert==2.2.0
-
+backports-strenum==1.2.8
+flatbuffers==25.12.19
+ml-dtypes==0.6.0
+numpy==2.5.2
+protobuf==7.36.1
+tqdm==4.70.0
+typing-extensions==4.16.0

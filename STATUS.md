@@ -48,7 +48,8 @@
 - Added a requirement-by-requirement completion audit and automated checks for the authoritative hardware record, experiment contract, and Autodesk V2 structure.
 - Added a clean-intermediate firmware builder with fixed epoch and checkout-root path normalization; independently reproduced the XIAO images across two local clones and retained byte-identical canonical/App-profile UNO Q containers.
 - Added a release-grade fresh-checkout verifier covering the pinned model, tests, Python 3.11 static analysis, all firmware/profile builds, clean manifests, and both archives without mutating tracked source.
-- Expanded the automated suite to 65 passing tests and retained zero Pyright errors.
+- Audited Arduino's documented Python 3.13/Linux ARM64 runner distribution tuple: the complete eight-wheel inference set is exact-version/SHA-256 locked, archive-checked, and the 16 LiteRT native objects verify as AArch64. The App logs target Python/machine/libc/package identity; actual App Lab loading/inference remains unobserved.
+- Expanded the automated suite to 67 passing tests and retained zero Pyright errors.
 
 ## In progress
 

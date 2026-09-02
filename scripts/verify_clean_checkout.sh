@@ -82,6 +82,7 @@ else
   echo "Pinned model not supplied; model/package tests will report two expected skips"
 fi
 
+python3 scripts/audit_unoq_runtime.py --download
 ./scripts/test.sh
 npx --yes pyright@1.1.413
 ./scripts/build_firmware.sh

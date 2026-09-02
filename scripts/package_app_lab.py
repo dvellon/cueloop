@@ -28,6 +28,7 @@ FORBIDDEN_SUFFIXES = {
     ".flac",
     ".mp3",
     ".m4a",
+    ".whl",
     ".local.h",
 }
 FORBIDDEN_NAMES = {".env", "credentials.json", "secrets.json"}
@@ -37,6 +38,8 @@ PROVENANCE_PATHS = (
     "linux/cueloop",
     "models/class_mapping.json",
     "models/model_manifest.json",
+    "models/requirements-unoq-cp313.lock",
+    "models/unoq_runtime_manifest.json",
     "scripts/package_app_lab.py",
     "scripts/sync_app_lab.py",
 )

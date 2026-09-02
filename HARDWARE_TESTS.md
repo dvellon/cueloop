@@ -118,14 +118,14 @@ Keep the CuePod cell detached throughout this gate.
 | W-101 | Connect UNO Q with the identified Arduino-order data/power path following the official host/SBC connection mode. | Board identity, 4 GB/32 GB configuration, connection mode, Linux image/update state, LAN address, and App Lab version recorded. |
 | W-102 | Run Arduino App Lab’s built-in Blink example. | Documented MCU RGB LED blinks and App Lab reports success. Stop if this board baseline fails. |
 | W-103 | Import the verified CueLoop ZIP, or extracted top-level `CueLoop` folder only if this App Lab version requests a directory. | `app.yaml`, `python/main.py`, requirements, sketch/profile, mapping, 4,126,810-byte model, and empty `data/` are present. |
-| W-104 | Select UNO Q and press **Run**. | App Lab resolves the pinned runtime, deploys Linux, compiles/flashes STM32, and starts both. Full monitor output/version recorded. |
+| W-104 | Select UNO Q and press **Run**. | App Lab resolves the complete pinned runtime set, deploys Linux, compiles/flashes STM32, and starts both. Full resolver/monitor output and App Lab/image versions recorded. |
 | W-105 | Observe health before and after Linux heartbeats. | LED4 may blink red while unhealthy, then becomes green; LED3 remains off until a confirmed cue. |
-| W-106 | Inspect monitor/model startup. | Dashboard and UDP startup appear; no checksum, tensor, embedded-label, database, socket, or Bridge error. |
+| W-106 | Inspect monitor/model startup. | Retain `CueLoop runtime: Python ...; machine=...; libc=...; ai-edge-litert=...`; expected audited family is Python 3.13, ARM64/AArch64, LiteRT 2.2.0. Dashboard and UDP startup appear; no native-import, checksum, tensor, embedded-label, database, socket, or Bridge error. |
 | W-107 | Browse to `http://<UNO-Q-IP>:8080/` and `/api/status`. | Dashboard loads; local/no-recordings and model/input/connection states are visible; pod initially disconnected; Bridge status becomes connected. |
 | W-108 | Inspect App `data/` before activity. | Empty except App-managed placeholders; no previous database or audio. |
 | W-109 | Enable **Run at startup** only after the manual run and restart test pass. | Optional setting and resulting reboot behavior recorded. |
 
-If `ai-edge-litert==2.2.0` cannot resolve on the actual UNO Q image, preserve the complete Python/architecture/resolver output. Do not switch to synthetic inference or an unpinned runtime; that requires an evidence-backed implementation decision. Reflash the UNO Q Linux image only through the official recovery flow after diagnosing a corrupt/unresponsive OS and recording the erase impact.
+The Ubuntu distribution audit proves a complete exact-hash wheel set headed by `ai-edge-litert==2.2.0` exists for Arduino's documented CPython 3.13/Linux ARM64 runner and verifies 16 LiteRT shared objects as AArch64. It does not prove the received image's loader or model inference. If the set cannot resolve/import on the actual UNO Q image, preserve the complete Python/machine/libc/resolver/traceback output. Do not switch to synthetic inference or an unpinned runtime; that requires an evidence-backed implementation decision. Reflash the UNO Q Linux image only through the official recovery flow after diagnosing a corrupt/unresponsive OS and recording the erase impact.
 
 ## Gate W-200 — XIAO source flash and secret-safe configuration
 
