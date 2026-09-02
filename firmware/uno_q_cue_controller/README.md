@@ -38,4 +38,4 @@ Class codes are 1 door knock, 2 alarm/beep, 3 dog bark, and 4 attention call. LE
 
 The minimum build needs no external actuator: onboard LEDs provide the physical cue. A normally-open button from D4 to GND enables immediate acknowledgement; without it, the pull-up remains inactive and dashboard acknowledgement still works. Optional active-high haptic/buzzer pins can be set in ignored `cue_controller_hardware.local.h` only after the driver/transistor/current path is documented—do not drive a motor directly from an MCU GPIO.
 
-Record physical Bridge, LED, debounce, cue-timing, and restart observations in `HARDWARE_RESULTS.md`.
+Record physical Bridge, LED, debounce, cue-timing, and restart observations under H-005 through H-009/H-305 in root `HARDWARE_TESTS.md`, then copy reviewed summaries to `HARDWARE_RESULTS.md`.

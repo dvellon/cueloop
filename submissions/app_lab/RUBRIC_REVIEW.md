@@ -11,7 +11,7 @@
 - `PROJECT_ARTICLE.md` begins with a human problem, states the social-impact use case, explains the uncertainty interaction, makes UNO Q’s dual processors essential, and supplies end-to-end build/config/use instructions.
 - `VIDEO_PACKAGE.md` prioritizes a physical observe → confirm → cue → acknowledge run and includes exact narration, shot timing, captions, safety, privacy, and fallback language.
 - `SOURCE_GUIDE.md` maps reviewer roles to implementation and tests; `TROUBLESHOOTING.md` handles likely setup and fault cases.
-- `WINDOWS_FLASHING.md`, `HARDWARE_BRINGUP.md`, and `PHYSICAL_VALIDATION.md` separate flashing, safe assembly, and measured validation.
+- Root `HARDWARE_TESTS.md` contains the authoritative Windows/safety/validation workflow and execution record; the three `user_checklists/` views keep operator steps short.
 - Limitations are repeated where a reader might otherwise infer a certified alarm, a real-audio result, encrypted transport, or existing hardware validation.
 
 ### Remaining score risks

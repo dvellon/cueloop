@@ -49,4 +49,4 @@ If the physical board schematic and multimeter confirm a battery divider, create
 
 ## Hardware test still required
 
-Compilation proves APIs and types only. The real board must confirm microphone waveform/non-clipping, pin orientation, Wi-Fi association, UDP heartbeat, receiver timeout/recovery, USB/battery metadata, and safe current/runtime. Record observations in `HARDWARE_RESULTS.md`; do not reinterpret test-tone behavior as acoustic-model accuracy.
+Compilation proves APIs and types only. The real board must confirm microphone waveform/non-clipping, pin orientation, Wi-Fi association, UDP heartbeat, receiver timeout/recovery, USB/battery metadata, and safe current/runtime. Append observations under the matching root `HARDWARE_TESTS.md` ID, then copy reviewed summaries to `HARDWARE_RESULTS.md`; do not reinterpret test-tone behavior as acoustic-model accuracy.

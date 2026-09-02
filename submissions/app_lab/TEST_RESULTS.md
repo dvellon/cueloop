@@ -2,13 +2,13 @@
 
 **Snapshot:** 2026-09-02 EDT
 
-**Rule:** this document summarizes reproducible evidence; `HARDWARE_RESULTS.md` remains authoritative for physical observations.
+**Rule:** this document summarizes reproducible evidence; detailed physical observations live in root `HARDWARE_TESTS.md` and reviewed summaries in `HARDWARE_RESULTS.md`.
 
 ## Publishable digital results
 
 | Area | Evidence tier | Method | Result | Claim boundary |
 |---|---|---|---|---|
-| Regression suite | Development computer / simulation | `./scripts/test.sh` | 49 tests passed at the last integrated checkpoint | Exercises software/CAD-document contracts; no board or real-audio claim |
+| Regression suite | Development computer / simulation | `./scripts/test.sh` | 57 tests passed at the last integrated checkpoint | Exercises software/evaluation/benchmark/CAD-document contracts; no board or real-audio claim |
 | Python static analysis | Development computer | `npx --yes pyright` | 0 errors, 0 warnings | Static analysis, not runtime proof |
 | XIAO firmware | Development-computer compile | Arduino CLI 1.5.1, `esp32:esp32` 3.3.11, target `XIAO_ESP32S3` | 888,480 B program (26%); 47,632 B global RAM (14%) | Compiles only; mic, Wi-Fi, NVS, and battery unobserved |
 | UNO Q firmware | Development-computer compile | Arduino CLI 1.5.1, `arduino:zephyr` 0.90.0, target `unoq` | 93,304 B program (11%); 34,018 B global RAM (12%) | Compiles only; MCU LEDs, button, and Bridge unobserved |
@@ -40,7 +40,7 @@ Exact build commands, full artifact hashes, builder/tool versions, and timestamp
 | Enclosure fit and usability | measured dimensions, photos, access/strain/heat checks | Not observed |
 | Accessibility feedback | consented protocol, participant context, result/limitations | Not observed |
 
-Use `user_checklists/PHYSICAL_VALIDATION.md` for the predeclared methods and write each observation into `HARDWARE_RESULTS.md`. Do not convert “Not observed” to pass based on a compile, simulator, datasheet, visual assumption, or successful test of a different hardware revision.
+Use root `HARDWARE_TESTS.md` for the complete predeclared methods and execution log, then copy reviewed summaries into `HARDWARE_RESULTS.md`. Do not convert “Not observed” to pass based on a compile, simulator, datasheet, visual assumption, or successful test of a different hardware revision.
 
 ## Final insertion format
 

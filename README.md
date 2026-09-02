@@ -13,7 +13,7 @@ CueLoop is an awareness aid. It is not a safety-certified alarm, security system
 
 ## Current state
 
-Development began on September 1, 2026. Hardware-dependent results are intentionally separated from simulator and development-computer results. See [STATUS.md](STATUS.md), [PLAN.md](PLAN.md), and [HARDWARE_RESULTS.md](HARDWARE_RESULTS.md) for the live record.
+Development began on September 1, 2026. Hardware-dependent results are intentionally separated from simulator and development-computer results. See [STATUS.md](STATUS.md), [PLAN.md](PLAN.md), [HARDWARE_TESTS.md](HARDWARE_TESTS.md), and [HARDWARE_RESULTS.md](HARDWARE_RESULTS.md) for the live record.
 
 Both firmware targets and the exact isolated App Lab sketch profile compile on the documented Ubuntu toolchain. The complete App Lab import archive can be generated locally with `python3 scripts/package_app_lab.py`; no claim is made that it has run on physical boards yet.
 
@@ -35,6 +35,8 @@ The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffe
 - `shared/` — protocol, event schema, and constants
 - `simulator/` — synthetic sender, WAV replay, loss, jitter, and latency injection
 - `models/` — model selection, preprocessing, conversion, provenance, and evaluation
+- `experiments/` — predeclared experiment registry, schema, and result boundaries
+- `benchmarks/` — evidence-labeled benchmark methods and curated summaries
 - `tests/` — unit, protocol, integration, and evaluation tests
 - `hardware/` — exact/estimated BOMs, wiring, schematics, power, and assembly
 - `cad/` — parametric Fusion automation, dimensions, exports, and assembly notes
@@ -53,7 +55,7 @@ The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffe
 
 Read [docs/safety.md](docs/safety.md) before hardware work and [docs/privacy-model.md](docs/privacy-model.md) before changing audio retention behavior.
 
-For physical work, begin with [the deadline-ordered next actions](user_checklists/NEXT_ACTIONS.md), then use [the short hardware bring-up checklist](user_checklists/HARDWARE_BRINGUP.md), [Windows flashing guide](user_checklists/WINDOWS_FLASHING.md), and [physical validation matrix](user_checklists/PHYSICAL_VALIDATION.md). The editable connectivity source and human schematic are under `hardware/schematics/`.
+For physical work, begin with [the deadline-ordered next actions](user_checklists/NEXT_ACTIONS.md), then execute the authoritative [Windows flashing and hardware test record](HARDWARE_TESTS.md). The [short hardware bring-up checklist](user_checklists/HARDWARE_BRINGUP.md), [Windows quick guide](user_checklists/WINDOWS_FLASHING.md), and [physical validation matrix](user_checklists/PHYSICAL_VALIDATION.md) are compact views. The editable connectivity source and human schematic are under `hardware/schematics/`.
 
 ## License
 

@@ -24,7 +24,7 @@ All critical millimeter values live in `design_parameters.json`. The script mirr
 7. Save the editable cloud design. Then choose **File → Export**, select **Fusion 360 Archive Files (`*.f3d`)**, and save as `CueLoop_Bridge_Preliminary_YYYY-MM-DD.f3d`.
 8. Attach the exported `.f3d` to the Autodesk hardware-application Hackster project. Export neutral STEP/3MF views only after inspection; generated exports belong in ignored `cad/exports/`.
 
-If Fusion reports an API error, copy the full error text into `HARDWARE_RESULTS.md` under a CAD run record, along with Fusion version and operating system. Do not manually patch around the failure without updating the generator.
+If Fusion reports an API error, copy the full error text into root `HARDWARE_TESTS.md` as a CAD run record, along with Fusion version and operating system. Do not manually patch around the failure without updating the generator.
 
 ## Render workflow
 
@@ -33,4 +33,3 @@ If Fusion reports an API error, copy the full error text into `HARDWARE_RESULTS.
 3. Use the Render workspace with soft daylight, a neutral warm-gray environment, and a three-quarter camera angle.
 4. Render one clean 16:9 hero, one exploded assembly, one microphone/USB close-up, and one clip/stand view.
 5. Caption every image `Fusion concept render—physical enclosure not yet manufactured` until a physical photograph exists.
-

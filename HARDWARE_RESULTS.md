@@ -1,6 +1,8 @@
 # Hardware results
 
-No physical results have been recorded. This file is the authoritative boundary between digitally verified work and observations made with real hardware.
+No physical results have been recorded. This file is the authoritative publication boundary between digitally verified work and reviewed observations made with real hardware.
+
+Detailed procedures and raw observation blocks are authoritative in `HARDWARE_TESTS.md`. This file contains only reviewed inventory/result summaries suitable for publication.
 
 ## Evidence vocabulary
 
@@ -47,6 +49,6 @@ Do not paste Wi-Fi credentials, personal data, or sensitive audio here.
 ## Prepared digital evidence (not a hardware result)
 
 - Development-computer Arduino CLI compilation is recorded in `firmware/BUILD_MANIFEST.md`.
-- Windows flashing/bring-up steps are in `user_checklists/WINDOWS_FLASHING.md` and `HARDWARE_BRINGUP.md`.
-- Predeclared test methods/targets are in `user_checklists/PHYSICAL_VALIDATION.md`.
+- Complete Windows flashing, bring-up, validation methods, expected observations, and the execution log are in root `HARDWARE_TESTS.md`.
+- Short operator views remain in `user_checklists/WINDOWS_FLASHING.md`, `HARDWARE_BRINGUP.md`, and `PHYSICAL_VALIDATION.md`.
 - No row above may change from “Not observed” until a physical operator records the observation using the result block.

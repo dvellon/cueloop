@@ -17,7 +17,7 @@ This directory contains the judge-facing source copy for **Invent the Future wit
 | Media/source credits | `LICENSES_AND_ATTRIBUTION.md` |
 | Final account-controlled actions | `SUBMISSION_CHECKLIST.md` |
 
-The authoritative physical observation record is the repository-root `HARDWARE_RESULTS.md`. Copy measured values into submission copy only after an operator records the hardware revision, conditions, units, evidence tier, and pass/fail status there.
+The authoritative detailed procedure/observation log is repository-root `HARDWARE_TESTS.md`; `HARDWARE_RESULTS.md` is its reviewed publication summary. Copy measured values into submission copy only after both preserve hardware revision, conditions, units, evidence tier, and pass/fail status.
 
 ## Release attachments
 

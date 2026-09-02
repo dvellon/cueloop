@@ -1,6 +1,6 @@
 # Windows flashing and App Lab deployment
 
-This checklist uses source and package artifacts already validated on the Ubuntu builder. It does not assume either board is attached to Ubuntu. Record exact App Lab/IDE/core versions, COM ports, outputs, and failures in `HARDWARE_RESULTS.md`.
+This quick checklist uses source and package artifacts already validated on the Ubuntu builder. It does not assume either board is attached to Ubuntu. Root `HARDWARE_TESTS.md` is authoritative and contains the complete steps, expected observations, and append-only execution record; copy only reviewed summaries to `HARDWARE_RESULTS.md`.
 
 ## Prepare transfer artifacts on Ubuntu
 

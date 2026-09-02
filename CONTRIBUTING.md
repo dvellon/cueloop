@@ -21,4 +21,4 @@ CueLoop welcomes reproducibility fixes, accessible interaction ideas, privacy im
 
 ## Physical results
 
-Record observations in `HARDWARE_RESULTS.md` using the supplied checklist ID, exact firmware commit, test conditions, units, and raw observation. Photos and traces that are safe and licensed may be attached separately; sensitive audio must remain local.
+Record raw observations under the supplied ID in root `HARDWARE_TESTS.md` with exact firmware commit, conditions, units, and evidence tier; copy reviewed summaries to `HARDWARE_RESULTS.md`. Photos and traces that are safe and licensed may be attached separately; sensitive audio must remain local.

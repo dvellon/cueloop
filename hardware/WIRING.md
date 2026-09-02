@@ -47,4 +47,4 @@ Battery negative connector contact ── measured pigtail lead ── XIAO BAT-
                                                              (closest to USB-C)
 ```
 
-Record connector-face orientation, meter reading, and lead mapping in `HARDWARE_RESULTS.md` before tinning. The battery stays physically unplugged for every soldering, inspection, and continuity step.
+Record connector-face orientation, meter reading, and lead mapping under H-307 in root `HARDWARE_TESTS.md` before tinning. The battery stays physically unplugged for every soldering, inspection, and continuity step.

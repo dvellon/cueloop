@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "experiment_id": "EXP-999",
+  "title": "Template — replace with a bounded product question",
+  "status": "planned",
+  "question": "Which declared input condition changes which product outcome?",
+  "evidence_tier": "simulated",
+  "method": "Describe the exact setup, software/hardware revisions, order, randomization, timing, and analysis before running.",
+  "independent_variables": ["declared input condition"],
+  "dependent_variables": ["measured outcome with unit"],
+  "controls": ["fixed release commit and configuration"],
+  "sample_plan": "State repetitions, source grouping, duration, seeds, and stopping rule before collecting data.",
+  "acceptance_target": "State the decision threshold and what happens if it is missed.",
+  "safety_privacy": "Use no private/unlicensed data; follow docs/safety.md and record consent where relevant.",
+  "result_record": "experiments/results/EXP-999.json (ignored) plus a curated Markdown summary if publishable"
+}

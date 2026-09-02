@@ -129,13 +129,13 @@ V1 begins with Google's Apache-2.0 YAMNet classification LiteRT v1 artifact. The
 
 YAMNet is a broad AudioSet/YouTube-derived baseline, not a CueLoop-trained or calibrated model. A max aggregation over selected doorbell/knock, alarm/siren/buzzer/beep, dog/bark, and shout/yell labels is a hypothesis until held-out audio testing passes. Scores are not probabilities of safety, and a high smoke-alarm label does not make CueLoop a smoke alarm.
 
-The evaluation tool refuses audio without source, license/ownership, consent, exact checksum, environment, distance, and split metadata. Calibration, validation, and held-out test remain separate. It reports per-class precision/recall/F1, false triggers per audio hour, missed-event rate, Brier/calibration error, and latency. Raw clips stay ignored and the evaluator never writes derived audio.
+The evaluation tool refuses audio without source, license/ownership, consent, exact checksum, labels, and split metadata; it records environment, distance/door, background, and event intervals where those conditions are measured. Calibration, validation, and held-out test remain separate. It reports per-class support/confusion matrices/precision/recall/F1, false triggers per audio hour, missed-event rate, Brier/calibration error, condition slices, inference and annotated audio-to-decision latency, and the production temporal policy beside a one-window baseline. Raw clips stay ignored and the evaluator never writes derived audio.
 
 ## What has actually been measured
 
 | Result | Evidence tier | Outcome |
 |---|---|---|
-| Automated regression suite | development computer / simulation | 49 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation gates, App/source archives, hardware connectivity, and preliminary CAD/application checks |
+| Automated regression suite | development computer / simulation | 57 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation comparison gates, simulated transport benchmark, App/source archives, hardware-record safety, and CAD/submission structure |
 | Static Python analysis | development computer | Pyright: 0 errors, 0 warnings |
 | XIAO firmware build | development computer compile | 888,480 bytes program (26%); 47,632 bytes global RAM (14%) |
 | UNO Q STM32 build | development computer compile | 93,304 bytes program (11%); 34,018 bytes global RAM (12%); canonical and isolated App Lab binary hashes match |
@@ -144,7 +144,7 @@ The evaluation tool refuses audio without source, license/ownership, consent, ex
 | UNO Q inference and end-to-end latency | not measured | Physical target required |
 | Physical CuePod, Wi-Fi range, battery and enclosure | not measured | Hardware bring-up required |
 
-The host benchmark proves that the pinned artifact and adapter execute; its synthetic tones were designed for the simulator, not YAMNet, and are deliberately excluded from accuracy reporting. Physical results will be inserted from `HARDWARE_RESULTS.md` only after the predeclared validation matrix is executed.
+The host benchmark proves that the pinned artifact and adapter execute; its synthetic tones were designed for the simulator, not YAMNet, and are deliberately excluded from accuracy reporting. Physical results will be inserted from reviewed `HARDWARE_RESULTS.md` summaries only after the matching root `HARDWARE_TESTS.md` gates are executed.
 
 ## Failure behavior and troubleshooting
 

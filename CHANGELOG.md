@@ -30,3 +30,8 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Deterministic exact-commit source ZIP packager with per-file checksums and guards against secrets, raw audio, downloaded models, databases, and build artifacts.
 - Automated release tests for required submission material, video disclosure/timeline, and repeatable sanitized source archives.
 - Automated preliminary Fusion-parameter and Autodesk-application completeness checks, plus one deadline-ordered physical/account handoff sheet.
+- Authoritative root `HARDWARE_TESTS.md` combining Windows deployment, battery-safe bring-up, quantitative physical gates, expected observations, and append-only records.
+- Evaluation result schema v2 with explicit confusion matrices/support, condition slices, event-interval decision latency, and temporal-versus-single-window comparison.
+- Deterministic 60-trial simulated transport fault benchmark, curated evidence summary, and claim-boundary tests.
+- Predeclared experiment registry/schema and complete Autodesk final-package structure for V2 development, DFM, evidence, article, and submission review.
+- Requirement-by-requirement `PROJECT_PROMPT` completion audit and automated structural/safety checks.

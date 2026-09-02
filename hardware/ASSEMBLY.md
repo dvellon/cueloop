@@ -58,4 +58,4 @@ This procedure stops at every point where a wrong assumption could damage the ce
 3. Keep microphone and antenna paths clear. Do not make a sealed heat trap.
 4. Close the enclosure only after a powered open-air run passes. Initial charging remains supervised with the enclosure open.
 
-Record every observation against the current Git commit in `HARDWARE_RESULTS.md`. The authoritative short execution order is in `user_checklists/HARDWARE_BRINGUP.md`.
+Record every observation against the current Git commit in root `HARDWARE_TESTS.md`; copy only reviewed summaries to `HARDWARE_RESULTS.md`. The short execution order is in `user_checklists/HARDWARE_BRINGUP.md`.

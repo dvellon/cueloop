@@ -15,10 +15,10 @@ This checklist contains the unavoidable hardware, media, account, and publicatio
 
 ## 2. Run unavoidable physical gates
 
-- [ ] Inventory exact hardware, revisions, order accessories, quantities, and markings in `HARDWARE_RESULTS.md`.
-- [ ] Follow `user_checklists/WINDOWS_FLASHING.md`: UNO Q Blink baseline, App Lab CueLoop Run, XIAO USB flash, serial/NVS setup, deterministic `TEST ON` transport.
+- [ ] Inventory exact hardware, revisions, order accessories, quantities, and markings under W-000 in root `HARDWARE_TESTS.md`.
+- [ ] Execute W-100/W-200 in `HARDWARE_TESTS.md`: UNO Q Blink baseline, App Lab CueLoop Run, XIAO USB flash, serial/NVS setup, deterministic `TEST ON` transport.
 - [ ] Follow `user_checklists/HARDWARE_BRINGUP.md` before any battery connection: polarity, continuity, inspection, insulation, strain relief, staged USB then battery power.
-- [ ] Run the predeclared `user_checklists/PHYSICAL_VALIDATION.md` matrix and preserve failures, conditions, units, sample counts, and evidence paths.
+- [ ] Run H-000 through H-400 in `HARDWARE_TESTS.md` (`user_checklists/PHYSICAL_VALIDATION.md` is the compact matrix) and preserve failures, conditions, units, sample counts, and evidence paths.
 - [ ] Disable/drop any class that lacks adequate held-out performance; rebuild/retest if policy or mapping changes.
 - [ ] Complete a 30-minute soak and at least one pod/Bridge/app restart-recovery trial.
 - [ ] Verify the exact finished build matches the published BOM, wiring, schematic, and safety text.

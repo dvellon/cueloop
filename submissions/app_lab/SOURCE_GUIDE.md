@@ -76,9 +76,11 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 - `test_app_lab_package.py`: mandatory structure, pinned dependencies, source/model/archive integrity.
 - `test_hardware_docs.py`: safe net connectivity and valid accessible schematic source.
 - `test_cad_application.py`: preliminary Fusion parameter/envelope sanity and Autodesk answer/evidence gates.
+- `test_simulated_transport_benchmark.py`: deterministic clean/moderate/severe fault profiles and software-only claim boundary.
+- `test_project_completion_docs.py`: canonical hardware workflow, V2 final structure, and experiment registry contract.
 - `test_submission_release.py`: required publication assets, video evidence labels, and deterministic sanitized source release.
 
-Compilation results are not tests of attached hardware. Physical results enter only through `HARDWARE_RESULTS.md` and the predeclared matrix.
+Compilation results are not tests of attached hardware. Physical observations enter through root `HARDWARE_TESTS.md`; only reviewed summaries enter `HARDWARE_RESULTS.md` and submission copy.
 
 ## Safe contribution rules
 

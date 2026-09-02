@@ -1,6 +1,6 @@
 # CueLoop physical validation matrix
 
-Run only completed rows; leave the rest pending. Every result must identify Git commit, firmware/App Lab versions, board revisions, date/timezone, operator, power mode, network conditions, evidence tier, units, and artifact path. Targets are predeclared goals, not results.
+Run only completed rows; leave the rest pending. Root `HARDWARE_TESTS.md` is the authoritative complete method and execution log; this file is the compact matrix. Every result must identify Git commit, firmware/App Lab versions, board revisions, date/timezone, operator, power mode, network conditions, evidence tier, units, and artifact path. Targets are predeclared goals, not results.
 
 ## Gate 1 — deterministic bring-up
 
@@ -46,7 +46,7 @@ Use owned or permissively licensed PCM16 mono WAV files and a complete ignored m
 4. Retain a class for the polished demo only if held-out precision ≥0.80 and recall ≥0.75 **or** clearly disclose that the target was missed and narrow the claim/demo.
 5. The quiet/background target is fewer than 1 false alert/hour on the explicitly defined mix. Never extrapolate beyond it.
 
-The checked-in evaluation framework scores independent fixed windows. For a competition-quality event-level claim, also annotate event intervals and document the merge/tolerance rule; until that extension exists, call results “clip/window-level,” not event-detection accuracy.
+The checked-in evaluator accepts one onset/end interval per labeled class and reports onset-to-first-temporally-qualifying-window latency plus explicit temporal-versus-single-window metrics. This remains an audio-file decision metric, not full CuePod-to-physical-cue latency; use synchronized H-302 measurement for the latter.
 
 ## Gate 4 — latency and resilience
 

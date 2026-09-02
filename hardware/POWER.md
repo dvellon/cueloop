@@ -66,4 +66,4 @@ Never place an ammeter directly across battery positive and negative; that is a 
 
 ## Required result fields
 
-Record average/peak method, meter/tool identity, cell voltage, firmware mode, Wi-Fi RSSI, duration, temperature observation, shutdown behavior, and evidence tier in `HARDWARE_RESULTS.md`. Use the physical validation checklist for pass/fail thresholds.
+Record average/peak method, meter/tool identity, cell voltage, firmware mode, Wi-Fi RSSI, duration, temperature observation, shutdown behavior, and evidence tier under H-307 through H-310 in root `HARDWARE_TESTS.md`; copy reviewed summaries to `HARDWARE_RESULTS.md`.

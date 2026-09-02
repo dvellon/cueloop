@@ -40,7 +40,13 @@
 - Added a deterministic committed-tree source-release packager with a per-file manifest, exact commit identity, excluded internal brief, secret/audio/model/database guards, and SHA-256 sidecar.
 - Added automated preliminary Fusion envelope/parameter checks and Autodesk five-answer/evidence-gate checks.
 - Added one deadline-ordered operator sheet covering the Autodesk application, hardware bring-up, measurement/media, and App Lab submission.
-- Expanded the automated suite to 49 passing tests and retained zero Pyright errors.
+- Consolidated all Windows flashing, safety, physical validation, expected observations, and append-only execution records in root `HARDWARE_TESTS.md`, while keeping `HARDWARE_RESULTS.md` as the reviewed publication boundary.
+- Extended real-audio evaluation with per-class confusion matrices/support, environment/distance/door/background slices, interval-based audio-to-decision latency, and temporal-versus-single-window comparisons.
+- Added and ran a 60-trial simulated transport benchmark across clean, 5% loss/moderate jitter, and 20% loss/severe jitter profiles; its results remain explicitly software-only.
+- Added the predeclared experiment registry and complete Autodesk December workspace for V2 hardware, interaction, CAD, manufacturing, evidence, article, and submission planning.
+- Added a requirement-by-requirement completion audit and automated checks for the authoritative hardware record, experiment contract, and Autodesk V2 structure.
+- Reverified Arduino CLI/cores/board definitions and reproduced all three firmware/profile builds and binary hashes.
+- Expanded the automated suite to 57 passing tests and retained zero Pyright errors.
 
 ## In progress
 
@@ -58,4 +64,4 @@ Inventory, Fusion `.f3d` export/application submission, App Lab/firmware bring-u
 
 ## Physical blockers
 
-Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, Fusion `.f3d` export, enclosure fit, photography, and final real-device video require user-accessible hardware or interactive desktop software. Exact checklists will be issued only after all independent digital work for the relevant checkpoint is complete.
+Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, Fusion `.f3d` export, enclosure fit, photography, and final real-device video require user-accessible hardware or interactive desktop software. The complete methods, safe stops, expected observations, and result blocks are already recorded in `HARDWARE_TESTS.md`.

@@ -59,6 +59,7 @@ class HardwareDocumentationTests(unittest.TestCase):
                 "hardware/BOM.md",
                 "hardware/WIRING.md",
                 "hardware/ASSEMBLY.md",
+                "HARDWARE_TESTS.md",
                 "user_checklists/HARDWARE_BRINGUP.md",
             )
         ).lower()

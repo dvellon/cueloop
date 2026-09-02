@@ -21,13 +21,13 @@ This plan is deadline-driven. A task is complete only when its artifact exists, 
 6. Implement XIAO microphone/Wi-Fi firmware with sequence/timestamp packets, discovery/configuration, reconnect, battery telemetry capability, test tone, and diagnostic counters.
 7. Implement UNO Q MCU cue ownership and compact Bridge RPC commands; package the Linux and sketch components as an official App Lab App.
 8. Create BOMs, real reproducible schematics, wiring/power diagrams, assembly order, troubleshooting, and safe bring-up checklists.
-9. Validate on hardware when available and label every number by evidence tier.
+9. Validate on hardware when available using root `HARDWARE_TESTS.md`; label every number by evidence tier and publish only reviewed summaries from `HARDWARE_RESULTS.md`.
 10. Complete Hackster copy, build guide, source guide, privacy/limitations, demo storyboards, narration, shot list, on-screen text, and submission checklist.
 11. Run an adversarial rubric review, verify a clean clone, archive a release candidate, and submit before the official deadline.
 
 ## Autodesk V2: protected development path
 
-After the September application, preserve V1 stability while evolving CueLoop Bridge into a portable product: dockable CuePod, clip/stand/lanyard receiver, haptic/visual language, charging and battery architecture, acoustic path, serviceable DFM enclosure, Fusion Electronics design, optional carrier PCB, PCBWay process, multi-pod interactions, and Autodesk-workflow evaluation. Shared and V2-only work are tracked explicitly in `submissions/DIFFERENTIATION.md`.
+After the September application, preserve V1 stability while evolving CueLoop Bridge into a portable product: dockable CuePod, clip/stand/lanyard receiver, haptic/visual language, charging and battery architecture, acoustic path, serviceable DFM enclosure, Fusion Electronics design, optional carrier PCB, PCBWay process, multi-pod interactions, and Autodesk-workflow evaluation. Shared and V2-only work are tracked explicitly in `submissions/DIFFERENTIATION.md`; the evidence-gated execution/manufacturing/final-story workspace is under `submissions/autodesk_final/`.
 
 ## Completion gates
 
