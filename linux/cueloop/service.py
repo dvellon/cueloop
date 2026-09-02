@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from pathlib import Path
 import signal
 import socket
 from threading import Event, Thread
@@ -16,6 +17,7 @@ from .constants import (
 )
 from .pipeline import CueLoopPipeline
 from .storage import EventStore
+from .yamnet import DEFAULT_YAMNET_SHA256, ModelConfigurationError, YamnetClassifier
 
 
 class UDPReceiver:
@@ -64,13 +66,41 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--http-port", type=int, default=DEFAULT_HTTP_PORT)
     parser.add_argument("--db", default="data/cueloop.sqlite3")
     parser.add_argument("--location", default="Simulated workshop")
+    parser.add_argument(
+        "--classifier",
+        choices=("synthetic", "yamnet"),
+        default="synthetic",
+        help="synthetic is the safe default and never represents real audio quality",
+    )
+    parser.add_argument("--model", type=Path, help="pinned YAMNet .tflite artifact")
+    parser.add_argument(
+        "--mapping", type=Path, default=Path("models/class_mapping.json")
+    )
+    parser.add_argument("--model-sha256", default=DEFAULT_YAMNET_SHA256)
+    parser.add_argument("--inference-threads", type=int, default=2)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = build_parser().parse_args(argv)
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    classifier = None
+    if args.classifier == "yamnet":
+        if args.model is None:
+            parser.error("--model is required with --classifier yamnet")
+        try:
+            classifier = YamnetClassifier(
+                args.model,
+                args.mapping,
+                expected_sha256=args.model_sha256,
+                num_threads=args.inference_threads,
+            )
+        except ModelConfigurationError as error:
+            parser.error(str(error))
     store = EventStore(args.db)
-    pipeline = CueLoopPipeline(store=store, location=args.location)
+    pipeline = CueLoopPipeline(
+        classifier=classifier, store=store, location=args.location
+    )
     receiver = UDPReceiver(args.udp_host, args.udp_port, pipeline)
     server = CueLoopHTTPServer((args.http_host, args.http_port), pipeline)
 
@@ -88,6 +118,7 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"CueLoop UDP receiver: {args.udp_host}:{args.udp_port}\n"
         f"CueLoop dashboard: http://{args.http_host}:{args.http_port}\n"
+        f"Classifier: {args.classifier}\n"
         "Privacy: raw audio is memory-only and not retained.",
         flush=True,
     )

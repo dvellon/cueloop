@@ -110,7 +110,12 @@ class CueLoopHandler(BaseHTTPRequestHandler):
         try:
             payload = self._read_json()
             if parsed.path == "/api/mute":
-                seconds = float(payload.get("seconds", 0))
+                raw_seconds = payload.get("seconds", 0)
+                if isinstance(raw_seconds, bool) or not isinstance(
+                    raw_seconds, (int, float, str)
+                ):
+                    raise ValueError("seconds must be numeric")
+                seconds = float(raw_seconds)
                 self.server.pipeline.engine.mute(seconds)
                 self._json(
                     HTTPStatus.OK,

@@ -1,0 +1,3 @@
+# Optional development/UNO Q inference stack. The core simulator has no third-party deps.
+ai-edge-litert==2.2.0
+

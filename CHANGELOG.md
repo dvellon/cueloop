@@ -13,3 +13,6 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Preliminary parametric Fusion generator, dimension manifest/validation checklist, and provenance-labeled cover concept.
 - CueLoop Protocol v1, bounded receiver/windowing, simulated CuePod with fault injection, temporal confirmation engine, metadata-only storage, local REST API, accessible dashboard, and one-command demo.
 - Automated tests for protocol integrity, loss/reordering/restart, buffer bounds, simulated signatures, uncertainty policy, privacy, API controls, and end-to-end event generation.
+- Checksum-pinned optional YAMNet LiteRT v1 adapter with explicit service selection, exact class mappings, a size/digest-verifying fetcher, and pinned inference dependencies.
+- Provenance-gated evaluation manifests and dataset-scoped precision, recall, false-trigger, missed-event, calibration, and latency reporting.
+- Honestly bounded development-computer latency baseline on a synthetic workload; no accuracy or UNO Q claim is attached.

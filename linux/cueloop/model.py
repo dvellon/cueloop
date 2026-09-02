@@ -75,7 +75,7 @@ class SignatureClassifier:
             for label, frequency in self.TARGET_FREQUENCIES.items()
         }
         total = sum(amplitudes.values()) + 1e-9
-        dominant = max(amplitudes, key=amplitudes.get)
+        dominant = max(amplitudes, key=lambda label: amplitudes[label])
         dominant_amplitude = amplitudes[dominant]
         dominance = dominant_amplitude / total
 
@@ -98,4 +98,3 @@ class SignatureClassifier:
             model_name="synthetic-signature-v1",
             evidence_tier="simulated",
         )
-

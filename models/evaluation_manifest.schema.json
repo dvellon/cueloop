@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cueloop.local/schemas/evaluation-manifest-v1.json",
+  "title": "CueLoop evaluation dataset manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset_id", "records"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "dataset_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "description": {"type": "string", "maxLength": 1000},
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "path", "labels", "split", "source", "license",
+          "consent_confirmed", "sha256"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 128},
+          "path": {"type": "string", "minLength": 1},
+          "labels": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": ["door_knock", "alarm_beep", "dog_bark", "attention_call"]
+            }
+          },
+          "split": {"enum": ["calibration", "validation", "test"]},
+          "source": {"type": "string", "minLength": 1, "maxLength": 500},
+          "license": {"type": "string", "minLength": 1, "maxLength": 100},
+          "consent_confirmed": {"const": true},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "environment": {"type": "string", "maxLength": 200},
+          "distance_m": {"type": "number", "minimum": 0},
+          "closed_door": {"type": "boolean"},
+          "notes": {"type": "string", "maxLength": 500}
+        }
+      }
+    }
+  }
+}
+

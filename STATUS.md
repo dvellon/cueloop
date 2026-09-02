@@ -1,7 +1,7 @@
 # Project status
 
-**Updated:** 2026-09-01 EDT  
-**Goal:** active  
+**Updated:** 2026-09-02 EDT
+**Goal:** active
 **Phase:** simulator, shared protocol, and UNO Q Linux pipeline
 
 ## Deadline clock
@@ -26,21 +26,23 @@
 - Implemented the simulated CuePod, WAV replay, loss/jitter/latency/reorder/restart injection, bounded receiver/windowing, simulation classifier, temporal confirmation engine, metadata-only SQLite store, local API, and accessible dashboard.
 - Added a one-command local demo and 21 passing protocol, buffering, model, engine, privacy, pipeline, API, and simulator tests.
 - Verified Arduino CLI 1.5.1, ESP32 core 3.3.11, UNO Q Zephyr core 0.90.0, and both target FQBNs.
+- Selected and checksum-pinned the official YAMNet LiteRT v1 baseline; added an optional validated adapter, exact AudioSet class mapping, safe fetcher, locked inference dependencies, and provenance-gated evaluation tooling.
+- Measured a clearly bounded development-computer/synthetic-workload inference baseline: 100 runs, 1.834 ms mean, 1.919 ms p95, 1.997 ms maximum. No accuracy or target-hardware claim is attached.
 
 ## In progress
 
-- Real model selection/evaluation tooling and development-computer benchmarks.
+- XIAO and UNO Q firmware plus App Lab packaging.
 
 ## Not yet claimed
 
 - No firmware has been compiled for either target.
-- No inference, end-to-end, packet-loss, latency, distance, closed-door, or battery measurement has been made.
+- No licensed real-audio accuracy, UNO Q inference, end-to-end, physical packet-loss/latency, distance, closed-door, or battery measurement has been made.
 - No physical board, battery, microphone, physical output, App Lab run, or Fusion-generated `.f3d` has been observed.
 - No simulated result may be described as physical validation.
 
 ## Next checkpoint
 
-Reproducible model manifests, preprocessing/conversion/evaluation tools, honest development-computer benchmark report, and selected real-model integration committed and pushed.
+Both firmware targets compile from a clean Arduino CLI invocation, and the official App Lab folder launches as far as can be validated without a board.
 
 ## Physical blockers
 

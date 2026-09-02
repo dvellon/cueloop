@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": 1,
+  "model_id": "google-yamnet-classification-tflite-v1",
+  "display_name": "YAMNet classification LiteRT v1",
+  "artifact_filename": "yamnet-classification-tflite-v1.tflite",
+  "download_url": "https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite",
+  "source_page": "https://www.kaggle.com/models/google/yamnet/tfLite/classification-tflite",
+  "upstream_source": "https://github.com/tensorflow/models/tree/master/research/audioset/yamnet",
+  "license": "Apache-2.0",
+  "expected_bytes": 4126810,
+  "sha256": "10c95ea3eb9a7bb4cb8bddf6feb023250381008177ac162ce169694d05c317de",
+  "retrieved_date_utc": "2026-09-02",
+  "input": {
+    "tensor_name": "waveform_binary",
+    "dtype": "float32",
+    "shape": [15600],
+    "sample_rate_hz": 16000,
+    "channels": 1,
+    "range": [-1.0, 1.0],
+    "duration_seconds": 0.975
+  },
+  "output": {
+    "tensor_name": "tower0/network/layer32/final_output",
+    "dtype": "float32",
+    "shape": [1, 521],
+    "semantics": "independent AudioSet class scores"
+  },
+  "runtime": {
+    "package": "ai-edge-litert",
+    "tested_version": "2.2.0"
+  },
+  "limitations": [
+    "Broad AudioSet baseline, not a CueLoop-specific calibrated model.",
+    "Training corpus is AudioSet/YouTube-derived; demographic and environment performance may vary.",
+    "Target class aggregation and alert thresholds require licensed real-audio evaluation.",
+    "A model score is not a certified alarm or safety guarantee."
+  ]
+}

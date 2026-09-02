@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "dataset_id": "replace-with-owned-or-licensed-evaluation-set",
+  "description": "Template only. Audio stays in ignored data/private/evaluation/.",
+  "records": [
+    {
+      "id": "example-door-knock-001",
+      "path": "../data/private/evaluation/example-door-knock-001.wav",
+      "labels": ["door_knock"],
+      "split": "test",
+      "source": "Replace with creator/source and acquisition method",
+      "license": "Replace with exact reusable license or self-recorded ownership statement",
+      "consent_confirmed": true,
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "environment": "Replace with room/noise description",
+      "distance_m": 1.0,
+      "closed_door": false,
+      "notes": "Template record; it will fail checksum validation until replaced."
+    }
+  ]
+}
+

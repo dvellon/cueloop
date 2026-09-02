@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "model_id": "google-yamnet-classification-tflite-v1",
+  "label_count": 521,
+  "aggregation": "max",
+  "target_groups": {
+    "door_knock": [
+      {"index": 349, "mid": "/m/03wwcy", "label": "Doorbell"},
+      {"index": 350, "mid": "/m/07r67yg", "label": "Ding-dong"},
+      {"index": 353, "mid": "/m/07r4wb8", "label": "Knock"},
+      {"index": 454, "mid": "/m/07qnq_y", "label": "Thump, thud"},
+      {"index": 455, "mid": "/m/07rrh0c", "label": "Thunk"}
+    ],
+    "alarm_beep": [
+      {"index": 382, "mid": "/m/07pp_mv", "label": "Alarm"},
+      {"index": 389, "mid": "/m/046dlr", "label": "Alarm clock"},
+      {"index": 390, "mid": "/m/03kmc9", "label": "Siren"},
+      {"index": 392, "mid": "/m/030rvx", "label": "Buzzer"},
+      {"index": 393, "mid": "/m/01y3hg", "label": "Smoke detector, smoke alarm"},
+      {"index": 394, "mid": "/m/0c3f7m", "label": "Fire alarm"},
+      {"index": 475, "mid": "/m/02fs_r", "label": "Beep, bleep"}
+    ],
+    "dog_bark": [
+      {"index": 69, "mid": "/m/0bt9lr", "label": "Dog"},
+      {"index": 70, "mid": "/m/05tny_", "label": "Bark"},
+      {"index": 71, "mid": "/m/07r_k2n", "label": "Yip"},
+      {"index": 73, "mid": "/m/07rc7d9", "label": "Bow-wow"}
+    ],
+    "attention_call": [
+      {"index": 6, "mid": "/m/07p6fty", "label": "Shout"},
+      {"index": 7, "mid": "/m/07q4ntr", "label": "Bellow"},
+      {"index": 8, "mid": "/m/07rwj3x", "label": "Whoop"},
+      {"index": 9, "mid": "/m/07sr1lc", "label": "Yell"},
+      {"index": 11, "mid": "/m/03qc9zr", "label": "Screaming"}
+    ]
+  },
+  "background_group": [
+    {"index": 494, "label": "Silence"},
+    {"index": 507, "label": "Noise"},
+    {"index": 508, "label": "Environmental noise"},
+    {"index": 514, "label": "White noise"},
+    {"index": 515, "label": "Pink noise"}
+  ],
+  "notes": [
+    "Speech is deliberately excluded from attention_call to reduce broad speech-triggered alerts.",
+    "Groups are hypotheses, not validated performance claims; tune only against provenance-complete evaluation audio.",
+    "The temporal engine still requires at least two qualifying windows before an alert."
+  ]
+}
+
