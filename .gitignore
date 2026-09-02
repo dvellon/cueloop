@@ -1,0 +1,100 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+credentials.json
+secrets.json
+wifi_secrets.h
+**/secrets.h
+config.local.*
+*.local.yaml
+*.local.yml
+
+# Private recordings and downloaded datasets (provenance manifests belong in Git)
+data/raw/
+data/private/
+datasets/
+recordings/
+captures/
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.aac
+!tests/fixtures/**/*.wav
+!tests/fixtures/**/*.flac
+
+# Model binaries and generated evaluation artifacts
+models/downloads/
+models/artifacts/
+*.tflite
+*.onnx
+*.pb
+*.pt
+*.pth
+benchmarks/results/
+experiments/results/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# JavaScript and dashboard builds
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+
+# Arduino, PlatformIO, and embedded builds
+.pio/
+.arduinoIDE/
+firmware/**/build/
+firmware/**/*.bin
+firmware/**/*.elf
+firmware/**/*.hex
+firmware/**/*.uf2
+compile_commands.json
+
+# Native build systems
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+
+# CAD and generated media
+cad/generated/
+cad/exports/
+assets/generated/
+*.f3d.lock
+*.autosave
+
+# Logs, temporary files, and local databases
+*.log
+*.tmp
+*.swp
+*.swo
+*.sqlite
+*.sqlite3
+tmp/
+.cache/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.example.json
