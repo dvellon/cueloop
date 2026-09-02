@@ -2,7 +2,7 @@
 
 **Updated:** 2026-09-02 EDT
 **Goal:** active
-**Phase:** simulator, shared protocol, and UNO Q Linux pipeline
+**Phase:** hardware documentation and submission package after compiled App Lab integration
 
 ## Deadline clock
 
@@ -28,21 +28,25 @@
 - Verified Arduino CLI 1.5.1, ESP32 core 3.3.11, UNO Q Zephyr core 0.90.0, and both target FQBNs.
 - Selected and checksum-pinned the official YAMNet LiteRT v1 baseline; added an optional validated adapter, exact AudioSet class mapping, safe fetcher, locked inference dependencies, and provenance-gated evaluation tooling.
 - Measured a clearly bounded development-computer/synthetic-workload inference baseline: 100 runs, 1.834 ms mean, 1.919 ms p95, 1.997 ms maximum. No accuracy or target-hardware claim is attached.
+- Implemented the XIAO CuePod PDM/Wi-Fi firmware with NVS serial configuration, strict Protocol v1 packets, receiver heartbeats, bounded reconnect, test tone, and diagnostics.
+- Implemented the UNO Q STM32 cue controller with validated Bridge RPC inputs, deterministic onboard RGB patterns, heartbeat health, optional acknowledgement button/actuators, and restart-safe Linux resynchronization.
+- Added the official self-contained App Lab folder, checksum-verified sync tool, fail-closed YAMNet startup, LAN dashboard/receiver, Bridge adapter, metadata persistence, pinned dependencies, and package drift tests.
+- Compiled XIAO firmware at 26% flash/14% RAM and both the canonical and isolated App Lab UNO Q sketches at 11% flash/12% RAM. These are build-machine results, not physical validation.
+- Expanded the automated suite to 40 passing tests and retained zero Pyright errors.
 
 ## In progress
 
-- XIAO and UNO Q firmware plus App Lab packaging.
+- Exact BOM, wiring/power documentation, safe bring-up and Windows flashing instructions.
 
 ## Not yet claimed
 
-- No firmware has been compiled for either target.
 - No licensed real-audio accuracy, UNO Q inference, end-to-end, physical packet-loss/latency, distance, closed-door, or battery measurement has been made.
 - No physical board, battery, microphone, physical output, App Lab run, or Fusion-generated `.f3d` has been observed.
 - No simulated result may be described as physical validation.
 
 ## Next checkpoint
 
-Both firmware targets compile from a clean Arduino CLI invocation, and the official App Lab folder launches as far as can be validated without a board.
+The reproducible hardware/documentation package and Windows bring-up checklists are complete, with every physical observation field left explicitly pending.
 
 ## Physical blockers
 

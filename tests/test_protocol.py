@@ -4,12 +4,16 @@ import unittest
 
 from cueloop.constants import SAMPLES_PER_FRAME
 from cueloop.protocol import (
+    ACK,
     AudioPacket,
     HEADER,
     PacketError,
     PacketFlags,
+    ReceiverAck,
     decode_audio,
+    decode_receiver_ack,
     encode_audio,
+    encode_receiver_ack,
 )
 
 
@@ -52,7 +56,18 @@ class ProtocolTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "int16"):
             AudioPacket(1, 1, 1, 1, (32768,))
 
+    def test_receiver_ack_round_trip(self) -> None:
+        ack = ReceiverAck(0xC0E10001, 0xFFFFFFFF, 123_456)
+        encoded = encode_receiver_ack(ack)
+        self.assertEqual(len(encoded), ACK.size)
+        self.assertEqual(decode_receiver_ack(encoded), ack)
+
+    def test_receiver_ack_corruption_rejected(self) -> None:
+        encoded = bytearray(encode_receiver_ack(ReceiverAck(1, 2, 3)))
+        encoded[12] ^= 0x40
+        with self.assertRaisesRegex(PacketError, "ACK CRC"):
+            decode_receiver_ack(bytes(encoded))
+
 
 if __name__ == "__main__":
     unittest.main()
-

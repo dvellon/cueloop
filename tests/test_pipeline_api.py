@@ -105,6 +105,20 @@ class PipelineApiTests(unittest.TestCase):
                 result = json.load(response)
             self.assertFalse(result["policy"]["enabled"])
             request = Request(
+                f"{base}/api/mute",
+                data=json.dumps({"seconds": 30}).encode(),
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with urlopen(request, timeout=2) as response:
+                result = json.load(response)
+            self.assertEqual(result["state"], "muted")
+            cue_output = self.pipeline.snapshot()["cue_output"]
+            self.assertEqual(
+                cue_output["last_command"],
+                {"command": "mute", "muted": True},
+            )
+            request = Request(
                 f"{base}/api/events/{event_id}/acknowledge",
                 data=b"{}",
                 headers={"Content-Type": "application/json"},

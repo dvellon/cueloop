@@ -14,6 +14,7 @@ wifi_secrets.h
 config.local.*
 *.local.yaml
 *.local.yml
+*.local.h
 
 # Private recordings and downloaded datasets (provenance manifests belong in Git)
 data/raw/
@@ -57,6 +58,8 @@ venv/
 node_modules/
 dist/
 build/
+packages/
+app_lab/exports/
 .vite/
 coverage/
 

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>CueLoop — Local awareness</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to current cue</a>
+    <header class="topbar">
+      <div class="brand" aria-label="CueLoop">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>CueLoop</span>
+      </div>
+      <div class="status-cluster" aria-live="polite">
+        <span id="mode-badge" class="badge simulated">Simulated input</span>
+        <span id="connection-badge" class="badge offline">Pod offline</span>
+        <span class="badge private">● Local · no recordings</span>
+      </div>
+    </header>
+
+    <main id="main" class="shell">
+      <section class="cue-panel" aria-labelledby="cue-title">
+        <div class="eyebrow">
+          <span id="location">Simulated workshop</span>
+          <span id="detected-time">Waiting for evidence</span>
+        </div>
+        <div id="cue-orbit" class="cue-orbit idle" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <b id="cue-symbol">···</b>
+        </div>
+        <p id="decision-state" class="decision">Listening locally</p>
+        <h1 id="cue-title">No confirmed event</h1>
+        <p id="cue-detail" class="cue-detail">Ambiguous sounds stay in a confirmation window instead of interrupting immediately.</p>
+        <div class="confidence-row">
+          <span>Evidence confidence</span>
+          <strong id="confidence-text">0%</strong>
+          <div class="meter" role="meter" aria-label="Event confidence" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span id="confidence-meter"></span>
+          </div>
+        </div>
+        <div class="controls" aria-label="Cue controls">
+          <button id="acknowledge" class="primary" disabled>Acknowledge</button>
+          <button id="dismiss" disabled>Dismiss</button>
+          <button id="mute">Mute 5 minutes</button>
+        </div>
+        <p class="limitation">Awareness aid only—not a certified alarm, medical device, or machine interlock.</p>
+      </section>
+
+      <aside class="side-column">
+        <section class="card health" aria-labelledby="health-title">
+          <div class="card-heading">
+            <div><p class="kicker">Live link</p><h2 id="health-title">CuePod health</h2></div>
+            <span id="health-dot" class="health-dot"></span>
+          </div>
+          <dl class="metric-grid">
+            <div><dt>Packet loss</dt><dd id="packet-loss">0.0%</dd></div>
+            <div><dt>Jitter</dt><dd id="jitter">0.0 ms</dd></div>
+            <div><dt>Inference</dt><dd id="inference">—</dd></div>
+            <div><dt>Battery</dt><dd id="battery">—</dd></div>
+          </dl>
+          <details>
+            <summary>Diagnostics</summary>
+            <dl class="diagnostics">
+              <div><dt>Pod ID</dt><dd id="pod-id">—</dd></div>
+              <div><dt>Frames received</dt><dd id="frames-received">0</dd></div>
+              <div><dt>Missing</dt><dd id="frames-missing">0</dd></div>
+              <div><dt>RSSI</dt><dd id="rssi">—</dd></div>
+              <div><dt>Model</dt><dd id="model">not run</dd></div>
+            </dl>
+          </details>
+        </section>
+
+        <section class="card" aria-labelledby="classes-title">
+          <div class="card-heading"><div><p class="kicker">Interrupt policy</p><h2 id="classes-title">Monitored events</h2></div></div>
+          <div id="class-controls" class="class-controls" aria-live="polite"></div>
+        </section>
+      </aside>
+
+      <section class="history-card" aria-labelledby="history-title">
+        <div class="history-heading">
+          <div><p class="kicker">Metadata only</p><h2 id="history-title">Recent cues</h2></div>
+          <button id="clear-history" class="quiet">Clear history</button>
+        </div>
+        <div id="history" class="history-list"><p class="empty">No confirmed events yet.</p></div>
+      </section>
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+name: CueLoop
+description: Local-first acoustic event awareness with a wireless CuePod and uncertainty-aware edge AI.
+icon: 🔔
+ports:
+  - 8080

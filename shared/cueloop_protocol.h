@@ -9,6 +9,7 @@ namespace cueloop {
 constexpr uint8_t kMagic[4] = {'C', 'L', 'P', '1'};
 constexpr uint8_t kVersion = 1;
 constexpr uint8_t kAudioPcm16 = 1;
+constexpr uint8_t kReceiverAck = 2;
 constexpr uint16_t kFlagSimulated = 1u << 0;
 constexpr uint16_t kFlagTestTone = 1u << 1;
 constexpr uint16_t kFlagUsbPowered = 1u << 2;
@@ -19,4 +20,5 @@ constexpr uint16_t kSamplesPerFrame = 320;
 constexpr uint16_t kHeaderBytes = 44;
 constexpr uint16_t kPayloadBytes = kSamplesPerFrame * sizeof(int16_t);
 constexpr uint16_t kDatagramBytes = kHeaderBytes + kPayloadBytes;
+constexpr uint16_t kAckBytes = 24;
 }  // namespace cueloop

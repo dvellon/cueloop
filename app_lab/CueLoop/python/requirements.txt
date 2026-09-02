@@ -1,0 +1,2 @@
+# Arduino App Lab provides arduino-app-utils and the Router Bridge runtime.
+ai-edge-litert==2.2.0

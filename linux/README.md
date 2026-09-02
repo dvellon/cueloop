@@ -4,4 +4,4 @@
 
 Run from the repository root with `./scripts/demo.sh`. The default classifier recognizes only synthetic test signatures and marks every result `simulated`; it is not evidence of real sound accuracy. A checksum-pinned YAMNet LiteRT adapter is available only through the explicit `--classifier yamnet --model ... --mapping ...` flags and the optional dependencies documented under `models/`.
 
-The service has no cloud runtime dependency and no audio-file writer. V1 binds the dashboard to localhost for desktop development. App Lab deployment will explicitly bind the declared LAN port and document the trusted-LAN limitation.
+The service has no cloud runtime dependency and no audio-file writer. V1 binds the dashboard to localhost for desktop development. The completed adapter under `app_lab/CueLoop` binds declared LAN port 8080, receives CuePod UDP 57321, sends compact Bridge calls to the STM32, records MCU health notifications, and resynchronizes mute/current-cue state after an observed MCU restart. Its trusted-LAN limitation is explicit.

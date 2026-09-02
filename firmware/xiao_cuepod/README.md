@@ -1,0 +1,50 @@
+# XIAO ESP32S3 Sense CuePod firmware
+
+This sketch captures the Sense expansion board's PDM microphone as 16 kHz mono PCM16, emits one checksummed 684-byte CueLoop UDP packet every 20 ms, validates receiver heartbeats, reconnects Wi-Fi with bounded backoff, and keeps diagnostic counters. It contains no filesystem or raw-audio recording path.
+
+## Pinned build target
+
+- Arduino CLI 1.5.1
+- `esp32:esp32` 3.3.11
+- FQBN `esp32:esp32:XIAO_ESP32S3`
+- Core libraries only: `ESP_I2S`, `WiFi`, `NetworkUDP`, and `Preferences`
+- Default board options shown by Arduino CLI; no PSRAM dependency
+
+Build from the repository root:
+
+```bash
+TMPDIR=/home/cd/.tmp-codex arduino-cli compile \
+  --fqbn esp32:esp32:XIAO_ESP32S3 \
+  --build-path firmware/xiao_cuepod/build/work \
+  --output-dir firmware/xiao_cuepod/build/artifacts \
+  firmware/xiao_cuepod
+```
+
+The `build/` directory and binary products are ignored. No extra Arduino library install is required.
+
+## Configure without source credentials
+
+Flash over USB, open a 115200-baud serial terminal with line ending LF, and send tab-separated commands. Passwords are written directly to ESP32 NVS and never echoed. They do not enter this repository.
+
+```text
+SET_WIFI<TAB>your-ssid<TAB>your-password
+SET_RECEIVER<TAB>192.168.1.50<TAB>57321
+SET_POD_ID<TAB>0xC0E10001
+POWER<TAB>USB
+TEST<TAB>ON
+STATUS
+```
+
+`<TAB>` means an actual tab character. `HELP` prints the command list. `STREAM OFF` pauses transmission without recording anything; `ERASE` removes all saved CuePod configuration and restarts. Switch `TEST OFF` before microphone evaluation. Set `POWER BATTERY` after disconnecting USB so packet metadata remains honest; the installed board variant cannot automatically distinguish USB from battery power.
+
+The pod binds local UDP port 57322. The receiver replies from port 57321 once per second. Five seconds without a valid matching CRC heartbeat sets `reachable=no`, increments `receiver_timeouts`, and marks the next packets as a restarted stream. This is reachability diagnostics, not authentication or reliable delivery.
+
+## Battery telemetry boundary
+
+The installed `XIAO_ESP32S3` variant does not expose a verified battery ADC pin/divider for this exact hardware revision, so the default firmware sends battery voltage `0` with `BATTERY_VALID` clear. Do not manufacture a voltage from an unverified pin.
+
+If the physical board schematic and multimeter confirm a battery divider, create ignored `cuepod_hardware.local.h`, override the ADC pin and rational scale, then compare reported millivolts against the meter at multiple voltages before accepting telemetry. Never connect or solder a LiPo while powered; follow the project safety checklist.
+
+## Hardware test still required
+
+Compilation proves APIs and types only. The real board must confirm microphone waveform/non-clipping, pin orientation, Wi-Fi association, UDP heartbeat, receiver timeout/recovery, USB/battery metadata, and safe current/runtime. Record observations in `HARDWARE_RESULTS.md`; do not reinterpret test-tone behavior as acoustic-model accuracy.
