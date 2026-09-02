@@ -2,7 +2,7 @@
 
 **Updated:** 2026-09-02 EDT
 **Goal:** active
-**Phase:** App Lab submission article, demo/video, and release review
+**Phase:** App Lab release verification and physical handoff
 
 ## Deadline clock
 
@@ -36,11 +36,13 @@
 - Added Windows UNO Q App Lab/XIAO flashing instructions and predeclared physical test gates for transport, microphone, model quality, latency, recovery, battery, thermal, mechanical, accessibility, and video evidence.
 - Added integer RMS/peak/clipping diagnostics to CuePod firmware and recompiled it at 26% flash/14% RAM.
 - Added a deterministic, secret-resistant App Lab release packager; local v0.1.0 archive SHA-256 is `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83`.
-- Expanded the automated suite to 44 passing tests and retained zero Pyright errors.
+- Completed the App Lab title/metadata, full Hackster article, source guide, troubleshooting, three-minute/short video scripts, photo list, evidence table, media attribution, final checklist, and adversarial 30/20/15/15/20 rubric audit.
+- Added a deterministic committed-tree source-release packager with a per-file manifest, exact commit identity, excluded internal brief, secret/audio/model/database guards, and SHA-256 sidecar.
+- Expanded the automated suite to 47 passing tests and retained zero Pyright errors.
 
 ## In progress
 
-- Competition-ready Hackster article, video/narration package, source/build guide, troubleshooting, and final rubric review.
+- Clean committed-tree release archive generation, release-candidate audit, and concise physical/operator handoff.
 
 ## Not yet claimed
 
@@ -50,7 +52,7 @@
 
 ## Next checkpoint
 
-The complete App Lab Hackster/video package and rubric-mapped release candidate are ready, with only physical/account-controlled fields left pending.
+The exact-commit App Lab/source archives, final verification record, and operator action sheet are ready, leaving only physical and account-controlled evidence gates.
 
 ## Physical blockers
 

@@ -26,3 +26,6 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Complete minimum/optional/V2 BOM, machine-readable netlist, accessible SVG schematic, wiring/pin tables, power and bandwidth analysis, and battery-safe assembly guide.
 - Windows App Lab/XIAO deployment instructions and a predeclared physical validation matrix with evidence gates.
 - Deterministic App Lab ZIP packager that verifies model/source drift and rejects private/runtime artifacts.
+- Complete App Lab submission copy: metadata, full project article, source/reproduction map, troubleshooting, primary and short video scripts, photo plan, evidence table, attribution ledger, final checklist, and rubric review.
+- Deterministic exact-commit source ZIP packager with per-file checksums and guards against secrets, raw audio, downloaded models, databases, and build artifacts.
+- Automated release tests for required submission material, video disclosure/timeline, and repeatable sanitized source archives.
