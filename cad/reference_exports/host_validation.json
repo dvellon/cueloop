@@ -1,0 +1,73 @@
+{
+  "interference_check_count": 12,
+  "kind": "freecad_opencascade_reference",
+  "reopened_fcstd_solid_count": 12,
+  "reopened_solid_count": 12,
+  "reported_object_count": 12,
+  "schema_version": 1,
+  "source_validation": {
+    "boss_radial_web_mm": 2.375,
+    "declared_component_count": 14,
+    "dock_total_clearance_mm": {
+      "length": 1.0,
+      "width": 1.0
+    },
+    "floor_mm": 2.4,
+    "manufacturing_component_count": 6,
+    "numeric_parameter_count": 125,
+    "pod_battery_boss_clearance_mm": {
+      "LiPo--boss_1": 2.115072906367325,
+      "LiPo--boss_2": 2.115072906367325,
+      "LiPo--boss_3": 2.115072906367325,
+      "LiPo--boss_4": 2.115072906367325
+    },
+    "pod_inner_mm": {
+      "height": 26.6,
+      "length": 49.2,
+      "width": 41.2
+    },
+    "pod_vertical_clearance_mm": {
+      "battery_to_bridge": 0.5000000000000009,
+      "battery_to_xiao": 1.8999999999999995,
+      "bridge_to_xiao": 0.1999999999999993,
+      "microphone_to_lid": 0.1999999999999993,
+      "xiao_to_microphone": 0.3500000000000014
+    },
+    "receiver_envelope_boss_clearance_mm": {
+      "UNO_Q--boss_1": 11.117821063276352,
+      "UNO_Q--boss_2": 23.350376645162687,
+      "UNO_Q--boss_3": 20.631871516941345,
+      "UNO_Q--boss_4": 5.048369535853735,
+      "haptic_led_module--boss_1": 77.75677859203638,
+      "haptic_led_module--boss_2": 21.81999200639361,
+      "haptic_led_module--boss_3": 29.815148038438355,
+      "haptic_led_module--boss_4": 80.57350416450299,
+      "support_electronics--boss_1": 72.96429609731845,
+      "support_electronics--boss_2": 1.7999999999999998,
+      "support_electronics--boss_3": 49.8,
+      "support_electronics--boss_4": 89.45527507918801
+    },
+    "receiver_envelope_edge_clearance_mm": {
+      "UNO_Q": 9.759999999999991,
+      "haptic_led_module": 5.099999999999994,
+      "support_electronics": 0.09999999999999432
+    },
+    "receiver_envelope_pair_clearance_mm": {
+      "UNO_Q--haptic_led_module": 2.1500000000000057,
+      "UNO_Q--support_electronics": 1.1500000000000057,
+      "support_electronics--haptic_led_module": 6.0
+    },
+    "receiver_inner_mm": {
+      "height": 31.6,
+      "length": 107.2,
+      "width": 81.2
+    },
+    "schema_version": 1,
+    "status": "pass",
+    "uno_vertical_margin_mm": 9.600000000000001,
+    "wall_mm": 2.4,
+    "xiao_closed_height_margin_mm": 7.75
+  },
+  "status": "pass",
+  "verified_file_count": 17
+}

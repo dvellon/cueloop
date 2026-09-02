@@ -1,0 +1,99 @@
+{
+  "authoritative": false,
+  "boundary": "Simple boxes are placement envelopes only. They are not vendor CAD, original board geometry, physical-fit evidence, or manufacturing outputs.",
+  "design_contract_sha256": "dcab1b9ecff6829eac8c1faf17d430d70e67e971c3e405aa3572770d9198a276",
+  "design_parameter_sha256": "b1c78d30a5d00eb1e05ba5c9fed1c361fc389fd181266e74f26e5e9831fc2889",
+  "engine": "FreeCAD/OpenCascade",
+  "generator": "cad/reference/freecad_reference.py",
+  "generator_sha256": "c875d3d5ff7a3c9ee13dca54050e0aa720a70237aaa964970ce91b96499c198b",
+  "original_geometry": [
+    "CuePod_Microphone_Module",
+    "CuePod_Bottom",
+    "CuePod_Top",
+    "Receiver_Assembly",
+    "Receiver_Bottom",
+    "Receiver_Top",
+    "Receiver_Carry_Clip",
+    "Alert_Diffuser"
+  ],
+  "schema_version": 1,
+  "source_hardware": {
+    "haptic_led_module": {
+      "geometry_policy": "original design allowance, not vendor geometry or a purchased BOM item",
+      "height_envelope": 8.0,
+      "length": 20.0,
+      "source": "CueLoop reserved placement allowance for optional output hardware; no vendor part is selected",
+      "source_url": "",
+      "width": 14.0
+    },
+    "lipo_500": {
+      "cable_length": 102.0,
+      "geometry_policy": "reference placement envelope only; never use CAD clearance as battery safety proof",
+      "height_envelope": 4.75,
+      "length": 36.0,
+      "source": "Adafruit product 1578 published dimensions; pouch/cable bend envelope must be measured on the received cell",
+      "source_url": "https://www.adafruit.com/product/1578",
+      "strain_clearance": 5.0,
+      "width": 29.0
+    },
+    "microphone_cartridge": {
+      "geometry_policy": "estimated reference keepout; microphone package geometry is not claimed",
+      "height_envelope": 4.0,
+      "length": 18.0,
+      "port_diameter": 1.2,
+      "source": "design keepout derived from the received-module inspection gate; deliberately conservative before measurement",
+      "source_url": "https://wiki.seeedstudio.com/xiao_esp32s3_sense_mic/",
+      "width": 18.0
+    },
+    "support_electronics": {
+      "geometry_policy": "original design allowance, not vendor geometry or a purchased BOM item",
+      "height_envelope": 12.0,
+      "length": 26.0,
+      "source": "CueLoop reserved placement allowance for power/interface hardware; no vendor part is selected",
+      "source_url": "",
+      "width": 14.0
+    },
+    "uno_q": {
+      "geometry_policy": "reference placement envelope only; not an original board reproduction",
+      "height_envelope": 18.0,
+      "length": 68.85,
+      "source": "Arduino UNO Q official product/form-factor references; maximum populated height is a conservative design envelope pending receipt",
+      "source_url": "https://docs.arduino.cc/hardware/uno-q/",
+      "width": 53.34
+    },
+    "xiao_sense": {
+      "geometry_policy": "reference placement envelope only; not an original board reproduction",
+      "height_envelope": 15.0,
+      "length": 21.0,
+      "source": "Seeed Studio XIAO ESP32S3 Sense official product dimensions plus conservative stacked-height allowance",
+      "source_url": "https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/",
+      "width": 17.8
+    }
+  },
+  "vendor_and_estimated_reference_geometry": [
+    {
+      "name": "Reference_UNO_Q",
+      "provenance": "Vendor-derived placement envelope; not an original board model"
+    },
+    {
+      "name": "Reference_Support_Electronics",
+      "provenance": "CueLoop reserved design envelope; no vendor part selected"
+    },
+    {
+      "name": "Reference_Haptic_LED_Module",
+      "provenance": "CueLoop reserved design envelope; no vendor part selected"
+    },
+    {
+      "name": "Reference_XIAO_Sense",
+      "provenance": "Vendor-derived placement envelope; not an original board model"
+    },
+    {
+      "name": "Reference_LiPo_500mAh",
+      "provenance": "Vendor-derived placement envelope; never manufacturing or battery-safety evidence"
+    },
+    {
+      "name": "Reference_Microphone_Cartridge",
+      "provenance": "Estimated acoustic keepout; not vendor package geometry"
+    }
+  ]
+}

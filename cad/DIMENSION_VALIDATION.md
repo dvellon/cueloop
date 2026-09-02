@@ -11,6 +11,7 @@ Record caliper measurements in millimeters. Update `design_parameters.json`, rer
 - [ ] Clearance between microphone face and inner acoustic wall.
 - [ ] Pigtail/connector strain-relief route with no pressure on cell pouch.
 - [ ] Standoff positions do not contact components or antenna keepout.
+- [ ] Elevated XIAO bridge clears the cell, supports the board without component contact, and leaves the declared 0.35 mm XIAO-to-microphone keepout in the measured stack.
 - [ ] Lid closes without compressing the battery.
 
 ## Receiver
@@ -30,4 +31,3 @@ Record caliper measurements in millimeters. Update `design_parameters.json`, rer
 - [ ] Measure M2 clearance holes, boss pilot holes, and insert pockets.
 - [ ] Check minimum readable embossed/debossed privacy and orientation marks.
 - [ ] Inspect wall warp, diffuser fit, microphone openings, unsupported spans, and surface finish.
-

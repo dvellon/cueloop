@@ -1,5 +1,5 @@
 {
-  "include": ["linux", "models", "scripts"],
+  "include": ["linux", "models", "scripts", "cad/validate_cad.py"],
   "exclude": ["**/__pycache__", ".venv-model", "tests"],
   "extraPaths": ["linux"],
   "venvPath": ".",

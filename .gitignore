@@ -81,9 +81,11 @@ cmake-build-*/
 # CAD and generated media
 cad/generated/
 cad/exports/
+.tools/
 assets/generated/
 *.f3d.lock
 *.autosave
+*.FCBak
 
 # Logs, temporary files, and local databases
 *.log
