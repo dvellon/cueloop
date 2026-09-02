@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cueloop"
+version = "0.1.0"
+description = "Private local-first acoustic event bridge for Arduino UNO Q"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "CueLoop contributors" }]
+dependencies = []
+
+[project.scripts]
+cueloop-service = "cueloop.service:main"
+cueloop-sim = "cueloop.simulator:main"
+
+[tool.setuptools]
+package-dir = { "" = "linux" }
+
+[tool.setuptools.packages.find]
+where = ["linux"]
+
+[tool.setuptools.package-data]
+cueloop = ["dashboard/*.html", "dashboard/*.css", "dashboard/*.js"]
+
+[tool.pytest.ini_options]
+pythonpath = ["linux"]
+testpaths = ["tests"]
+

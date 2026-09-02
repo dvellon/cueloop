@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cueloop.local/schemas/event-v1.json",
+  "title": "CueLoop event record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "class_name",
+    "confidence",
+    "detected_at",
+    "pod_id",
+    "location",
+    "priority",
+    "decision_state",
+    "evidence_windows",
+    "evidence_tier",
+    "packet_loss_rate",
+    "pipeline_latency_ms",
+    "user_action"
+  ],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "class_name": {
+      "enum": ["door_knock", "alarm_beep", "dog_bark", "attention_call"]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "detected_at": { "type": "string", "format": "date-time" },
+    "pod_id": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "location": { "type": "string", "maxLength": 48 },
+    "priority": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "decision_state": { "const": "confirmed" },
+    "evidence_windows": { "type": "integer", "minimum": 2 },
+    "evidence_tier": {
+      "enum": ["simulated", "development-computer", "UNO Q", "physical CuePod", "estimated"]
+    },
+    "packet_loss_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "pipeline_latency_ms": { "type": ["number", "null"], "minimum": 0 },
+    "user_action": { "enum": ["pending", "acknowledged", "dismissed"] }
+  }
+}

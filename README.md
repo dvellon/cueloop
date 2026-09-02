@@ -15,15 +15,15 @@ CueLoop is an awareness aid. It is not a safety-certified alarm, security system
 
 Development began on September 1, 2026. Hardware-dependent results are intentionally separated from simulator and development-computer results. See [STATUS.md](STATUS.md), [PLAN.md](PLAN.md), and [HARDWARE_RESULTS.md](HARDWARE_RESULTS.md) for the live record.
 
-## Intended quick start
+## Quick start
 
-The simulator-first path will remain usable without boards:
+The simulator-first path runs without boards or third-party Python packages:
 
 ```bash
 ./scripts/demo.sh
 ```
 
-The command will start a simulated CuePod, the UDP receiver, uncertainty-aware event engine, API, and local dashboard. Until that checkpoint lands, `STATUS.md` is authoritative about what is runnable.
+The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffer, uncertainty-aware event engine, metadata-only store, API, and accessible local dashboard at `http://127.0.0.1:8080`. Every synthetic result is visibly labeled `simulated`; it is pipeline evidence, not real sound-model evidence. Run `./scripts/test.sh` for the automated suite.
 
 ## Repository map
 

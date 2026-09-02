@@ -22,10 +22,14 @@
 - Wrote the Autodesk application responses, Hackster opening story, starting BOM, differentiation ledger, and submission checklist.
 - Created a central CAD parameter manifest, physical-dimension checklist, and Fusion Python generator for the preliminary pod/receiver/clip assembly.
 - Generated and provenance-labeled an original Autodesk cover concept; it is explicitly not physical evidence.
+- Implemented and documented the 684-byte CueLoop Protocol v1 with strict CRC/length/flag validation and matching C++ constants.
+- Implemented the simulated CuePod, WAV replay, loss/jitter/latency/reorder/restart injection, bounded receiver/windowing, simulation classifier, temporal confirmation engine, metadata-only SQLite store, local API, and accessible dashboard.
+- Added a one-command local demo and 21 passing protocol, buffering, model, engine, privacy, pipeline, API, and simulator tests.
+- Verified Arduino CLI 1.5.1, ESP32 core 3.3.11, UNO Q Zephyr core 0.90.0, and both target FQBNs.
 
 ## In progress
 
-- Simulator/common protocol and Linux event pipeline.
+- Real model selection/evaluation tooling and development-computer benchmarks.
 
 ## Not yet claimed
 
@@ -36,7 +40,7 @@
 
 ## Next checkpoint
 
-Runnable one-command simulated CuePod, versioned protocol, UDP receiver, uncertainty-aware event engine, local API/dashboard, and automated tests committed and pushed.
+Reproducible model manifests, preprocessing/conversion/evaluation tools, honest development-computer benchmark report, and selected real-model integration committed and pushed.
 
 ## Physical blockers
 
