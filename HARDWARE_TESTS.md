@@ -69,12 +69,15 @@ Transfer through a trusted path:
 - the XIAO sketch under `firmware/xiao_cuepod/`;
 - optionally the ignored Ubuntu artifact folders for hash comparison, not guessed-address flashing.
 
-Current release-candidate values must be rechecked if the commit changes:
+Release ZIP identities are intentionally not hard-coded in this tracked file: the
+source ZIP contains this file, so editing its digest here would immediately create
+a different source archive. Generate both archives only from the final clean commit,
+then retain their adjacent `.sha256` sidecars and verify the embedded commit fields:
 
 | Artifact | SHA-256 / identity |
 |---|---|
-| App Lab ZIP | `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83` |
-| Source ZIP at commit `371bf8e` | `1ab367806adf4b7ac455d6019b4a5d6a295091c96484f8b14fe2aa0169df091e` |
+| App Lab ZIP | Adjacent `.sha256`; `PACKAGE_MANIFEST.json` must say `source_tree_clean: true` and its `source_commit` must equal `git rev-parse HEAD` |
+| Source ZIP | Adjacent `.sha256`; `SOURCE_MANIFEST.json` `commit` must equal `git rev-parse HEAD` |
 | YAMNet inside App | `10c95ea3eb9a7bb4cb8bddf6feb023250381008177ac162ce169694d05c317de` |
 | XIAO platform/FQBN | `esp32:esp32` 3.3.11 / `esp32:esp32:XIAO_ESP32S3` |
 | UNO Q platform/FQBN | `arduino:zephyr` 0.90.0 / `arduino:zephyr:unoq` |
@@ -89,6 +92,10 @@ Get-Content .\CueLoop-Source-v0.1.0.zip.sha256
 ```
 
 Do not proceed if either digest differs.
+
+Also open both embedded manifests and compare their full 40-character commit to
+the clean release commit. A matching sidecar alone does not prove that the archive
+was generated from the intended source revision.
 
 ## Gate W-000 — inventory and Windows preparation
 
