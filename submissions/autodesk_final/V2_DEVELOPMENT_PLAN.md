@@ -79,7 +79,7 @@ CueLoop Bridge is not CueLoop V1 in another shell. It must add:
 
 | Period | Outcome |
 |---|---|
-| Sep 1–7 | application package, preliminary generator/render, public project start, `.f3d` export |
+| Sep 1–7 | application package, native generator plus OpenCascade reference validation, concept render, public project start, Windows Fusion `.f3d` execution/review/export |
 | Sep 8–13 | protect/finish V1; inventory and measured V2 requirements only |
 | Sep 14–30 | portable power/output architecture, interaction breadboard, measured CAD rev A |
 | Oct 1–18 | schematic/carrier decision, Fusion assembly rev B, tolerance coupons, design review |

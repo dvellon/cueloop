@@ -6,7 +6,7 @@ This plan is deadline-driven. A task is complete only when its artifact exists, 
 
 1. **September 1 — foundations:** verify official requirements; create project controls, product requirements, architecture, privacy/safety policy, source log, decision log, and risk register.
 2. **September 1–2 — Autodesk application:** finish polished responses, separate V2 story, starting BOM, system diagrams, feasibility/risk narrative, schedule, and Hackster opening copy.
-3. **September 1–3 — preliminary Fusion package:** generate parametric CuePod and receiver concepts, attachment/dock features, assembly notes, dimension checklist, reference geometry, original cover render, and exact `.f3d` export instructions.
+3. **September 1–3 — native Fusion package:** complete the production-intent `adsk` generator, named parameter/component/output contracts, pod/receiver/clip/dock/electronics-envelope geometry, independent OpenCascade reference exports and interference validation, DFM/provenance records, original cover concept, and exact `.f3d` execution/evidence/return instructions. Only the Windows Fusion run and review remain external.
 4. **September 3 — application freeze candidate:** adversarially review every required field and attachment. Leave only the user-controlled Hackster/Fusion submission actions.
 5. **September 4–6 — buffer and evidence:** incorporate real inventory/dimensions if hardware arrives; otherwise improve CAD, code credibility, and render package without destabilizing the application.
 6. **September 7 — user submission:** execute the short application checklist before 23:59 PDT.
@@ -31,6 +31,6 @@ After the September application, preserve V1 stability while evolving CueLoop Br
 
 ## Completion gates
 
-- **Digital gate:** all software, firmware, CAD automation, tests, docs, submission copy, and checklists that do not require physical access are complete.
+- **Digital gate:** all software, firmware, native Fusion CAD automation, independent reference geometry/exports, tests, docs, submission copy, and checklists that do not require hardware or Fusion Desktop are complete.
 - **Hardware gate:** target builds, polarity/continuity, flash, microphone, network, cue, thermal, current, runtime, distance, door, noise, and recovery results are recorded.
 - **Submission gate:** all official fields/assets are attached, public claims match evidence, links work without private-repository access where required, and the user performs the final account-controlled submission.

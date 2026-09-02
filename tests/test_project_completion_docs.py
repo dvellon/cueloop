@@ -15,6 +15,8 @@ class ProjectCompletionDocumentationTests(unittest.TestCase):
             "W-001",
             "W-101",
             "W-109",
+            "C-101",
+            "C-109",
             "H-001",
             "H-010",
             "H-101",
@@ -31,6 +33,7 @@ class ProjectCompletionDocumentationTests(unittest.TestCase):
             "Never solder directly to a LiPo cell",
             "Never trust wire color",
             "Do not proceed if either digest differs",
+            "FreeCAD/OpenCascade",
             "No physical test records exist yet",
         ):
             self.assertIn(phrase, content)

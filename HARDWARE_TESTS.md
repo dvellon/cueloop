@@ -151,6 +151,24 @@ STATUS
 
 Expected: the password is never echoed; Wi-Fi connects; capture/sent counters increase; valid ACKs increase and `reachable=yes` after the receiver responds. Do not capture the credential command in evidence. Begin in `TEST ON`; do not claim acoustic accuracy from the generated tone.
 
+## Gate C-100 — Windows Fusion native-model execution and return
+
+All Ubuntu-executable CAD work is complete before this gate: the native `adsk` generator, shared parameter/contract sources, independent FreeCAD/OpenCascade implementation, committed neutral reference exports, and host validators. Read and execute `cad/FUSION_WINDOWS_RUNBOOK.md` exactly. The OpenCascade STEP is validation/reference geometry only and must never be imported as the authoritative contest model.
+
+| ID | Procedure | Expected observation / required record |
+|---|---|---|
+| C-101 | Record Git commit, Windows/Fusion versions, operator/date/timezone, and SHA-256 of the Fusion script plus both JSON sources. | Inputs match the reviewed commit; any change is explained before execution. |
+| C-102 | Install the three source files as one Fusion Python script and click **Run** once. | A new parametric design is created without requesting/importing STEP, mesh, BRep, or base geometry. |
+| C-103 | Preserve the final message and `CueLoop_Bridge_validation.json`. | `Validation: PASS`; component/body/sketch/feature/timeline/parameter counts meet `design_contract.json`. |
+| C-104 | Inspect Browser, timeline, Change Parameters, manufacturing bodies, and empty Mesh Bodies. | Hierarchy matches `cad/README.md`; six manufacturing components each finish as one solid; native sketches/features and at least 70 named parameters are visible. |
+| C-105 | Change `pod_mic_hole_diameter` from 1.8 to 2.0 mm, observe all seven ports, then Undo to 1.8 mm. | Geometry updates without error, proving the native parameter/feature relationship; final retained output is restored to 1.8 mm. |
+| C-106 | Complete section, measure, and interference review for shells, hardware envelopes, dock, clip, fasteners, openings, and service paths. | No unexplained collision, zero-thickness/sliver feature, floating body, blocked required opening, or impossible assembly; limitations/adjustments recorded. |
+| C-107 | Close Fusion and reopen exported `CueLoop_Bridge_Native.f3d` in a clean session. | Component hierarchy, non-empty native timeline, parameters, six manufacturing solids, and reference-only names persist. |
+| C-108 | Capture the ten screenshots and four native Fusion renders listed in the runbook. | Images prove native history/parameters/geometry and retain the caption `Fusion native concept render—physical enclosure and fit validation pending.` |
+| C-109 | Return the complete export directory, CSV/ZIP hashes, screenshots/renders, and run record. | F3D, assembly STEP, six STEP/STL/3MF sets, exact source snapshots/manifest, BOM/parameters/validation, and checksums are non-empty and verify on Ubuntu with `cad/validate_cad.py --fusion-output`. |
+
+If a visual defect requires adjustment, preserve the failure, update `design_parameters.json` or the generator in Git, rerun Ubuntu validation, then execute a fresh Fusion document. Do not repair a generated body manually and present it as script-generated. This gate remains pending until the genuine `.f3d` has been run, visually inspected, reopened, and returned.
+
 ## Gate H-000 — deterministic integrated bring-up
 
 | ID | Test | Exact method | Expected observation / target |

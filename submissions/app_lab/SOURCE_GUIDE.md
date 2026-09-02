@@ -18,7 +18,7 @@ This map is written for a reviewer or contributor starting from a clean checkout
 | Build a release ZIP | `scripts/package_app_lab.py` | package tests and generated internal manifest |
 | Build a source release | `scripts/package_source_release.py` | committed-tree manifest, privacy guards, deterministic ZIP |
 | Build safely | `user_checklists/HARDWARE_BRINGUP.md` | `hardware/`, `docs/safety.md`, physical matrix |
-| Generate preliminary CAD | `cad/fusion/CueLoopBridgeGenerator.py` | central design parameters and dimension checklist |
+| Generate authoritative CAD | `cad/fusion/CueLoopBridgeGenerator.py` | native Fusion contract/runbook; independent OpenCascade reference and host validator |
 
 ## Runtime modules
 
@@ -75,7 +75,7 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 - `test_yamnet_mapping.py` and `test_evaluation.py`: mapping labels/aggregation and provenance gates/metrics.
 - `test_app_lab_package.py`: mandatory structure, pinned dependencies, source/model/archive integrity.
 - `test_hardware_docs.py`: safe net connectivity and valid accessible schematic source.
-- `test_cad_application.py`: preliminary Fusion parameter/envelope sanity and Autodesk answer/evidence gates.
+- `test_cad_application.py`: native Fusion API/export/provenance contract, critical clearances, OpenCascade STEP/STL output integrity/interference, and Autodesk answer/evidence gates.
 - `test_simulated_transport_benchmark.py`: deterministic clean/moderate/severe fault profiles and software-only claim boundary.
 - `test_project_completion_docs.py`: canonical hardware workflow, V2 final structure, and experiment registry contract.
 - `test_submission_release.py`: required publication assets, video evidence labels, and deterministic sanitized source release.

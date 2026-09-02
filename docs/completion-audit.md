@@ -90,11 +90,13 @@
 
 | Requirement | Evidence | State |
 |---|---|---|
-| Preliminary parametric Fusion Python workflow | `cad/fusion/CueLoopBridgeGenerator.py`, parameter JSON, syntax/envelope tests | Digitally verified; interactive run pending |
-| Pod/base/lid/mic path/USB/battery/supports/fasteners | named generated components/bodies and CAD docs | Digitally defined; Fusion/fit pending |
-| Receiver/diffuser/buttons/dock/clip/stand/basic assembly | named generated components/bodies | Digitally defined; Fusion/fit pending |
-| Realistic preliminary walls/gaps/radii/M2/service | parameter manifest and validation checklist | Digitally defined; measurement/DFM pending |
-| Exact `.f3d` save/export and render workflow | `cad/README.md` | Prepared / interactive Fusion pending |
+| Production-intent native Fusion Python workflow | `cad/fusion/CueLoopBridgeGenerator.py`, 125-value parameter source, component/output contract, static native-API tests | Digitally verified; Windows Fusion execution pending |
+| Pod/base/lid/mic path/USB/cable/vents/battery bridge/restraints/fasteners | named native sketches/features/components plus independent OpenCascade solids | Digitally generated and geometry-validated; Fusion visual/physical fit pending |
+| Receiver/diffuser/buttons/LED/power/USB/cable/vents/dock/clip/assembly | named native sketches/features/components plus independent OpenCascade solids | Digitally generated and geometry-validated; Fusion visual/physical fit pending |
+| Walls/floors/webs/gaps/radii/M2/electronics/dock/service clearances | parameter manifest, host validator, 12 zero-overlap OpenCascade checks, DFM/physical checklists | Digitally verified at source/reference tier; measurement/PCBWay review pending |
+| FreeCAD/OpenCascade reference pipeline and neutral-export validation | editable FCStd, 12 valid solids, assembly STEP reopened as 12 solids, 12 zero-overlap checks, per-part exports/hashes | Digitally verified; explicitly non-authoritative |
+| Exact native `.f3d`/STEP/STL/3MF/BOM/source export, inspection, screenshots/renders, and return/hash workflow | `cad/FUSION_WINDOWS_RUNBOOK.md`, C-100 through C-109 | Prepared / Windows Fusion execution pending |
+| Original/vendor geometry provenance boundary | `cad/PROVENANCE.md`, parameter source URLs/policies, component attributes and output manifests | Digitally verified |
 | Application cover | original AI-generated concept with prompt/mode/date/digest disclosure | Digitally complete as concept, not physical evidence |
 | September application copy and project opening | complete five responses, biography/URL truth gates, BOM/story/checklist | Digitally complete; identity/account/Fusion export pending |
 | December package begun without risking V1 | `submissions/autodesk_final/` plan, manufacturing, evidence, article, checklist | Digitally complete structure; V2 build pending |
@@ -113,6 +115,6 @@
 
 ## Definition-of-done audit verdict
 
-Every brief item that can be executed without physical boards, interactive Fusion, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. At this audit checkpoint, 57 automated tests pass, Pyright reports zero errors/warnings, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, and all recorded binary hashes remain unchanged. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
+Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 61 automated tests pass, Pyright reports zero errors/warnings, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, and all recorded firmware binary hashes remain unchanged. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
 
 The long-running product goal remains active because hardware/app/media/account claims are explicitly required for the final competitions. Their complete executable steps and record location are in `HARDWARE_TESTS.md`; no pending row is treated as a pass.

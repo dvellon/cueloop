@@ -135,7 +135,7 @@ The evaluation tool refuses audio without source, license/ownership, consent, ex
 
 | Result | Evidence tier | Outcome |
 |---|---|---|
-| Automated regression suite | development computer / simulation | 57 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation comparison gates, simulated transport benchmark, App/source archives, hardware-record safety, and CAD/submission structure |
+| Automated regression suite | development computer / simulation | 61 tests pass: protocol/CRC/ACK, loss/reorder/restart/bounds, temporal engine, privacy storage, API, Bridge faults/restart, model/evaluation comparison gates, simulated transport benchmark, App/source archives, hardware-record safety, and native-CAD/reference-output/submission contracts |
 | Static Python analysis | development computer | Pyright: 0 errors, 0 warnings |
 | XIAO firmware build | development computer compile | 888,480 bytes program (26%); 47,632 bytes global RAM (14%) |
 | UNO Q STM32 build | development computer compile | 93,304 bytes program (11%); 34,018 bytes global RAM (12%); canonical and isolated App Lab binary hashes match |

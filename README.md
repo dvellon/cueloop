@@ -39,7 +39,7 @@ The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffe
 - `benchmarks/` — evidence-labeled benchmark methods and curated summaries
 - `tests/` — unit, protocol, integration, and evaluation tests
 - `hardware/` — exact/estimated BOMs, wiring, schematics, power, and assembly
-- `cad/` — parametric Fusion automation, dimensions, exports, and assembly notes
+- `cad/` — native Fusion generator, OpenCascade reference exports/validation, parameters, DFM/provenance, and Windows evidence runbook
 - `submissions/` — separate competition-ready packages and differentiation record
 - `docs/` — product, architecture, privacy, safety, build, test, and demo guidance
 - `user_checklists/` — short physical-action checklists and result capture locations

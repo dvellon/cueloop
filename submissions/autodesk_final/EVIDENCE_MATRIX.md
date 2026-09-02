@@ -20,7 +20,7 @@ This matrix prevents preliminary V1/shared work from silently becoming a V2 prod
 | Acoustic path helps/protects | A/B measurement of open board versus enclosure revisions across relevant sounds | Pending CAD/physical |
 | RF path remains usable | packet loss/RSSI/recovery across carry/dock/enclosure orientations and workflow | Pending physical |
 | Enclosure is serviceable | timed assembly/disassembly, tool/fastener count, cable/cell/board access and damage check | Pending manufactured part |
-| Fusion is source of truth | native parameterized `.f3d`, measured parameters, joints/interference/drawings/revisions | Preliminary generator only |
+| Fusion is source of truth | native parameterized `.f3d`, measured parameters, timeline/components, interference/drawings/revisions, source hashes | Native generator and independent reference validation complete; Windows Fusion C-100 execution/review pending |
 | Fusion Electronics adds value | linked carrier schematic/PCB/MCAD and physical carrier, or documented no-carrier decision | Pending Gate B |
 | PCBWay process is appropriate | coupon, supplier feedback, released files/quote, received-part inspection and revisions | Pending selection/order |
 | Approximately-750-unit path is credible | assembly/EOL process, quote/economics/yield/component lifecycle review | Planning only |

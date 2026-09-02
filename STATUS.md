@@ -20,7 +20,8 @@
 - Identified and documented the Autodesk official-rules template-placeholder defect.
 - Fixed the product split: CueLoop V1 and materially evolved CueLoop Bridge V2.
 - Wrote the Autodesk application responses, Hackster opening story, starting BOM, differentiation ledger, and submission checklist.
-- Created a central CAD parameter manifest, physical-dimension checklist, and Fusion Python generator for the preliminary pod/receiver/clip assembly.
+- Created the production-intent native Autodesk Fusion generator, 125-value parameter source, component/output contract, PCBWay DFM notes, provenance boundary, and exact Windows execution/evidence/return runbook for the CuePod/receiver/dock/clip assembly.
+- Generated the independent editable FreeCAD/OpenCascade reference assembly and six manufacturing part sets on Ubuntu; 12 solids are valid and positive-volume, the assembly STEP reopens as 12 solids, all 12 forbidden placement intersections have zero overlap, and 17 exported files verify against SHA-256.
 - Generated and provenance-labeled an original Autodesk cover concept; it is explicitly not physical evidence.
 - Implemented and documented the 684-byte CueLoop Protocol v1 with strict CRC/length/flag validation and matching C++ constants.
 - Implemented the simulated CuePod, WAV replay, loss/jitter/latency/reorder/restart injection, bounded receiver/windowing, simulation classifier, temporal confirmation engine, metadata-only SQLite store, local API, and accessible dashboard.
@@ -38,7 +39,7 @@
 - Added a deterministic, secret-resistant App Lab release packager; local v0.1.0 archive SHA-256 is `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83`.
 - Completed the App Lab title/metadata, full Hackster article, source guide, troubleshooting, three-minute/short video scripts, photo list, evidence table, media attribution, final checklist, and adversarial 30/20/15/15/20 rubric audit.
 - Added a deterministic committed-tree source-release packager with a per-file manifest, exact commit identity, excluded internal brief, secret/audio/model/database guards, and SHA-256 sidecar.
-- Added automated preliminary Fusion envelope/parameter checks and Autodesk five-answer/evidence-gate checks.
+- Added dependency-free Fusion/reference output validation for critical dimensions, positive walls/floors/webs, vertical/electronics/dock clearances, body/component/timeline/parameter minima, exact reference bounds, provenance, source snapshots, expected export structure, and hashes.
 - Added one deadline-ordered operator sheet covering the Autodesk application, hardware bring-up, measurement/media, and App Lab submission.
 - Consolidated all Windows flashing, safety, physical validation, expected observations, and append-only execution records in root `HARDWARE_TESTS.md`, while keeping `HARDWARE_RESULTS.md` as the reviewed publication boundary.
 - Extended real-audio evaluation with per-class confusion matrices/support, environment/distance/door/background slices, interval-based audio-to-decision latency, and temporal-versus-single-window comparisons.
@@ -46,11 +47,12 @@
 - Added the predeclared experiment registry and complete Autodesk December workspace for V2 hardware, interaction, CAD, manufacturing, evidence, article, and submission planning.
 - Added a requirement-by-requirement completion audit and automated checks for the authoritative hardware record, experiment contract, and Autodesk V2 structure.
 - Reverified Arduino CLI/cores/board definitions and reproduced all three firmware/profile builds and binary hashes.
-- Expanded the automated suite to 57 passing tests and retained zero Pyright errors.
+- Expanded the automated suite to 61 passing tests and retained zero Pyright errors.
 
 ## In progress
 
-- Hardware-dependent, interactive Fusion, media-capture, identity/account, logged-out publication, and final submission actions listed in `user_checklists/NEXT_ACTIONS.md`.
+- The single remaining Fusion gate is C-100 through C-109: run the reviewed native script in Windows Fusion, visually inspect/interference-check it, make evidence-backed source adjustments if necessary, reopen the genuine `.f3d`, capture proof/renders, and return/hash the export bundle.
+- Hardware-dependent, media-capture, identity/account, logged-out publication, and final submission actions are listed in `user_checklists/NEXT_ACTIONS.md`.
 
 ## Not yet claimed
 
@@ -60,8 +62,8 @@
 
 ## Next checkpoint
 
-Inventory, Fusion `.f3d` export/application submission, App Lab/firmware bring-up, and physical result records are returned for evidence-driven integration.
+The Windows Fusion C-100 evidence bundle, inventory/application submission records, App Lab/firmware bring-up, and physical result records are returned for evidence-driven integration.
 
-## Physical blockers
+## External gates
 
-Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, Fusion `.f3d` export, enclosure fit, photography, and final real-device video require user-accessible hardware or interactive desktop software. The complete methods, safe stops, expected observations, and result blocks are already recorded in `HARDWARE_TESTS.md`.
+Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, enclosure fit, photography, and final real-device video require user-accessible hardware. The native Fusion run, visual inspection, adjustment if needed, and genuine `.f3d` export require Windows Fusion Desktop. The complete methods, safe stops, expected observations, and result blocks are recorded in `HARDWARE_TESTS.md`; no other CAD work is externally blocked.
