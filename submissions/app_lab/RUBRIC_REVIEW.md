@@ -85,7 +85,7 @@
 
 - Target runtime dependency resolution and App Lab Router Bridge behavior remain unobserved.
 - The private development repository cannot serve as a durable public contribution unless a judge-accessible release/archive is attached.
-- No independent reader has yet reproduced the clean-clone path.
+- The automated fresh local checkout now reproduces tests, static analysis, firmware, model/package gates, and release creation; an independent reader/judge has not yet repeated it on a different machine.
 
 ### Final acceptance
 

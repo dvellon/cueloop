@@ -161,8 +161,10 @@ class YamnetClassifier:
         validate_mapping_labels(self.mapping, self.labels)
 
         try:
-            import numpy as np
-            from ai_edge_litert.interpreter import Interpreter
+            import numpy as np  # pyright: ignore[reportMissingImports]
+            from ai_edge_litert.interpreter import (  # pyright: ignore[reportMissingImports]
+                Interpreter,
+            )
         except ImportError as error:
             raise ModelConfigurationError(
                 "YAMNet requires requirements-model.txt (ai-edge-litert 2.2.0)"

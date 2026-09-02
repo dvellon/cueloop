@@ -2,8 +2,6 @@
   "include": ["linux", "models", "scripts", "cad/validate_cad.py"],
   "exclude": ["**/__pycache__", ".venv-model", "tests"],
   "extraPaths": ["linux"],
-  "venvPath": ".",
-  "venv": ".venv-model",
-  "pythonVersion": "3.14",
+  "pythonVersion": "3.11",
   "typeCheckingMode": "basic"
 }

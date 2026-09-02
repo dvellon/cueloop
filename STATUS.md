@@ -46,8 +46,9 @@
 - Added and ran a 60-trial simulated transport benchmark across clean, 5% loss/moderate jitter, and 20% loss/severe jitter profiles; its results remain explicitly software-only.
 - Added the predeclared experiment registry and complete Autodesk December workspace for V2 hardware, interaction, CAD, manufacturing, evidence, article, and submission planning.
 - Added a requirement-by-requirement completion audit and automated checks for the authoritative hardware record, experiment contract, and Autodesk V2 structure.
-- Reverified Arduino CLI/cores/board definitions and reproduced all three firmware/profile builds and binary hashes.
-- Expanded the automated suite to 62 passing tests and retained zero Pyright errors.
+- Added a clean-intermediate firmware builder with fixed epoch and checkout-root path normalization; independently reproduced the XIAO images across two local clones and retained byte-identical canonical/App-profile UNO Q containers.
+- Added a release-grade fresh-checkout verifier covering the pinned model, tests, Python 3.11 static analysis, all firmware/profile builds, clean manifests, and both archives without mutating tracked source.
+- Expanded the automated suite to 65 passing tests and retained zero Pyright errors.
 
 ## In progress
 

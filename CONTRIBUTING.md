@@ -18,6 +18,7 @@ CueLoop welcomes reproducibility fixes, accessible interaction ideas, privacy im
 - Format and lint only files in scope.
 - Update `CHANGELOG.md`, `DECISIONS.md`, or `RISKS.md` when the change affects users, architecture, or claims.
 - Use imperative commit subjects such as `feat: add jitter-buffer loss accounting`.
+- Run `./scripts/verify_clean_checkout.sh` for a release candidate; it preserves the isolated clone under ignored `tmp/` so failures can be inspected.
 
 ## Physical results
 

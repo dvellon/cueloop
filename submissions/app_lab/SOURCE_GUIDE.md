@@ -17,6 +17,7 @@ This map is written for a reviewer or contributor starting from a clean checkout
 | Evaluate licensed audio | `models/evaluate.py` | manifest/schema, `linux/cueloop/evaluation.py` |
 | Build a release ZIP | `scripts/package_app_lab.py` | package tests and generated internal manifest |
 | Build a source release | `scripts/package_source_release.py` | committed-tree manifest, privacy guards, deterministic ZIP |
+| Verify a fresh checkout | `scripts/verify_clean_checkout.sh` | tests, Pyright, deterministic firmware, model gate, both release types |
 | Build safely | `user_checklists/HARDWARE_BRINGUP.md` | `hardware/`, `docs/safety.md`, physical matrix |
 | Generate authoritative CAD | `cad/fusion/CueLoopBridgeGenerator.py` | native Fusion contract/runbook; independent OpenCascade reference and host validator |
 
@@ -79,12 +80,13 @@ The first operation copies approved core files, dashboard assets, UNO Q sketch/h
 - `test_simulated_transport_benchmark.py`: deterministic clean/moderate/severe fault profiles and software-only claim boundary.
 - `test_project_completion_docs.py`: canonical hardware workflow, V2 final structure, and experiment registry contract.
 - `test_submission_release.py`: required publication assets, video evidence labels, and deterministic sanitized source release.
+- `test_reproducibility.py`: fixed-time/path-normalized firmware builder, minimum-Python static-analysis target, and fresh-checkout release surface.
 
 Compilation results are not tests of attached hardware. Physical observations enter through root `HARDWARE_TESTS.md`; only reviewed summaries enter `HARDWARE_RESULTS.md` and submission copy.
 
 ## Safe contribution rules
 
-1. Run `./scripts/test.sh`, Pyright, both canonical firmware builds, and App Lab profile build in proportion to the changed surface.
+1. Run `./scripts/test.sh`, Pyright, and `./scripts/build_firmware.sh` in proportion to the changed surface; use `./scripts/verify_clean_checkout.sh` at release checkpoints.
 2. Sync the App Lab vendor tree after changing an approved core or UNO Q sketch file.
 3. Do not relax the model checksum, evidence-tier labeling, minimum temporal evidence, raw-audio boundary, or safety language merely to make a demo pass.
 4. Add/modify packet fields only with a versioned shared protocol change and cross-language tests.

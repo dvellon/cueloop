@@ -13,14 +13,10 @@ This sketch captures the Sense expansion board's PDM microphone as 16 kHz mono P
 Build from the repository root:
 
 ```bash
-TMPDIR=/home/cd/.tmp-codex arduino-cli compile \
-  --fqbn esp32:esp32:XIAO_ESP32S3 \
-  --build-path firmware/xiao_cuepod/build/work \
-  --output-dir firmware/xiao_cuepod/build/artifacts \
-  firmware/xiao_cuepod
+./scripts/build_firmware.sh
 ```
 
-The `build/` directory and binary products are ignored. No extra Arduino library install is required.
+The builder compiles both project targets and the App Lab profile so their shared release evidence cannot drift. For the ESP32 image it also cleans intermediates, fixes the reproducible build epoch, and normalizes checkout-root paths before hashing. Ad-hoc Arduino CLI builds remain valid compile checks but their embedded compile time/path digest may differ. The `build/` directory and binary products are ignored. No extra Arduino library install is required.
 
 ## Configure without source credentials
 

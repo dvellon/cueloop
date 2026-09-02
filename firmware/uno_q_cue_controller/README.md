@@ -11,14 +11,10 @@ This sketch gives the STM32U585 deterministic ownership of physical cue timing. 
 - `Arduino_RPClite` 0.3.0 (RouterBridge dependency)
 
 ```bash
-TMPDIR=/home/cd/.tmp-codex arduino-cli compile \
-  --fqbn arduino:zephyr:unoq \
-  --build-path firmware/uno_q_cue_controller/build/work \
-  --output-dir firmware/uno_q_cue_controller/build/artifacts \
-  firmware/uno_q_cue_controller
+./scripts/build_firmware.sh
 ```
 
-The ignored artifact folder is retained for later Windows flashing. Compilation does not prove LED polarity, brightness, button wiring, optional actuator current, or Bridge operation on a physical UNO Q.
+The builder compiles this canonical sketch and the isolated App Lab profile from clean intermediates, then requires their `.bin` and `.bin-zsk.bin` files to be byte-identical. The ignored artifact folder is retained for later Windows flashing. Compilation does not prove LED polarity, brightness, button wiring, optional actuator current, or Bridge operation on a physical UNO Q.
 
 ## Bridge interface
 

@@ -24,7 +24,7 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Receiver ACK extension to CueLoop Protocol v1 and matching strict Python/C++ validation.
 - Fault-contained Linux Bridge adapter with diagnostics and MCU-restart cue resynchronization.
 - Official App Lab package structure, pinned Python/sketch dependencies, checksum-enforced source/model synchronizer, commit-bound clean-tree release archives, and package integrity tests.
-- Reproducible firmware build manifest covering both canonical targets and the isolated App Lab sketch profile.
+- Clean-intermediate, fixed-epoch, checkout-path-normalized firmware builder with byte-identical cross-checkout XIAO images and canonical/App-profile UNO Q containers.
 - Objective CuePod per-frame RMS, peak, and cumulative clipping diagnostics for physical microphone bring-up.
 - Complete minimum/optional/V2 BOM, machine-readable netlist, accessible SVG schematic, wiring/pin tables, power and bandwidth analysis, and battery-safe assembly guide.
 - Windows App Lab/XIAO deployment instructions and a predeclared physical validation matrix with evidence gates.
@@ -38,3 +38,4 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - Deterministic 60-trial simulated transport fault benchmark, curated evidence summary, and claim-boundary tests.
 - Predeclared experiment registry/schema and complete Autodesk final-package structure for V2 development, DFM, evidence, article, and submission review.
 - Requirement-by-requirement `PROJECT_PROMPT` completion audit and automated structural/safety checks.
+- Release-grade fresh-checkout verifier covering the pinned model, tests, minimum-Python static analysis, all Arduino builds, and deterministic App/source archives.

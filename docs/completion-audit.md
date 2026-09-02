@@ -54,7 +54,7 @@
 | Supported Bridge/RPC compact MCU commands | `bridge.py`, UNO Q sketch, pinned Router Bridge profile/tests | Compiles/tests; target pending |
 | MCU LED patterns, health, acknowledgement, optional safe outputs | cue controller and hardware header; onboard LEDs minimum | Compiles/tests; physical pending |
 | Official App Lab folder/descriptor/Python/sketch/profile | `app_lab/CueLoop`, sync/packager/structure tests | Digitally verified; import/Run pending |
-| Reproducible dependencies and release | pinned requirements/profile, deterministic App/source ZIPs/manifests/digests | Digitally verified |
+| Reproducible dependencies and release | pinned requirements/profile, clean-checkout verifier, deterministic firmware/App/source outputs and manifests | Digitally verified across two local checkouts |
 | Dashboard required fields | connection, pod/location, event/confidence/time/state/priority, controls/history/loss/latency/privacy/config | Present and integration-tested |
 
 ## Simulator, models, experiments, and quantitative evaluation
@@ -110,11 +110,11 @@
 | BOM/schematic/build/setup/use/troubleshooting/privacy/limits/results/source/reuse | article, source guide, troubleshooting, test results, hardware docs | Digitally complete with physical slots only |
 | Photo list, three-minute storyboard, short/long narration, on-screen text | photo/video package | Digitally complete; original capture pending |
 | Final checklist and judging-rubric optimization | checklist plus 30/20/15/15/20 adversarial review | Digitally complete |
-| Deterministic packages/archives and clean extraction | App/source packagers, manifests, release tests and prior clean-extraction run | Digitally verified; regenerate after this audit checkpoint |
+| Deterministic packages/archives and clean extraction | App/source packagers, manifests, release tests, fresh-clone verifier, and clean-extraction run | Digitally verified; regenerate after this audit checkpoint |
 | Prioritized remaining user actions | `user_checklists/NEXT_ACTIONS.md`, root hardware test gates | Digitally complete |
 
 ## Definition-of-done audit verdict
 
-Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 62 automated tests pass, Pyright reports zero errors/warnings, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, and all recorded firmware binary hashes remain unchanged. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
+Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 65 automated tests pass, Pyright reports zero errors/warnings against the minimum supported Python 3.11, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, and fixed-epoch/path-normalized XIAO images reproduce byte-for-byte in two local checkouts. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
 
 The long-running product goal remains active because hardware/app/media/account claims are explicitly required for the final competitions. Their complete executable steps and record location are in `HARDWARE_TESTS.md`; no pending row is treated as a pass.

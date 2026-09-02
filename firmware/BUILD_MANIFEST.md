@@ -6,6 +6,8 @@
 
 **Arduino CLI:** 1.5.1 (`01f3d4f2b`)
 
+**Reproducible builder:** `scripts/build_firmware.sh`; clean intermediates, fixed `SOURCE_DATE_EPOCH=1788307200`, and checkout-root prefix mapping for ESP32
+
 Compilation validates preprocessing, C++ APIs, linking, board/core compatibility, and resource accounting. It does not validate flashing, microphone data, Wi-Fi, Bridge transport, LEDs, optional actuators, power, timing, or physical behavior.
 
 ## XIAO ESP32S3 Sense CuePod
@@ -15,8 +17,8 @@ Compilation validates preprocessing, C++ APIs, linking, board/core compatibility
 - Result: 888,480 bytes program reported (26% of 3,342,336); 47,632 bytes global RAM (14% of 327,680), 280,048 bytes remaining
 - Flash image: `firmware/xiao_cuepod/build/artifacts/xiao_cuepod.ino.bin`
 - Image size: 888,624 bytes
-- Image SHA-256: `950a87868f8a076c3d7c38edcc6317c276ade8e4aeb5104d2b4c033ace5b90e1`
-- Merged flash image SHA-256: `1da4a0f25d3d1a77d4746f670f54a9c89bd1b1930be5e6ce98161a65af3d41fe`
+- Image SHA-256: `651efe0835a6a934b4dbe5615920a4094d8ee476581b43468fe5f7dea30fed10`
+- Merged flash image SHA-256: `2d80291b2a8e362b93a662d0d24d9f8aff087787fdea9fb97f931bbcd93d68d3`
 
 ## UNO Q STM32U585 cue controller
 
@@ -33,4 +35,6 @@ Compilation validates preprocessing, C++ APIs, linking, board/core compatibility
 
 The self-contained `app_lab/CueLoop/sketch` was also compiled using its isolated `uno_q` profile. It reported the same 93,304-byte program and 34,018-byte RAM use. Its `.bin` and `.bin-zsk.bin` hashes exactly match the canonical UNO Q outputs above, demonstrating that the synchronized App Lab MCU source and pinned profile reproduce the canonical binaries on this builder.
 
-Build products remain ignored but are retained in the working copy for later Windows flashing. Rebuild and compare hashes after any firmware, platform, or library change.
+The XIAO application and merged images were independently rebuilt in a second local clone with the same relative work paths and matched byte-for-byte. Without the fixed epoch, ESP32 core compile-time strings change; without prefix mapping, the image's embedded ELF digest changes with the checkout path even when loadable program bytes are otherwise identical. Only artifacts produced by the documented builder should be compared to the hashes above.
+
+Build products remain ignored but are retained in the working copy for later Windows flashing. Run the builder and compare hashes after any firmware, platform, library, or build-policy change.
