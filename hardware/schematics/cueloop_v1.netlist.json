@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "title": "CueLoop V1 minimum electrical and logical connectivity",
+  "evidence": "design source; physical revision and continuity validation pending",
+  "components": {
+    "B1": {
+      "value": "Protected LiPo 3.7 V nominal 500 mAh",
+      "part": "Adafruit 1578",
+      "pins": ["POS", "NEG"]
+    },
+    "J1": {
+      "value": "JST-PH 2-pin female pigtail 100 mm",
+      "part": "Adafruit 261",
+      "pins": ["MEASURED_POS", "MEASURED_NEG"]
+    },
+    "U1": {
+      "value": "XIAO ESP32S3 Sense",
+      "part": "Seeed Studio 113991115",
+      "pins": ["BAT_POS", "BAT_NEG", "GPIO42_PDM_CLK", "GPIO41_PDM_DATA", "WIFI"]
+    },
+    "MIC1": {
+      "value": "PDM microphone on Sense expansion",
+      "part": "integrated with U1",
+      "pins": ["CLK", "DATA", "POWER", "GND"]
+    },
+    "U2A": {
+      "value": "UNO Q Qualcomm Linux MPU",
+      "part": "Arduino ABX00173",
+      "pins": ["WIFI", "BRIDGE", "USB_C_POWER"]
+    },
+    "U2B": {
+      "value": "UNO Q STM32U585 MCU",
+      "part": "Arduino ABX00173",
+      "pins": ["BRIDGE", "D4", "GND", "LED3_RGB", "LED4_RGB"]
+    },
+    "S1": {
+      "value": "Normally-open acknowledgement button (optional)",
+      "part": "inventory-gated",
+      "pins": ["1", "2"]
+    },
+    "PS1": {
+      "value": "UNO Q approved USB-C power/data path",
+      "part": "Arduino-order item pending inventory",
+      "pins": ["USB_C"]
+    }
+  },
+  "nets": [
+    {
+      "name": "BAT_POS",
+      "type": "electrical",
+      "endpoints": ["B1.POS", "J1.MEASURED_POS", "U1.BAT_POS"],
+      "verification": "measure connector and pigtail; XIAO pad is farther from USB-C"
+    },
+    {
+      "name": "BAT_NEG",
+      "type": "electrical",
+      "endpoints": ["B1.NEG", "J1.MEASURED_NEG", "U1.BAT_NEG"],
+      "verification": "measure connector and pigtail; XIAO pad is closest to USB-C"
+    },
+    {
+      "name": "PDM_CLK",
+      "type": "integrated",
+      "endpoints": ["U1.GPIO42_PDM_CLK", "MIC1.CLK"]
+    },
+    {
+      "name": "PDM_DATA",
+      "type": "integrated",
+      "endpoints": ["U1.GPIO41_PDM_DATA", "MIC1.DATA"]
+    },
+    {
+      "name": "TRUSTED_LAN_WIFI",
+      "type": "wireless-logical",
+      "endpoints": ["U1.WIFI", "U2A.WIFI"],
+      "protocol": "CueLoop UDP v1; destination 57321, pod local 57322"
+    },
+    {
+      "name": "ARDUINO_ROUTER_BRIDGE",
+      "type": "onboard-logical",
+      "endpoints": ["U2A.BRIDGE", "U2B.BRIDGE"],
+      "protocol": "MessagePack RPC via official Arduino Bridge"
+    },
+    {
+      "name": "ACK_BUTTON",
+      "type": "electrical-optional",
+      "endpoints": ["U2B.D4", "S1.1"]
+    },
+    {
+      "name": "UNO_GND",
+      "type": "electrical-optional",
+      "endpoints": ["U2B.GND", "S1.2"]
+    },
+    {
+      "name": "UNO_USB_C",
+      "type": "electrical",
+      "endpoints": ["PS1.USB_C", "U2A.USB_C_POWER"],
+      "verification": "exact ordered accessory and power mode pending inventory"
+    },
+    {
+      "name": "EVENT_CUE",
+      "type": "onboard-integrated",
+      "endpoints": ["U2B.LED3_RGB"]
+    },
+    {
+      "name": "HEALTH_CUE",
+      "type": "onboard-integrated",
+      "endpoints": ["U2B.LED4_RGB"]
+    }
+  ],
+  "explicitly_not_connected": [
+    "CuePod power to UNO Q power",
+    "CuePod ground to UNO Q ground",
+    "Qwiic to CuePod battery",
+    "external actuator directly to MCU GPIO"
+  ]
+}

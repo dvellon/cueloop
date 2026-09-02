@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">CueLoop V1 electrical and logical schematic</title>
+  <desc id="desc">A protected battery powers the XIAO Sense pod through a measured JST pigtail. Its integrated microphone connects on GPIO 42 and 41. The pod sends audio over Wi-Fi to UNO Q Linux, which communicates by onboard Bridge with the STM32 controlling onboard LEDs and an optional D4 acknowledgement button.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f7fafc}.panel{fill:#fff;stroke:#233044;stroke-width:3}.sub{fill:#edf7f6;stroke:#28766e;stroke-width:2}.wire{fill:none;stroke:#b53a3a;stroke-width:4}.gnd{fill:none;stroke:#25324a;stroke-width:4}.signal{fill:none;stroke:#1666a8;stroke-width:4}.logical{fill:none;stroke:#7255a5;stroke-width:4;stroke-dasharray:12 8}.optional{fill:none;stroke:#777;stroke-width:3;stroke-dasharray:7 7}.title{font:700 30px sans-serif;fill:#172033}.h{font:700 20px sans-serif;fill:#172033}.t{font:16px sans-serif;fill:#243247}.small{font:14px sans-serif;fill:#435166}.pin{font:700 14px monospace;fill:#172033}.warn{fill:#fff4df;stroke:#c77b16;stroke-width:2}.note{fill:#edf3ff;stroke:#4068a0;stroke-width:2}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#7255a5"/></marker>
+  </defs>
+  <rect class="bg" width="1400" height="900"/>
+  <text class="title" x="50" y="54">CueLoop V1 · minimum schematic · rev 1</text>
+  <text class="small" x="50" y="80">Design source: cueloop_v1.netlist.json · physical revision/polarity/continuity pending</text>
+
+  <rect class="panel" x="50" y="125" width="600" height="565" rx="16"/>
+  <text class="h" x="80" y="165">Wireless CuePod power and sensing</text>
+
+  <rect class="sub" x="85" y="210" width="180" height="125" rx="10"/>
+  <text class="h" x="108" y="242">B1</text>
+  <text class="t" x="108" y="270">Protected LiPo</text>
+  <text class="t" x="108" y="294">3.7 V · 500 mAh</text>
+  <text class="small" x="108" y="318">Adafruit 1578</text>
+  <circle cx="265" cy="250" r="7" fill="#b53a3a"/><circle cx="265" cy="305" r="7" fill="#25324a"/>
+  <text class="pin" x="232" y="244">+</text><text class="pin" x="232" y="325">−</text>
+
+  <rect class="sub" x="335" y="210" width="190" height="125" rx="10"/>
+  <text class="h" x="358" y="242">J1</text>
+  <text class="t" x="358" y="270">JST-PH pigtail</text>
+  <text class="t" x="358" y="294">measured mapping</text>
+  <text class="small" x="358" y="318">Adafruit 261</text>
+  <circle cx="335" cy="250" r="7" fill="#b53a3a"/><circle cx="335" cy="305" r="7" fill="#25324a"/>
+  <circle cx="525" cy="250" r="7" fill="#b53a3a"/><circle cx="525" cy="305" r="7" fill="#25324a"/>
+  <path class="wire" d="M272 250 H328"/><path class="gnd" d="M272 305 H328"/>
+
+  <rect class="sub" x="365" y="420" width="240" height="205" rx="10"/>
+  <text class="h" x="390" y="453">U1 · XIAO ESP32S3</text>
+  <text class="t" x="390" y="478">Sense · 113991115</text>
+  <text class="pin" x="390" y="515">BAT+  (far from USB)</text>
+  <text class="pin" x="390" y="545">BAT−  (near USB)</text>
+  <text class="pin" x="390" y="575">GPIO42 · PDM CLK</text>
+  <text class="pin" x="390" y="605">GPIO41 · PDM DATA</text>
+  <circle cx="365" cy="510" r="7" fill="#b53a3a"/><circle cx="365" cy="540" r="7" fill="#25324a"/>
+  <circle cx="605" cy="570" r="7" fill="#1666a8"/><circle cx="605" cy="600" r="7" fill="#1666a8"/>
+  <path class="wire" d="M532 250 H570 V380 H330 V510 H358"/>
+  <path class="gnd" d="M532 305 H545 V365 H312 V540 H358"/>
+
+  <rect class="sub" x="85" y="455" width="205" height="120" rx="10"/>
+  <text class="h" x="110" y="487">MIC1 · integrated</text>
+  <text class="t" x="110" y="516">Sense PDM microphone</text>
+  <text class="small" x="110" y="544">16 kHz mono PCM16</text>
+  <circle cx="290" cy="500" r="7" fill="#1666a8"/><circle cx="290" cy="550" r="7" fill="#1666a8"/>
+  <path class="signal" d="M297 500 H320 V570 H598"/><path class="signal" d="M297 550 H335 V600 H598"/>
+
+  <rect class="warn" x="78" y="360" width="240" height="64" rx="8"/>
+  <text class="t" x="96" y="386">Battery detached while</text><text class="t" x="96" y="408">pigtail is soldered.</text>
+
+  <rect class="panel" x="750" y="125" width="600" height="565" rx="16"/>
+  <text class="h" x="780" y="165">UNO Q receiver · Arduino ABX00173</text>
+  <rect class="sub" x="800" y="215" width="245" height="180" rx="10"/>
+  <text class="h" x="825" y="250">U2A · Linux MPU</text>
+  <text class="t" x="825" y="280">UDP + jitter buffer</text>
+  <text class="t" x="825" y="308">YAMNet + policy</text>
+  <text class="t" x="825" y="336">SQLite metadata + UI</text>
+  <text class="pin" x="825" y="370">USB-C power/data</text>
+
+  <rect class="sub" x="1100" y="215" width="205" height="270" rx="10"/>
+  <text class="h" x="1125" y="250">U2B · STM32</text>
+  <text class="t" x="1125" y="280">Bridge validation</text>
+  <text class="t" x="1125" y="308">cue timing + health</text>
+  <text class="pin" x="1125" y="350">LED3 · event RGB</text>
+  <text class="pin" x="1125" y="380">LED4 · health RGB</text>
+  <text class="pin" x="1125" y="430">D4 · INPUT_PULLUP</text>
+  <text class="pin" x="1125" y="458">GND</text>
+  <path class="logical" d="M1052 300 H1092" marker-end="url(#arrow)"/>
+  <text class="small" x="1048" y="288">onboard Bridge RPC</text>
+
+  <rect class="sub" x="800" y="500" width="245" height="100" rx="10"/>
+  <text class="h" x="825" y="535">PS1 · USB-C path</text>
+  <text class="t" x="825" y="564">5 V · supply up to 3 A</text>
+  <text class="small" x="825" y="586">exact order item pending</text>
+  <path class="wire" d="M922 493 V405"/>
+
+  <rect class="sub" x="1110" y="535" width="185" height="75" rx="10"/>
+  <text class="h" x="1133" y="567">S1 · optional</text>
+  <text class="t" x="1133" y="591">N.O. acknowledge</text>
+  <path class="optional" d="M1200 492 V528"/><path class="optional" d="M1230 492 V528"/>
+  <text class="small" x="1177" y="519">D4</text><text class="small" x="1232" y="519">GND</text>
+
+  <path class="logical" d="M610 335 C700 235 725 235 800 275" marker-end="url(#arrow)"/>
+  <text class="h" x="620" y="235">trusted 2.4 GHz Wi-Fi</text>
+  <text class="t" x="630" y="260">UDP 57321 · PCM + CRC</text>
+
+  <rect class="note" x="50" y="735" width="1300" height="110" rx="12"/>
+  <text class="h" x="80" y="772">Explicit non-connections and limits</text>
+  <text class="t" x="80" y="803">No CuePod↔UNO power/ground wire · no CuePod Qwiic · no actuator directly on GPIO · external haptic/buzzer disabled.</text>
+  <text class="t" x="80" y="830">CRC is corruption detection, not authentication. Use only a private trusted LAN. Physical continuity and behavior remain unverified.</text>
+</svg>

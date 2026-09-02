@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from zipfile import ZipFile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,6 +62,31 @@ class AppLabPackageTests(unittest.TestCase):
         )
         self.assertEqual(model.stat().st_size, manifest["expected_bytes"])
         self.assertEqual(hashlib.sha256(model.read_bytes()).hexdigest(), manifest["sha256"])
+
+    def test_release_archive_is_deterministic_and_excludes_runtime_data(self) -> None:
+        model = APP / "models" / "yamnet-classification-tflite-v1.tflite"
+        if not model.exists():
+            self.skipTest("ignored model is required for a complete release archive")
+        command = [sys.executable, "scripts/package_app_lab.py", "--version", "test"]
+        first = subprocess.run(
+            command, cwd=ROOT, capture_output=True, text=True, check=False
+        )
+        self.assertEqual(first.returncode, 0, first.stderr)
+        archive = ROOT / "packages" / "CueLoop-App-Lab-vtest.zip"
+        first_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
+        second = subprocess.run(
+            command, cwd=ROOT, capture_output=True, text=True, check=False
+        )
+        self.assertEqual(second.returncode, 0, second.stderr)
+        self.assertEqual(hashlib.sha256(archive.read_bytes()).hexdigest(), first_hash)
+        with ZipFile(archive) as bundle:
+            names = bundle.namelist()
+            self.assertIn("CueLoop/PACKAGE_MANIFEST.json", names)
+            self.assertIn(
+                "CueLoop/models/yamnet-classification-tflite-v1.tflite", names
+            )
+            self.assertFalse(any(name.endswith(".sqlite3") for name in names))
+            self.assertFalse(any("__pycache__" in name for name in names))
 
 
 if __name__ == "__main__":

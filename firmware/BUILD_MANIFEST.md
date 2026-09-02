@@ -12,11 +12,11 @@ Compilation validates preprocessing, C++ APIs, linking, board/core compatibility
 
 - FQBN: `esp32:esp32:XIAO_ESP32S3`
 - Platform: `esp32:esp32` 3.3.11
-- Result: 887,568 bytes program reported (26% of 3,342,336); 47,632 bytes global RAM (14% of 327,680), 280,048 bytes remaining
+- Result: 888,480 bytes program reported (26% of 3,342,336); 47,632 bytes global RAM (14% of 327,680), 280,048 bytes remaining
 - Flash image: `firmware/xiao_cuepod/build/artifacts/xiao_cuepod.ino.bin`
-- Image size: 887,712 bytes
-- Image SHA-256: `29bddc5e6fde7cedd1698685e809258c298c93a1c785b636494aa0e3688daea0`
-- Merged flash image SHA-256: `ce1766f482becf01248c7ecc4cd977ecc36f100ca0df15b85620d5d87a08d9d7`
+- Image size: 888,624 bytes
+- Image SHA-256: `950a87868f8a076c3d7c38edcc6317c276ade8e4aeb5104d2b4c033ace5b90e1`
+- Merged flash image SHA-256: `1da4a0f25d3d1a77d4746f670f54a9c89bd1b1930be5e6ce98161a65af3d41fe`
 
 ## UNO Q STM32U585 cue controller
 

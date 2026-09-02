@@ -39,6 +39,8 @@ STATUS
 
 The pod binds local UDP port 57322. The receiver replies from port 57321 once per second. Five seconds without a valid matching CRC heartbeat sets `reachable=no`, increments `receiver_timeouts`, and marks the next packets as a restarted stream. This is reachability diagnostics, not authentication or reliable delivery.
 
+`STATUS` also reports the most recent 20 ms frame's integer RMS and peak plus a cumulative clipped-sample count. In test-tone mode RMS/peak should be approximately 8192 with zero clipping. In microphone mode, nonzero changing values confirm only that samples vary; they do not establish acoustic-model accuracy.
+
 ## Battery telemetry boundary
 
 The installed `XIAO_ESP32S3` variant does not expose a verified battery ADC pin/divider for this exact hardware revision, so the default firmware sends battery voltage `0` with `BATTERY_VALID` clear. Do not manufacture a voltage from an unverified pin.

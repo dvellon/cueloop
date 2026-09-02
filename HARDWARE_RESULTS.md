@@ -43,3 +43,10 @@ Notes and artifact path:
 ```
 
 Do not paste Wi-Fi credentials, personal data, or sensitive audio here.
+
+## Prepared digital evidence (not a hardware result)
+
+- Development-computer Arduino CLI compilation is recorded in `firmware/BUILD_MANIFEST.md`.
+- Windows flashing/bring-up steps are in `user_checklists/WINDOWS_FLASHING.md` and `HARDWARE_BRINGUP.md`.
+- Predeclared test methods/targets are in `user_checklists/PHYSICAL_VALIDATION.md`.
+- No row above may change from “Not observed” until a physical operator records the observation using the result block.

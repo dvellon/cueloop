@@ -31,6 +31,7 @@ struct Counters {
   uint32_t valid_acks = 0;
   uint32_t bad_acks = 0;
   uint32_t receiver_timeouts = 0;
+  uint32_t clipped_samples = 0;
 };
 
 Preferences preferences;
@@ -58,6 +59,8 @@ uint32_t wifi_retry_ms = kMinimumWifiRetryMs;
 uint32_t last_ack_ms = 0;
 uint32_t last_diagnostics_ms = 0;
 uint32_t next_test_frame_us = 0;
+uint16_t last_audio_rms = 0;
+uint16_t last_audio_peak = 0;
 String serial_line;
 int16_t samples[cueloop::kSamplesPerFrame];
 uint8_t datagram[cueloop::kDatagramBytes];
@@ -181,6 +184,23 @@ void fillTestTone() {
   }
 }
 
+void updateAudioDiagnostics() {
+  uint64_t sum_squares = 0;
+  uint32_t peak = 0;
+  for (uint16_t index = 0; index < cueloop::kSamplesPerFrame; ++index) {
+    const int32_t value = samples[index];
+    const uint32_t magnitude = static_cast<uint32_t>(value < 0 ? -value : value);
+    peak = max(peak, magnitude);
+    sum_squares += static_cast<uint64_t>(magnitude) * magnitude;
+    if (magnitude >= 32760) {
+      counters.clipped_samples++;
+    }
+  }
+  last_audio_peak = static_cast<uint16_t>(min<uint32_t>(peak, 32768));
+  last_audio_rms = static_cast<uint16_t>(sqrt(
+      static_cast<double>(sum_squares) / cueloop::kSamplesPerFrame));
+}
+
 bool captureFrame() {
   if (test_tone_enabled) {
     const uint32_t now_us = micros();
@@ -192,6 +212,7 @@ bool captureFrame() {
     }
     next_test_frame_us += kFrameDurationUs;
     fillTestTone();
+    updateAudioDiagnostics();
     counters.captured_frames++;
     return true;
   }
@@ -205,6 +226,7 @@ bool captureFrame() {
     counters.capture_errors++;
     return false;
   }
+  updateAudioDiagnostics();
   counters.captured_frames++;
   return true;
 }
@@ -360,6 +382,12 @@ void printStatus() {
   Serial.print(counters.bad_acks);
   Serial.print(" receiver_timeouts=");
   Serial.print(counters.receiver_timeouts);
+  Serial.print(" clipped_samples=");
+  Serial.print(counters.clipped_samples);
+  Serial.print(" audio_rms=");
+  Serial.print(last_audio_rms);
+  Serial.print(" audio_peak=");
+  Serial.print(last_audio_peak);
   Serial.print(" rssi_dbm=");
   Serial.print(WiFi.status() == WL_CONNECTED ? WiFi.RSSI() : 0);
   Serial.print(" free_heap=");

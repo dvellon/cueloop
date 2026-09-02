@@ -2,7 +2,7 @@
 
 **Updated:** 2026-09-02 EDT
 **Goal:** active
-**Phase:** hardware documentation and submission package after compiled App Lab integration
+**Phase:** App Lab submission article, demo/video, and release review
 
 ## Deadline clock
 
@@ -24,7 +24,7 @@
 - Generated and provenance-labeled an original Autodesk cover concept; it is explicitly not physical evidence.
 - Implemented and documented the 684-byte CueLoop Protocol v1 with strict CRC/length/flag validation and matching C++ constants.
 - Implemented the simulated CuePod, WAV replay, loss/jitter/latency/reorder/restart injection, bounded receiver/windowing, simulation classifier, temporal confirmation engine, metadata-only SQLite store, local API, and accessible dashboard.
-- Added a one-command local demo and 21 passing protocol, buffering, model, engine, privacy, pipeline, API, and simulator tests.
+- Added a one-command local demo and broad protocol, buffering, model, engine, privacy, pipeline, API, and simulator coverage.
 - Verified Arduino CLI 1.5.1, ESP32 core 3.3.11, UNO Q Zephyr core 0.90.0, and both target FQBNs.
 - Selected and checksum-pinned the official YAMNet LiteRT v1 baseline; added an optional validated adapter, exact AudioSet class mapping, safe fetcher, locked inference dependencies, and provenance-gated evaluation tooling.
 - Measured a clearly bounded development-computer/synthetic-workload inference baseline: 100 runs, 1.834 ms mean, 1.919 ms p95, 1.997 ms maximum. No accuracy or target-hardware claim is attached.
@@ -32,11 +32,15 @@
 - Implemented the UNO Q STM32 cue controller with validated Bridge RPC inputs, deterministic onboard RGB patterns, heartbeat health, optional acknowledgement button/actuators, and restart-safe Linux resynchronization.
 - Added the official self-contained App Lab folder, checksum-verified sync tool, fail-closed YAMNet startup, LAN dashboard/receiver, Bridge adapter, metadata persistence, pinned dependencies, and package drift tests.
 - Compiled XIAO firmware at 26% flash/14% RAM and both the canonical and isolated App Lab UNO Q sketches at 11% flash/12% RAM. These are build-machine results, not physical validation.
-- Expanded the automated suite to 40 passing tests and retained zero Pyright errors.
+- Created the complete minimum/optional/V2 BOM split, machine-readable connectivity netlist, accessible SVG schematic, wiring/pin tables, power/bandwidth/runtime analysis, and battery-safe assembly procedure.
+- Added Windows UNO Q App Lab/XIAO flashing instructions and predeclared physical test gates for transport, microphone, model quality, latency, recovery, battery, thermal, mechanical, accessibility, and video evidence.
+- Added integer RMS/peak/clipping diagnostics to CuePod firmware and recompiled it at 26% flash/14% RAM.
+- Added a deterministic, secret-resistant App Lab release packager; local v0.1.0 archive SHA-256 is `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83`.
+- Expanded the automated suite to 44 passing tests and retained zero Pyright errors.
 
 ## In progress
 
-- Exact BOM, wiring/power documentation, safe bring-up and Windows flashing instructions.
+- Competition-ready Hackster article, video/narration package, source/build guide, troubleshooting, and final rubric review.
 
 ## Not yet claimed
 
@@ -46,7 +50,7 @@
 
 ## Next checkpoint
 
-The reproducible hardware/documentation package and Windows bring-up checklists are complete, with every physical observation field left explicitly pending.
+The complete App Lab Hackster/video package and rubric-mapped release candidate are ready, with only physical/account-controlled fields left pending.
 
 ## Physical blockers
 
