@@ -36,7 +36,7 @@
 - Created the complete minimum/optional/V2 BOM split, machine-readable connectivity netlist, accessible SVG schematic, wiring/pin tables, power/bandwidth/runtime analysis, and battery-safe assembly procedure.
 - Added Windows UNO Q App Lab/XIAO flashing instructions and predeclared physical test gates for transport, microphone, model quality, latency, recovery, battery, thermal, mechanical, accessibility, and video evidence.
 - Added integer RMS/peak/clipping diagnostics to CuePod firmware and recompiled it at 26% flash/14% RAM.
-- Added a deterministic, secret-resistant App Lab release packager; local v0.1.0 archive SHA-256 is `0aae8fbf693c52fffddd48638c9e19c87f0e97db8efd8e0c01454e6f49841b83`.
+- Added a deterministic, secret-resistant App Lab release packager that records the exact Git commit, refuses dirty packaging inputs, and emits a SHA-256 sidecar. Release archives are ignored and regenerated from the final committed checkpoint so status text cannot make their identity stale.
 - Completed the App Lab title/metadata, full Hackster article, source guide, troubleshooting, three-minute/short video scripts, photo list, evidence table, media attribution, final checklist, and adversarial 30/20/15/15/20 rubric audit.
 - Added a deterministic committed-tree source-release packager with a per-file manifest, exact commit identity, excluded internal brief, secret/audio/model/database guards, and SHA-256 sidecar.
 - Added dependency-free Fusion/reference output validation for critical dimensions, positive walls/floors/webs, vertical/electronics/dock clearances, body/component/timeline/parameter minima, exact reference bounds, provenance, source snapshots, expected export structure, and hashes.
@@ -47,7 +47,7 @@
 - Added the predeclared experiment registry and complete Autodesk December workspace for V2 hardware, interaction, CAD, manufacturing, evidence, article, and submission planning.
 - Added a requirement-by-requirement completion audit and automated checks for the authoritative hardware record, experiment contract, and Autodesk V2 structure.
 - Reverified Arduino CLI/cores/board definitions and reproduced all three firmware/profile builds and binary hashes.
-- Expanded the automated suite to 61 passing tests and retained zero Pyright errors.
+- Expanded the automated suite to 62 passing tests and retained zero Pyright errors.
 
 ## In progress
 

@@ -1,6 +1,6 @@
 # Official requirements and source check
 
-**Checked:** September 1, 2026 (America/New_York)  
+**Checked:** September 2, 2026 (America/New_York)
 **Policy:** use primary organizer/manufacturer sources; recheck before submission because organizers reserve the right to change dates.
 
 ## Competition 1: Invent the Future with Arduino UNO Q and App Lab
@@ -49,6 +49,7 @@ Arduino's current product and App Lab documentation confirm:
 - UNO Q combines a Qualcomm Dragonwing QRB2210 MPU running Debian Linux with an STM32U585 MCU running Arduino sketches over Zephyr OS.
 - The specified 4 GB / 32 GB unit is SKU ABX00173; the brief's configuration is compatible with the 4 GB recommendation for SBC/App Lab workloads.
 - App Lab Apps use a mandatory `app.yaml`, mandatory `python/main.py`, optional `python/requirements.txt`, and optional `sketch/sketch.ino` plus `sketch/sketch.yaml`.
+- The official `arduino-app-cli` is designed to run on UNO Q and assumes its board user, groups, system directories, and services. It is not a valid hardware-free App Lab runner for this generic Ubuntu build machine; final App import/run validation remains a declared UNO Q gate.
 - Optional Bricks run on Linux alongside the Python app.
 - Linux and MCU communicate through Arduino Bridge RPC. Supported patterns include Python `Bridge.call()`/`Bridge.notify()` and MCU `Bridge.provide()`/`Bridge.provide_safe()` after `Bridge.begin()`.
 - Arduino documents the advanced router socket as `/var/run/arduino-router.sock`; CueLoop uses the supported App Lab helper instead of binding directly for V1.
@@ -58,6 +59,7 @@ Primary sources:
 - [UNO Q product documentation](https://docs.arduino.cc/hardware/uno-q)
 - [Arduino App Lab documentation](https://docs.arduino.cc/software/app-lab/)
 - [Official App specification](https://github.com/arduino/arduino-app-cli/blob/main/docs/app-specification.md)
+- [Official App CLI user documentation](https://github.com/arduino/arduino-app-cli/blob/main/docs/user-documentation.md)
 - [Official UNO Q user manual source](https://github.com/arduino/docs-content/blob/main/content/hardware/02.uno/boards/uno-q/tutorials/01.user-manual/content.md)
 - [Official App Lab examples](https://github.com/arduino/app-bricks-examples)
 

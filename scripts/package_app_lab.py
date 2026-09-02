@@ -31,6 +31,15 @@ FORBIDDEN_SUFFIXES = {
     ".local.h",
 }
 FORBIDDEN_NAMES = {".env", "credentials.json", "secrets.json"}
+PROVENANCE_PATHS = (
+    "app_lab/CueLoop",
+    "firmware/uno_q_cue_controller",
+    "linux/cueloop",
+    "models/class_mapping.json",
+    "models/model_manifest.json",
+    "scripts/package_app_lab.py",
+    "scripts/sync_app_lab.py",
+)
 
 
 def sha256_bytes(content: bytes) -> str:
@@ -65,7 +74,45 @@ def zip_info(name: str, *, directory: bool = False) -> ZipInfo:
     return info
 
 
-def build(version: str) -> tuple[Path, str]:
+def source_provenance(*, allow_dirty: bool) -> tuple[str, bool]:
+    commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if commit.returncode or not commit.stdout.strip():
+        raise ValueError(commit.stderr.strip() or "cannot resolve source commit")
+
+    status = subprocess.run(
+        [
+            "git",
+            "status",
+            "--porcelain",
+            "--untracked-files=all",
+            "--",
+            *PROVENANCE_PATHS,
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if status.returncode:
+        raise ValueError(status.stderr.strip() or "cannot inspect packaging source tree")
+    source_tree_clean = not status.stdout.strip()
+    if not source_tree_clean and not allow_dirty:
+        changed = ", ".join(line[3:] for line in status.stdout.splitlines())
+        raise ValueError(
+            "packaging inputs differ from HEAD; commit them or use --allow-dirty "
+            f"for development-only archives ({changed})"
+        )
+    return commit.stdout.strip(), source_tree_clean
+
+
+def build(version: str, *, allow_dirty: bool = False) -> tuple[Path, str]:
+    source_commit, source_tree_clean = source_provenance(allow_dirty=allow_dirty)
     sync = subprocess.run(
         [
             sys.executable,
@@ -101,6 +148,8 @@ def build(version: str) -> tuple[Path, str]:
             "schema_version": 1,
             "app": "CueLoop",
             "version": version,
+            "source_commit": source_commit,
+            "source_tree_clean": source_tree_clean,
             "raw_audio_included": False,
             "runtime_data_included": False,
             "files": entries,
@@ -127,6 +176,11 @@ def build(version: str) -> tuple[Path, str]:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--version", default="0.1.0")
+    parser.add_argument(
+        "--allow-dirty",
+        action="store_true",
+        help="allow a development-only archive when packaging inputs differ from HEAD",
+    )
     return parser
 
 
@@ -136,7 +190,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Package version must be nonempty and contain no spaces", file=sys.stderr)
         return 2
     try:
-        archive, digest = build(args.version)
+        archive, digest = build(args.version, allow_dirty=args.allow_dirty)
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"App Lab packaging failed: {error}", file=sys.stderr)
         return 1

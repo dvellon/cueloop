@@ -23,7 +23,7 @@ All notable changes are recorded here. This project uses semantic versioning onc
 - UNO Q STM32 cue-controller firmware with compact Bridge RPCs, deterministic LED/optional actuator patterns, health indication, and acknowledgement input.
 - Receiver ACK extension to CueLoop Protocol v1 and matching strict Python/C++ validation.
 - Fault-contained Linux Bridge adapter with diagnostics and MCU-restart cue resynchronization.
-- Official App Lab package structure, pinned Python/sketch dependencies, checksum-enforced source/model synchronizer, and package integrity tests.
+- Official App Lab package structure, pinned Python/sketch dependencies, checksum-enforced source/model synchronizer, commit-bound clean-tree release archives, and package integrity tests.
 - Reproducible firmware build manifest covering both canonical targets and the isolated App Lab sketch profile.
 - Objective CuePod per-frame RMS, peak, and cumulative clipping diagnostics for physical microphone bring-up.
 - Complete minimum/optional/V2 BOM, machine-readable netlist, accessible SVG schematic, wiring/pin tables, power and bandwidth analysis, and battery-safe assembly guide.

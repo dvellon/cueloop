@@ -14,6 +14,28 @@ APP = ROOT / "app_lab" / "CueLoop"
 
 
 class AppLabPackageTests(unittest.TestCase):
+    def test_release_packager_rejects_uncommitted_input(self) -> None:
+        probe = APP / "UNCOMMITTED_PACKAGE_PROBE.txt"
+        probe.write_text("test-only packaging drift\n", encoding="utf-8")
+        try:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/package_app_lab.py",
+                    "--version",
+                    "dirty-probe",
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        finally:
+            probe.unlink(missing_ok=True)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("packaging inputs differ from HEAD", result.stderr)
+        self.assertIn(probe.name, result.stderr)
+
     def test_required_app_structure_and_metadata(self) -> None:
         for relative in (
             "app.yaml",
@@ -67,7 +89,13 @@ class AppLabPackageTests(unittest.TestCase):
         model = APP / "models" / "yamnet-classification-tflite-v1.tflite"
         if not model.exists():
             self.skipTest("ignored model is required for a complete release archive")
-        command = [sys.executable, "scripts/package_app_lab.py", "--version", "test"]
+        command = [
+            sys.executable,
+            "scripts/package_app_lab.py",
+            "--version",
+            "test",
+            "--allow-dirty",
+        ]
         first = subprocess.run(
             command, cwd=ROOT, capture_output=True, text=True, check=False
         )
@@ -87,6 +115,20 @@ class AppLabPackageTests(unittest.TestCase):
             )
             self.assertFalse(any(name.endswith(".sqlite3") for name in names))
             self.assertFalse(any("__pycache__" in name for name in names))
+            package_manifest = json.loads(
+                bundle.read("CueLoop/PACKAGE_MANIFEST.json")
+            )
+            source_commit = subprocess.run(
+                ["git", "rev-parse", "HEAD"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout.strip()
+            self.assertEqual(package_manifest["source_commit"], source_commit)
+            self.assertIsInstance(package_manifest["source_tree_clean"], bool)
+            self.assertFalse(package_manifest["raw_audio_included"])
+            self.assertFalse(package_manifest["runtime_data_included"])
 
 
 if __name__ == "__main__":

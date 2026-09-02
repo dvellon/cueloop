@@ -8,7 +8,7 @@
 
 | Area | Evidence tier | Method | Result | Claim boundary |
 |---|---|---|---|---|
-| Regression suite | Development computer / simulation | `./scripts/test.sh` | 61 tests passed at the last integrated checkpoint | Exercises software/evaluation/benchmark/native-CAD/reference-export contracts; no board or real-audio claim |
+| Regression suite | Development computer / simulation | `./scripts/test.sh` | 62 tests passed at the last integrated checkpoint | Exercises software/evaluation/benchmark/commit-bound packaging/native-CAD/reference-export contracts; no board or real-audio claim |
 | Python static analysis | Development computer | `npx --yes pyright` | 0 errors, 0 warnings | Static analysis, not runtime proof |
 | XIAO firmware | Development-computer compile | Arduino CLI 1.5.1, `esp32:esp32` 3.3.11, target `XIAO_ESP32S3` | 888,480 B program (26%); 47,632 B global RAM (14%) | Compiles only; mic, Wi-Fi, NVS, and battery unobserved |
 | UNO Q firmware | Development-computer compile | Arduino CLI 1.5.1, `arduino:zephyr` 0.90.0, target `unoq` | 93,304 B program (11%); 34,018 B global RAM (12%) | Compiles only; MCU LEDs, button, and Bridge unobserved |

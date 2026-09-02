@@ -53,7 +53,7 @@ python3 scripts/sync_app_lab.py --check --include-model
 
 The first operation copies approved core files, dashboard assets, UNO Q sketch/header, mapping, manifest, and the ignored verified model. The second compares bytes and checksum without writing. Tests run the no-model drift check so clean clones remain testable.
 
-`scripts/package_app_lab.py` repeats the model/source gate, excludes build/cache/database/audio/secret-like files, writes an empty `data/` directory, adds a per-file `PACKAGE_MANIFEST.json`, fixes ZIP timestamps/permissions for deterministic output, and produces a SHA-256 sidecar. The release archive and model remain ignored.
+`scripts/package_app_lab.py` repeats the model/source gate, refuses a release archive when any packaging input differs from `HEAD`, excludes build/cache/database/audio/secret-like files, writes an empty `data/` directory, adds a per-file `PACKAGE_MANIFEST.json` with the exact source commit and clean-tree result, fixes ZIP timestamps/permissions for deterministic output, and produces a SHA-256 sidecar. The release archive and model remain ignored. `--allow-dirty` exists only for development tests; never use it for a submission archive.
 
 `scripts/package_source_release.py` packages blobs from exact committed `HEAD`, not arbitrary working-copy bytes. It omits the internal `PROJECT_PROMPT.md`, rejects credential/audio/model/database/build artifact paths, adds the commit plus per-file SHA-256 values to `SOURCE_MANIFEST.json`, and writes an ignored digest sidecar. It refuses a dirty tracked worktree by default; `--allow-dirty` exists for automated testing and still packages committed `HEAD` only.
 
