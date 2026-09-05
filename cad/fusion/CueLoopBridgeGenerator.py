@@ -1863,7 +1863,11 @@ def run(_context: Any) -> None:
             adsk.fusion.DistanceUnits.MillimeterDistanceUnits
         )
         root = design.rootComponent
-        root.name = ROOT_NAME
+        try:
+            root.name = ROOT_NAME
+        except RuntimeError as exc:
+            if "root component name cannot be changed" not in str(exc):
+                raise
         root.partNumber = "CUELOOP-BRIDGE-NATIVE-V2"
         root.attributes.add(ATTRIBUTE_GROUP, "Evidence", VALIDATION_ATTRIBUTE)
         root.attributes.add(ATTRIBUTE_GROUP, "GeneratorVersion", SCRIPT_VERSION)
