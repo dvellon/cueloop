@@ -184,10 +184,18 @@ class CadApplicationTests(unittest.TestCase):
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(b"manufacturing-placeholder\n")
 
+            # Reproduce a generator snapshot exported by Fusion on Windows.
+            generator_payload = (
+                (CAD / "fusion" / "CueLoopBridgeGenerator.py")
+                .read_bytes()
+                .replace(b"\r\n", b"\n")
+                .replace(b"\n", b"\r\n")
+            )
+            self.assertIn(b"\r\n", generator_payload)
             source_payloads = {
                 "fusion_generator": (
                     "sources/CueLoopBridgeGenerator.py",
-                    (CAD / "fusion" / "CueLoopBridgeGenerator.py").read_bytes(),
+                    generator_payload,
                 ),
                 "design_parameters": (
                     "sources/design_parameters.json",

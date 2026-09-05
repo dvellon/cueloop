@@ -685,8 +685,14 @@ def validate_fusion_output(
         raise CadValidationError("Fusion contract snapshot differs from validation source")
     current_generator = CAD_ROOT / "fusion" / "CueLoopBridgeGenerator.py"
     if current_generator.is_file():
-        current_digest = hashlib.sha256(current_generator.read_bytes()).hexdigest()
-        if current_digest != source_by_role["fusion_generator"]["sha256"]:
+        snapshot_generator = (
+            directory / source_by_role["fusion_generator"]["path"]
+        )
+        # Snapshot integrity was checked above using its exact raw hash.
+        # This comparison ignores only Windows-versus-Linux line endings.
+        current_bytes = current_generator.read_bytes().replace(b"\r\n", b"\n")
+        snapshot_bytes = snapshot_generator.read_bytes().replace(b"\r\n", b"\n")
+        if current_bytes != snapshot_bytes:
             raise CadValidationError(
                 "Fusion generator snapshot differs from the checked-out generator"
             )
