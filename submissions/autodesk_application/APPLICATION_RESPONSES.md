@@ -26,19 +26,7 @@ The product is not a certified alarm, security system, or medical device and wil
 
 ## 3. Link to the project you have started
 
-**USER ACTION REQUIRED:** paste the public Hackster project URL here after creating it from `HACKSTER_PROJECT_OPENING.md`:
-
-`https://www.hackster.io/<account>/<cueloop-bridge-project>`
-
-Before pasting this answer, the linked project must contain:
-
-- the CueLoop Bridge name and elevator pitch;
-- the concept cover image in `assets/concepts/`;
-- the beginning BOM in `STARTING_BOM.md`;
-- Arduino UNO Q, Autodesk Fusion, and PCBWay 3D Printing in the Things list;
-- the project story and architecture from `HACKSTER_PROJECT_OPENING.md`;
-- a Fusion-generated preliminary `.f3d` created from `cad/fusion/CueLoopBridgeGenerator.py`;
-- the system diagram and relevant source/CAD attachments.
+https://www.hackster.io/danvellon/cueloop-bridge-69f47f
 
 ## 4. How does your solution work? What are the main features? How will UNO Q, Fusion, and PCBWay be used?
 

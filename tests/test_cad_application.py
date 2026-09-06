@@ -297,7 +297,9 @@ class CadApplicationTests(unittest.TestCase):
         )
         for number in range(1, 6):
             self.assertIn(f"## {number}.", responses)
-        self.assertIn("USER ACTION REQUIRED", responses)
+        self.assertNotIn("USER ACTION REQUIRED", responses)
+        self.assertNotIn("<account>", responses)
+        self.assertIn("https://www.hackster.io/danvellon/cueloop-bridge-69f47f", responses)
         self.assertNotIn("UNAVOIDABLE USER INPUT", responses)
         self.assertNotIn("[profession/role", responses)
         self.assertIn("I am an investment banker", responses)

@@ -15,8 +15,7 @@ SHA-256 hashes.
 5. Add `media/cueloop-bridge-system-diagram.svg` to the story.
 6. Add the supporting Fusion renders where they clarify the pod, dock/latch,
    receiver, and clip.
-7. Paste the five form answers from `00-APPLICATION_RESPONSES.md` only after
-   confirming the completed biography and replacing the public-project URL placeholder.
+7. Paste the five completed form answers from `00-APPLICATION_RESPONSES.md`.
 
 Required caption for every native Fusion render:
 
@@ -27,7 +26,6 @@ with its provenance record. It must not be presented as physical evidence.
 
 ## Required user-controlled steps
 
-- Create the public Hackster project and replace the URL placeholder in answer 3.
 - Preview the project and application while logged out or in a private window.
 - Save a screenshot or PDF of the live rules while template placeholders remain.
 - Save the final pasted answers and submission confirmation.

@@ -6,11 +6,11 @@ Deadline: **September 7, 2026 at 11:59 PM PDT**. Target an internal submission n
 
 - [x] Recheck official overview, rules, and organizer guide; record any change.
 - [x] Replace only truthful personal facts in application response 5.
-- [ ] Create the public Hackster opening and paste its URL into response 3.
-- [ ] Add name, elevator pitch, concept render, BOM, and complete opening story.
-- [ ] Add Arduino UNO Q, Autodesk Fusion, and PCBWay 3D Printing to Things.
+- [x] Create the public Hackster opening and paste its URL into response 3.
+- [x] Add name, elevator pitch, concept render, BOM, and complete opening story.
+- [x] Add Arduino UNO Q, Autodesk Fusion, and PCBWay 3D Printing to Things.
 - [x] Complete `HARDWARE_TESTS.md` C-100 through C-109 using `cad/FUSION_WINDOWS_RUNBOOK.md`; attach the genuine native-history `.f3d` only after component/timeline/parameter/geometry/reopen checks and retain the hashed return bundle.
-- [ ] Attach or embed the system diagram and concept-render disclosure.
+- [x] Attach or embed the system diagram and concept-render disclosure.
 - [x] Ensure every “built/measured/tested” claim has evidence; keep future work in future tense.
 - [x] Confirm the project is handheld/carryable, carry-on-safe in concept, useful beyond AU, and relevant to Autodesk customers.
 - [x] Explain why UNO Q, Fusion, and PCBWay each materially matter.
