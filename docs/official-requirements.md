@@ -1,7 +1,9 @@
 # Official requirements and source check
 
-**Checked:** September 2, 2026 (America/New_York)
+**Checked:** September 5, 2026 (America/New_York)
 **Policy:** use primary organizer/manufacturer sources; recheck before submission because organizers reserve the right to change dates.
+
+**September 5 recheck:** the live Hackster FAQ and organizer-authored application guide still show the September 7 hardware-application deadline and the same five application prompts. The visible rules-template placeholders remain.
 
 ## Competition 1: Invent the Future with Arduino UNO Q and App Lab
 

@@ -1,6 +1,6 @@
 # PROJECT_PROMPT completion audit
 
-**Audit date:** 2026-09-02 EDT
+**Audit date:** 2026-09-05 EDT
 
 **Method:** each brief requirement is mapped to current repository evidence. “Digitally verified” means an artifact exists and an appropriate test/build/review has run; it never implies physical hardware. “Prepared / physical pending” means the complete procedure/record exists but the required board, measurement, person, interactive desktop, media, or account observation does not.
 
@@ -8,7 +8,7 @@
 
 | Requirement | Evidence | State |
 |---|---|---|
-| Verify official rules/technical facts and discrepancies from primary sources | `docs/official-requirements.md` with check date/URLs and Autodesk rules-template discrepancy | Digitally verified; recheck before submission |
+| Verify official rules/technical facts and discrepancies from primary sources | `docs/official-requirements.md` with September 5 live recheck, URLs, and Autodesk rules-template discrepancy | Digitally verified; recheck once more in the account before submission |
 | Maintain goal, status, plan, decisions, risks, results | active thread goal; `STATUS.md`, `PLAN.md`, `DECISIONS.md`, `RISKS.md`, `HARDWARE_RESULTS.md`, this audit | Digitally verified |
 | Safe repository and no secrets/generated/private artifacts | `.gitignore`, package guards/manifests, release tests, Git review | Digitally verified |
 | Social-impact but broad user framing; central promise | `docs/product-requirements.md`, V1 article/metadata | Digitally verified |
@@ -90,15 +90,15 @@
 
 | Requirement | Evidence | State |
 |---|---|---|
-| Production-intent native Fusion Python workflow | `cad/fusion/CueLoopBridgeGenerator.py`, 125-value parameter source, component/output contract, static native-API tests | Digitally verified; Windows Fusion execution pending |
-| Pod/base/lid/mic path/USB/cable/vents/battery bridge/restraints/fasteners | named native sketches/features/components plus independent OpenCascade solids | Digitally generated and geometry-validated; Fusion visual/physical fit pending |
-| Receiver/diffuser/buttons/LED/power/USB/cable/vents/dock/clip/assembly | named native sketches/features/components plus independent OpenCascade solids | Digitally generated and geometry-validated; Fusion visual/physical fit pending |
-| Walls/floors/webs/gaps/radii/M2/electronics/dock/service clearances | parameter manifest, host validator, 12 zero-overlap OpenCascade checks, DFM/physical checklists | Digitally verified at source/reference tier; measurement/PCBWay review pending |
+| Production-intent native Fusion Python workflow | generator, 125-value parameter source, component/output contract, genuine native-history `.f3d`, source manifest, and C-100 execution record | Digitally verified in Windows Fusion; physical fit pending |
+| Pod/base/lid/mic path/USB/cable/vents/battery bridge/restraints/fasteners | named native sketches/features/components, Fusion sections/renders, and independent OpenCascade solids | Digitally generated and visually inspected; physical fit pending |
+| Receiver/diffuser/buttons/LED/power/USB/cable/vents/dock/clip/assembly | named native sketches/features/components, measurements, interference studies, and independent OpenCascade solids | Digitally generated and visually inspected; physical fit pending |
+| Walls/floors/webs/gaps/radii/M2/electronics/dock/service clearances | parameter manifest, host validator, Fusion measurements/interference checks, 12 zero-overlap OpenCascade checks, and DFM/physical checklists | Digitally verified; received-part measurement and PCBWay review pending |
 | FreeCAD/OpenCascade reference pipeline and neutral-export validation | editable FCStd, 12 valid solids, assembly STEP reopened as 12 solids, 12 zero-overlap checks, per-part exports/hashes | Digitally verified; explicitly non-authoritative |
-| Exact native `.f3d`/STEP/STL/3MF/BOM/source export, inspection, screenshots/renders, and return/hash workflow | `cad/FUSION_WINDOWS_RUNBOOK.md`, C-100 through C-109 | Prepared / Windows Fusion execution pending |
+| Exact native `.f3d`/STEP/STL/3MF/BOM/source export, inspection, screenshots/renders, and return/hash workflow | validated Windows return bundle, final evidence archives, `cad/FUSION_WINDOWS_RUNBOOK.md`, and completed C-100 through C-109 record | Digitally verified and returned; physical validation pending |
 | Original/vendor geometry provenance boundary | `cad/PROVENANCE.md`, parameter source URLs/policies, component attributes and output manifests | Digitally verified |
-| Application cover | original AI-generated concept with prompt/mode/date/digest disclosure | Digitally complete as concept, not physical evidence |
-| September application copy and project opening | complete five responses, biography/URL truth gates, BOM/story/checklist | Digitally complete; identity/account/Fusion export pending |
+| Application cover | native Fusion hero render with required concept caption; earlier AI-generated concept retained with prompt/mode/date/digest disclosure | Digitally complete as a render, not physical evidence |
+| September application copy and project opening | five-response draft, biography/URL truth gates, BOM/story/checklist, native `.f3d`, Fusion renders, and verified evidence | Package-ready inputs complete; identity and account actions pending |
 | December package begun without risking V1 | `submissions/autodesk_final/` plan, manufacturing, evidence, article, checklist | Digitally complete structure; V2 build pending |
 | New hardware/interactions/CAD/manufacturing/testing/workflow tracked | Autodesk final artifact map/evidence matrix and differentiation ledger | Digitally prepared; physical execution pending |
 
@@ -115,6 +115,6 @@
 
 ## Definition-of-done audit verdict
 
-Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The sole remaining Fusion gate is running the native generator, inspecting/adjusting it if evidence requires, reopening the genuine `.f3d`, and returning the hashed export/evidence bundle. At this audit checkpoint, 67 automated tests pass, Pyright reports zero errors/warnings against the minimum supported Python 3.11, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, fixed-epoch/path-normalized XIAO images reproduce byte-for-byte in two local checkouts, and the complete hash-locked CPython 3.13/Linux ARM64 inference distribution set passes metadata/archive/AArch64 ELF validation. That distribution audit is not a claim of dynamic loading or inference on the received UNO Q. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
+Every brief item that can be executed without physical boards, Windows Fusion Desktop, original photography/video, real licensed/self-recorded evaluation audio, entrant identity, or competition-account access now has an implementation or an explicit evidence-backed nonconversion/optional-hardware decision. The Windows Fusion gate is complete: the native generator ran, the result was inspected and parameter-tested, the genuine `.f3d` reopened cleanly, and the hashed export/evidence bundle was verified on Ubuntu. At this audit checkpoint, 67 automated tests pass, Pyright reports zero errors/warnings against the minimum supported Python 3.11, both canonical firmware targets compile on the pinned cores, the isolated App sketch reproduces the canonical UNO Q binaries, fixed-epoch/path-normalized XIAO images reproduce byte-for-byte in two local checkouts, and the complete hash-locked CPython 3.13/Linux ARM64 inference distribution set passes metadata/archive/AArch64 ELF validation. That distribution audit is not a claim of dynamic loading or inference on the received UNO Q. Deterministic archives and their clean extraction are regenerated from the exact commit after this audit is committed.
 
 The long-running product goal remains active because hardware/app/media/account claims are explicitly required for the final competitions. Their complete executable steps and record location are in `HARDWARE_TESTS.md`; no pending row is treated as a pass.

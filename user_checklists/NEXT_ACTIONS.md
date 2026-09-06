@@ -6,8 +6,8 @@ All independent digital development is prepared. Work these gates in deadline or
 
 Deadline: **September 7, 2026 at 11:59 PM PDT / September 8 at 2:59 AM EDT**. Target September 6.
 
-1. Create the public CueLoop Bridge Hackster draft using `submissions/autodesk_application/HACKSTER_PROJECT_OPENING.md`, the starting BOM, system diagram, and the clearly labeled V2 concept image.
-2. Execute C-100 through C-109 in root `HARDWARE_TESTS.md` using `cad/FUSION_WINDOWS_RUNBOOK.md`: run the reviewed native `adsk` generator in Windows Fusion, preserve exact input hashes/messages, inspect timeline/components/parameters/solids/clearances, perform the parameter-edit and clean-reopen proofs, capture the ten screenshots/four renders, and return the genuine `.f3d` plus complete hashed export folder. All Ubuntu CAD generation/reference/validation work is complete; do not import the reference STEP into the authoritative model.
+1. Create the public CueLoop Bridge Hackster draft using `submissions/autodesk_application/HACKSTER_PROJECT_OPENING.md`, the starting BOM, system diagram, and the captioned native Fusion hero render.
+2. Completed September 5: C-100 through C-109 passed for the digital scope. The genuine native-history `.f3d`, complete export, run record, screenshots/renders, manifests, and evidence archives were returned and hash-verified on Ubuntu. Physical fit and hardware-performance gates remain pending.
 3. Write the truthful entrant biography in answer 5 and paste the public draft URL in answer 3. These identity/account fields cannot be inferred safely.
 4. Complete `submissions/autodesk_application/APPLICATION_CHECKLIST.md`, preview logged out, save the live rules if template placeholders remain, submit, and retain confirmation evidence.
 

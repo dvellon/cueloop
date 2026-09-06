@@ -1,14 +1,14 @@
 # Project status
 
-**Updated:** 2026-09-02 EDT
+**Updated:** 2026-09-05 EDT
 **Goal:** active
-**Phase:** digital gate complete; physical and account-controlled handoff
+**Phase:** Autodesk application packaging; physical and account-controlled handoff
 
 ## Deadline clock
 
 | Deliverable | Official deadline | Eastern equivalent | Status |
 |---|---:|---:|---|
-| Autodesk hardware application | 2026-09-07 23:59 PDT | 2026-09-08 02:59 EDT | In progress; highest priority |
+| Autodesk hardware application | 2026-09-07 23:59 PDT | 2026-09-08 02:59 EDT | Submission kit in progress; highest priority |
 | App Lab final submission | 2026-09-13 23:59 PDT | 2026-09-14 02:59 EDT | In progress |
 | Autodesk final submission | 2026-12-20 23:59 PST | 2026-12-21 02:59 EST | Structure started; protected from V1 schedule |
 
@@ -22,6 +22,8 @@
 - Wrote the Autodesk application responses, Hackster opening story, starting BOM, differentiation ledger, and submission checklist.
 - Created the production-intent native Autodesk Fusion generator, 125-value parameter source, component/output contract, PCBWay DFM notes, provenance boundary, and exact Windows execution/evidence/return runbook for the CuePod/receiver/dock/clip assembly.
 - Generated the independent editable FreeCAD/OpenCascade reference assembly and six manufacturing part sets on Ubuntu; 12 solids are valid and positive-volume, the assembly STEP reopens as 12 solids, all 12 forbidden placement intersections have zero overlap, and 17 exported files verify against SHA-256.
+- Ran the reviewed native generator in Windows Fusion 2705.1.11, inspected the hierarchy, timeline, parameters, sections, measurements, manufacturing parts, hardware envelopes, and interference results, then reopened the genuine `.f3d` cleanly.
+- Returned and verified the complete Fusion export, final screenshot/render sets, run record, manifests, and SHA-256 archives on Ubuntu; C-101 through C-109 are recorded as passed for the digital scope.
 - Generated and provenance-labeled an original Autodesk cover concept; it is explicitly not physical evidence.
 - Implemented and documented the 684-byte CueLoop Protocol v1 with strict CRC/length/flag validation and matching C++ constants.
 - Implemented the simulated CuePod, WAV replay, loss/jitter/latency/reorder/restart injection, bounded receiver/windowing, simulation classifier, temporal confirmation engine, metadata-only SQLite store, local API, and accessible dashboard.
@@ -53,19 +55,19 @@
 
 ## In progress
 
-- The single remaining Fusion gate is C-100 through C-109: run the reviewed native script in Windows Fusion, visually inspect/interference-check it, make evidence-backed source adjustments if necessary, reopen the genuine `.f3d`, capture proof/renders, and return/hash the export bundle.
+- Assemble the Autodesk hardware-application kit from the verified Fusion output, final render/evidence archives, application copy, starting BOM, and architecture material; entrant biography, public Hackster URL, account preview, and submission confirmation remain user-controlled.
 - Hardware-dependent, media-capture, identity/account, logged-out publication, and final submission actions are listed in `user_checklists/NEXT_ACTIONS.md`.
 
 ## Not yet claimed
 
 - No licensed real-audio accuracy, UNO Q inference, end-to-end, physical packet-loss/latency, distance, closed-door, or battery measurement has been made.
-- No physical board, battery, microphone, physical output, App Lab run, or Fusion-generated `.f3d` has been observed.
+- No physical board, battery, microphone, physical output, or App Lab run has been observed. The native Fusion `.f3d` is digitally validated but has not been physically fit-tested.
 - No simulated result may be described as physical validation.
 
 ## Next checkpoint
 
-The Windows Fusion C-100 evidence bundle, inventory/application submission records, App Lab/firmware bring-up, and physical result records are returned for evidence-driven integration.
+The Autodesk application kit is generated and reviewed, the entrant biography and public Hackster project URL are supplied, and the account-controlled application is previewed and submitted. Hardware inventory and bring-up follow as separate evidence gates.
 
 ## External gates
 
-Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, enclosure fit, photography, and final real-device video require user-accessible hardware. The native Fusion run, visual inspection, adjustment if needed, and genuine `.f3d` export require Windows Fusion Desktop. The complete methods, safe stops, expected observations, and result blocks are recorded in `HARDWARE_TESTS.md`; no other CAD work is externally blocked.
+Hardware inventory, measurements, assembly, flash verification, wireless testing, physical cue verification, enclosure fit, photography, and final real-device video require user-accessible hardware. Entrant biography, Hackster project creation, logged-out review, and final submission require the user's account. The Windows Fusion digital gate is complete. Remaining physical methods, safe stops, expected observations, and result blocks are recorded in `HARDWARE_TESTS.md`.

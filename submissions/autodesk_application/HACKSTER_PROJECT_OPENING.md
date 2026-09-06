@@ -43,8 +43,10 @@ CueLoop is an awareness aid, not a certified alarm, security system, machine int
 ## What exists at application time
 
 - Product requirements, architecture, privacy model, safety plan, risks, and measurable milestones.
-- A preliminary parametric Fusion generator and central dimension manifest.
-- An original concept cover render clearly identified as a render.
+- A genuine native-history preliminary Fusion `.f3d`, generated from the reviewed script and reopened cleanly after inspection.
+- Fusion sections, measurements, interference checks, parameter-edit proof, six manufacturing-component proof, and five captioned native renders.
+- A native Fusion hero render recommended as the project cover; it is a concept render, not a physical photograph.
+- An earlier AI-generated concept image retained separately with its prompt summary, date, digest, and public disclosure.
 - Starting V2 BOM and confirmed ordered core hardware.
 - A versioned packet design and simulator-first implementation path.
 - Separate scope and evidence requirements for the September App Lab prototype and December Autodesk product.
@@ -53,8 +55,8 @@ Any result described before physical bring-up is labeled simulated, development-
 
 ## Development path
 
-1. Freeze the parametric preliminary design and hardware application package.
-2. Complete the shared protocol, simulator, event engine, API, dashboard, and model evaluation framework.
+1. Freeze the parametric preliminary design and hardware application package (digital Fusion checkpoint completed September 5).
+2. Complete the shared protocol, simulator, event engine, API, dashboard, and model evaluation framework (digital baseline complete; target execution remains pending).
 3. Bring up the XIAO microphone, wireless stream, UNO Q inference, Bridge cues, and safe power path.
 4. Measure accuracy, false alerts, latency, loss, distance, closed-door behavior, background interference, current, and runtime.
 5. Build a new V2 carrier/interaction layer, Fusion Electronics design, and portable enclosure.
