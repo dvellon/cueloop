@@ -174,7 +174,39 @@ All Ubuntu-executable CAD work is complete before this gate: the native `adsk` g
 | C-108 | Capture the ten screenshots and four native Fusion renders listed in the runbook. | Images prove native history/parameters/geometry and retain the caption `Fusion native concept render—physical enclosure and fit validation pending.` |
 | C-109 | Return the complete export directory, CSV/ZIP hashes, screenshots/renders, and run record. | F3D, assembly STEP, six STEP/STL/3MF sets, exact source snapshots/manifest, BOM/parameters/validation, and checksums are non-empty and verify on Ubuntu with `cad/validate_cad.py --fusion-output`. |
 
-If a visual defect requires adjustment, preserve the failure, update `design_parameters.json` or the generator in Git, rerun Ubuntu validation, then execute a fresh Fusion document. Do not repair a generated body manually and present it as script-generated. This gate remains pending until the genuine `.f3d` has been run, visually inspected, reopened, and returned.
+If a visual defect requires adjustment, preserve the failure, update `design_parameters.json` or the generator in Git, rerun Ubuntu validation, then execute a fresh Fusion document. Do not repair a generated body manually and present it as script-generated. The completed record below closes only the Windows/Fusion digital gate; physical fit and hardware-performance claims remain pending under the applicable hardware gates.
+
+### C-100 execution record — 2026-09-05 (PASS)
+
+This record covers native Fusion generation and digital inspection only. It does not
+claim physical enclosure fit, latch force, acoustic performance, thermal performance,
+RF performance, or manufacturing readiness.
+
+| ID | Result | Recorded observation / evidence |
+|---|---|---|
+| C-101 | PASS | Generation commit `bad2be99b5f221b4e65e5cc0efc6b8d50b988b4f`; validation commit `26544ed0f3f2343a16c5373ed0fb9854330304dd`; Fusion `2705.1.11 x86_64`; Windows 11 Home 25H2 (`26200.9168`). Operator, timestamp, timezone, and exact source hashes are preserved in `FUSION_RUN_RECORD.txt`. |
+| C-102 | PASS | The Fusion Python generator created a new native parametric design without importing STEP, mesh, BRep, or base geometry. The immutable Fusion root-name condition was handled by the committed generator fix rather than by manually repairing generated geometry. |
+| C-103 | PASS | `CueLoop_Bridge_validation.json` reports `status: pass`. The returned design contains 15 components including the root, 12 solid bodies, 269 timeline entries, and 125 user parameters; contract-required counts passed validation. |
+| C-104 | PASS | Browser, timeline, parameters, manufacturing bodies, and reference components were inspected. Six manufacturing components finish as one solid each, native history is present, and the manufacturing-only view contains the expected six components. |
+| C-105 | PASS | `pod_mic_hole_diameter` was changed from 1.8 mm to 2.0 mm; all seven microphone ports updated without warnings. Undo restored the retained design and all seven driven dimensions to 1.8 mm. |
+| C-106 | PASS (digital scope) | CuePod and receiver sections were reviewed. Recorded dock pocket is 55 x 47 mm; CuePod outer size is 54 x 46 mm; dock tongue is 34 x 27 x 2 mm; latch depth is 1.8 mm. Manufacturing-component and hardware-envelope interference studies reported no interferences. Physical fit, latch force, acoustics, thermal/RF behavior, and DFM remain pending. |
+| C-107 | PASS | The exported `CueLoop_Bridge_Native.f3d` was closed and reopened in a clean Fusion session. Compute All completed without warnings; hierarchy, timeline, parameters, manufacturing solids, and reference-only component names persisted. |
+| C-108 | PASS | Final evidence contains 21 laptop PNG files plus 10 desktop images. It includes the required orthographic, hierarchy, parameter, section, measurement, interference, manufacturing, clip, reopen, render, and export/hash views. Five native Fusion concept renders carry the exact required caption. |
+| C-109 | PASS | The complete Windows return archive was copied to Ubuntu and validated. The final laptop and desktop evidence archives were independently checked for byte counts, SHA-256 identities, internal file counts, manifest rows, and per-file hashes with zero issues. |
+
+Authoritative returned-artifact identities:
+
+- `CueLoop_Bridge_Native.f3d`: `AD85F87B2108F35DBF9DFC957B1D4231192909AE949B7276D2C08B920DEEABC2`
+- `CueLoop_Bridge_Native.step`: `2F63338C7C9CB303AC1A6AED0C561A93881CA46C305807792AD561F79A2F6170`
+- `CueLoop_Bridge_Native_v2_Windows_Return.zip`: 52,880,550 bytes; `D6643B17DAB3CC22308B39AC5BB0BEC495248554D7DB25B262AC4CFB3D4D2482`
+- `CueLoop-Fusion-Evidence-Laptop-v3.zip`: 9,752,048 bytes; `6B37C517F26E5D7498FA5FC96043C2EEDD5F4B101C602613DA66F91781639676`
+- `CueLoop-Fusion-Evidence-Desktop.zip`: 5,848,995 bytes; `80966830523A0D2C99FC632632EA2D9B33BFCAB30E4B6246208642BC57ECE605`
+- Ubuntu evidence location: `cad/exports/fusion_return/2026-09-05-bad2be9/evidence/`
+
+The validator continues to enforce the source manifest's exact raw hashes. Commit
+`26544ed0f3f2343a16c5373ed0fb9854330304dd` permits only CRLF-versus-LF
+normalization when comparing the Windows generator snapshot with the checked-out
+Linux file.
 
 ## Gate H-000 — deterministic integrated bring-up
 
