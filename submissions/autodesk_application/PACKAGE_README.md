@@ -16,7 +16,7 @@ SHA-256 hashes.
 6. Add the supporting Fusion renders where they clarify the pod, dock/latch,
    receiver, and clip.
 7. Paste the five form answers from `00-APPLICATION_RESPONSES.md` only after
-   replacing the biography and public-project URL placeholders.
+   confirming the completed biography and replacing the public-project URL placeholder.
 
 Required caption for every native Fusion render:
 
@@ -27,7 +27,6 @@ with its provenance record. It must not be presented as physical evidence.
 
 ## Required user-controlled steps
 
-- Replace the bracketed biography facts in answer 5 with truthful information.
 - Create the public Hackster project and replace the URL placeholder in answer 3.
 - Preview the project and application while logged out or in a private window.
 - Save a screenshot or PDF of the live rules while template placeholders remain.

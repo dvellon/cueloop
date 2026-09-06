@@ -298,7 +298,10 @@ class CadApplicationTests(unittest.TestCase):
         for number in range(1, 6):
             self.assertIn(f"## {number}.", responses)
         self.assertIn("USER ACTION REQUIRED", responses)
-        self.assertIn("UNAVOIDABLE USER INPUT", responses)
+        self.assertNotIn("UNAVOIDABLE USER INPUT", responses)
+        self.assertNotIn("[profession/role", responses)
+        self.assertIn("I am an investment banker", responses)
+        self.assertIn("hobbyist hardware and software developer", responses)
         self.assertIn("not a certified alarm", responses)
         self.assertIn("raw audio is discarded after inference by default", responses)
         self.assertIn("preliminary `.f3d`", responses)

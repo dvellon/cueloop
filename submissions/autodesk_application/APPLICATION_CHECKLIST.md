@@ -5,7 +5,7 @@ Deadline: **September 7, 2026 at 11:59 PM PDT**. Target an internal submission n
 ## Digital package gate
 
 - [x] Recheck official overview, rules, and organizer guide; record any change.
-- [ ] Replace only truthful personal facts in application response 5.
+- [x] Replace only truthful personal facts in application response 5.
 - [ ] Create the public Hackster opening and paste its URL into response 3.
 - [ ] Add name, elevator pitch, concept render, BOM, and complete opening story.
 - [ ] Add Arduino UNO Q, Autodesk Fusion, and PCBWay 3D Printing to Things.
