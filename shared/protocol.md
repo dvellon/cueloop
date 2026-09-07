@@ -1,8 +1,12 @@
 # CueLoop Protocol v1
 
-CueLoop V1 uses one UDP datagram per 20 ms of 16 kHz mono signed 16-bit PCM. At 320 samples/frame the payload is 640 bytes and the complete datagram is 684 bytes, below common Ethernet/Wi-Fi MTUs. The stream consumes approximately 273.6 kbit/s including this application header, before UDP/IP/link overhead.
+CueLoop V1 uses one length-framed packet per 20 ms of 16 kHz mono signed 16-bit PCM over a persistent TCP connection. At 320 samples/frame the PCM payload is 640 bytes, the CueLoop packet is 684 bytes, and the two-byte stream prefix makes each TCP application frame 686 bytes. The stream consumes approximately 274.4 kbit/s before TCP/IP/link overhead.
 
-V1 is intended only for a trusted private LAN. CRCs detect accidental corruption; they do not provide authentication, integrity against an attacker, or confidentiality. Never expose the UDP port to the internet or use the prototype on public Wi-Fi.
+V1 is intended only for a trusted private LAN. TCP supplies ordered reliable bytes but no application identity or confidentiality. CRCs detect accidental corruption; they do not provide authentication or integrity against an attacker. Never expose TCP port 57321 to the internet or use the prototype on public Wi-Fi.
+
+## Stream framing
+
+Every CueLoop packet is prefixed by a two-byte unsigned big-endian payload length. The length excludes the prefix and must be from 1 through 1324 bytes. A normal audio frame has prefix value 684; a receiver acknowledgement has prefix value 24. Invalid lengths terminate the connection. The next connection begins at a new frame boundary.
 
 ## Header
 
@@ -31,7 +35,7 @@ Flags: bit 0 simulated source, bit 1 test tone, bit 2 USB powered, bit 3 battery
 
 ## Receiver heartbeat acknowledgement
 
-Once per second, after validating an audio packet, the receiver replies to that packet's UDP source port with a fixed 24-byte acknowledgement. This lets the pod distinguish “Wi-Fi associated” from “CueLoop receiver reachable” without adding audio retransmission or cloud state.
+Once per second, after validating an audio packet, the receiver returns a framed 24-byte acknowledgement on the same TCP connection. This lets the pod distinguish “Wi-Fi associated” from “CueLoop receiver reachable” without cloud state.
 
 | Offset | Size | Field | Meaning |
 |---:|---:|---|---|
@@ -44,13 +48,13 @@ Once per second, after validating an audio packet, the receiver replies to that 
 | 16 | 4 | receiver uptime ms | Receiver-process uptime modulo 2^32 |
 | 20 | 4 | CRC32 | IEEE/zlib CRC32 over bytes 0–19 |
 
-The pod treats a valid matching acknowledgement as reachability evidence. After five seconds without one it raises a diagnostic receiver timeout and marks the next successfully delivered stream as restarted. The acknowledgement does not make UDP reliable, does not prove identity, and is not a cryptographic authentication tag.
+The pod treats a valid matching acknowledgement as reachability evidence. After five seconds of enabled streaming without one it raises a diagnostic receiver timeout, closes the connection, reconnects with bounded backoff, and marks the next successfully delivered stream as restarted. The acknowledgement does not prove identity and is not a cryptographic authentication tag.
 
 ## Ordering, restart, and clock behavior
 
-- The receiver keys state by pod ID and releases frames through a bounded jitter buffer.
+- TCP preserves byte order within a connection. The receiver still keys state by pod ID and releases frames through a bounded sequence buffer so simulator-injected faults, sender-side drops, and reconnect boundaries remain explicit.
 - Duplicates and packets older than the current release point are discarded and counted.
-- A gap is held for a small reorder depth, then emitted as the expected number of zero samples and counted. The system never waits indefinitely for UDP retransmission.
+- A sequence gap is held only to the configured bounded depth, then emitted as the expected number of zero samples and counted. TCP retransmission can increase latency, so the pod uses bounded connect/write timeouts instead of waiting indefinitely at the application layer.
 - The first packet after a firmware/network stream reset sets `STREAM_RESTART`; the receiver clears pending reorder/audio state and accepts the new sequence/sample clock.
 - `capture_ms` is pod uptime, not synchronized wall time. V1 estimates interarrival jitter and decision-pipeline delay; it does not claim one-way network latency without a measured clock-offset exchange.
 - A sample-rate or nominal-frame-size change resets the stream and reports a diagnostic mismatch in V1.

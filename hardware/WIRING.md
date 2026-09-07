@@ -9,7 +9,7 @@
 | Pigtail verified negative lead | XIAO `BAT-` pad | Battery return | Seeed identifies the negative pad as the side closest to USB-C |
 | XIAO USB-C | Windows laptop USB-C data cable | Flash, serial configuration, USB development power/charge | Battery disconnected during soldering; known-good data cable |
 | UNO Q USB-C | Approved Arduino-order supply/data/PD path | UNO Q power and App Lab connection | Exact accessory and mode confirmed from packing list/manual |
-| CuePod Wi-Fi | UNO Q Wi-Fi on same trusted LAN | UDP 57321 PCM/ACK transport | 2.4 GHz support, IP address, firewall, no guest isolation |
+| CuePod Wi-Fi | UNO Q Wi-Fi on same trusted LAN | TCP 57321 length-framed PCM/ACK transport | 2.4 GHz support, IP address, firewall, no guest isolation |
 
 There is no wired signal or shared ground between CuePod and UNO Q during normal use. There is no Qwiic cable in the minimum build.
 

@@ -12,9 +12,9 @@ from arduino.app_utils import App, Bridge
 
 from cueloop.api import CueLoopHTTPServer
 from cueloop.bridge import BridgeCueSink
-from cueloop.constants import DEFAULT_UDP_PORT
+from cueloop.constants import DEFAULT_TCP_PORT
 from cueloop.pipeline import CueLoopPipeline
-from cueloop.service import UDPReceiver
+from cueloop.service import TCPReceiver
 from cueloop.storage import EventStore
 from cueloop.yamnet import DEFAULT_YAMNET_SHA256, YamnetClassifier
 
@@ -60,7 +60,7 @@ class CueLoopApp:
             cue_sink=self.cue_sink,
             location="CuePod monitored space",
         )
-        self.receiver = UDPReceiver("0.0.0.0", DEFAULT_UDP_PORT, self.pipeline)
+        self.receiver = TCPReceiver("0.0.0.0", DEFAULT_TCP_PORT, self.pipeline)
         self.server = CueLoopHTTPServer(("0.0.0.0", HTTP_PORT), self.pipeline)
         self.server_thread = Thread(
             target=self.server.serve_forever,
@@ -105,7 +105,7 @@ class CueLoopApp:
         self.registration_thread.start()
         print(
             f"CueLoop dashboard: http://<uno-q-address>:{HTTP_PORT}\n"
-            f"CueLoop CuePod receiver: UDP {DEFAULT_UDP_PORT}\n"
+            f"CueLoop CuePod receiver: TCP {DEFAULT_TCP_PORT}\n"
             "Privacy: raw audio is processed in memory and is not retained.",
             flush=True,
         )

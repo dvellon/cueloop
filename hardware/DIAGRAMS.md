@@ -6,7 +6,7 @@
 flowchart LR
   MIC[Integrated PDM mic] --> XIAO[XIAO ESP32S3 Sense\n16 kHz PCM + framing]
   BAT[Protected 1-cell LiPo] --> XIAO
-  XIAO -->|Wi-Fi UDP 57321\ntrusted LAN| RX[UNO Q Linux receiver]
+  XIAO -->|Wi-Fi TCP 57321\ntrusted LAN| RX[UNO Q Linux receiver]
   RX --> MODEL[YAMNet + class map]
   MODEL --> POLICY[temporal confirmation\npriority + cooldown]
   POLICY --> UI[local dashboard :8080]
@@ -22,7 +22,7 @@ flowchart LR
 ```mermaid
 flowchart TB
   subgraph Linux[UNO Q Qualcomm / Debian]
-    UDP[UDP + jitter/loss]
+    TCP[TCP stream framing\nsequence gaps + reconnects]
     AI[inference + temporal policy]
     DB[bounded event/feedback SQLite]
     WEB[REST + dashboard]
@@ -32,7 +32,7 @@ flowchart TB
     TIME[nonblocking cue timing]
     IO[LEDs + optional button/driver]
   end
-  UDP --> AI
+  TCP --> AI
   AI --> DB
   AI --> WEB
   AI -->|cue / clear / mute / heartbeat| RPC
@@ -71,15 +71,15 @@ The battery is detached while J1 is soldered. Connector orientation and voltageâ
 
 ```mermaid
 sequenceDiagram
-  participant Pod as XIAO CuePod :57322
+  participant Pod as XIAO CuePod TCP client
   participant Linux as UNO Q Linux :57321
   participant Model as Local model/policy
   participant MCU as UNO Q STM32
   participant UI as Browser :8080
   loop every 20 ms
-    Pod->>Linux: 684-byte PCM v1 frame + CRC + sequence
+    Pod->>Linux: 2-byte length + 684-byte PCM v1 packet
   end
-  Linux-->>Pod: 24-byte CRC ACK, at most once/s
+  Linux-->>Pod: 2-byte length + 24-byte CRC ACK, at most once/s
   Linux->>Model: normalized bounded window
   Model-->>Linux: class scores + inference time
   Note over Linux: require temporal evidence; apply cooldown/mute

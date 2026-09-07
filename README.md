@@ -25,7 +25,7 @@ The simulator-first path runs without boards or third-party Python packages:
 ./scripts/demo.sh
 ```
 
-The command starts a simulated CuePod, UDP receiver, bounded jitter/window buffer, uncertainty-aware event engine, metadata-only store, API, and accessible local dashboard at `http://127.0.0.1:8080`. Every synthetic result is visibly labeled `simulated`; it is pipeline evidence, not real sound-model evidence. Run `./scripts/test.sh` for the automated suite, `python3 scripts/audit_unoq_runtime.py --download` for the target-distribution audit, `./scripts/build_firmware.sh` for all three Arduino builds, and `./scripts/verify_clean_checkout.sh` for the release-grade fresh-checkout audit.
+The command starts a simulated CuePod, framed TCP receiver, bounded jitter/window buffer, uncertainty-aware event engine, metadata-only store, API, and accessible local dashboard at `http://127.0.0.1:8080`. Every synthetic result is visibly labeled `simulated`; it is pipeline evidence, not real sound-model evidence. Run `./scripts/test.sh` for the automated suite, `python3 scripts/audit_unoq_runtime.py --download` for the target-distribution audit, `./scripts/build_firmware.sh` for all three Arduino builds, and `./scripts/verify_clean_checkout.sh` for the release-grade fresh-checkout audit.
 
 ## Repository map
 

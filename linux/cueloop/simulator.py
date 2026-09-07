@@ -6,12 +6,21 @@ import argparse
 from dataclasses import dataclass
 import math
 import random
+import select
 import socket
 import time
 import wave
 
-from .constants import DEFAULT_UDP_PORT, SAMPLE_RATE_HZ, SAMPLES_PER_FRAME
-from .protocol import AudioPacket, PacketFlags, encode_audio
+from .constants import DEFAULT_TCP_PORT, SAMPLE_RATE_HZ, SAMPLES_PER_FRAME
+from .protocol import (
+    AudioPacket,
+    PacketFlags,
+    STREAM_LENGTH,
+    decode_receiver_ack,
+    decode_stream_length,
+    encode_audio,
+    encode_stream_frame,
+)
 
 
 SYNTHETIC_EVENTS = (
@@ -124,10 +133,32 @@ class WavFrames:
         self._wave.close()
 
 
+def drain_acknowledgements(sock: socket.socket, pending: bytearray) -> int:
+    """Consume and validate any complete receiver ACKs without blocking sends."""
+
+    while select.select([sock], [], [], 0)[0]:
+        chunk = sock.recv(4096)
+        if not chunk:
+            raise ConnectionError("CueLoop receiver closed the TCP connection")
+        pending.extend(chunk)
+
+    accepted = 0
+    while len(pending) >= STREAM_LENGTH.size:
+        payload_length = decode_stream_length(bytes(pending[: STREAM_LENGTH.size]))
+        frame_length = STREAM_LENGTH.size + payload_length
+        if len(pending) < frame_length:
+            break
+        decode_receiver_ack(bytes(pending[STREAM_LENGTH.size : frame_length]))
+        del pending[:frame_length]
+        accepted += 1
+    return accepted
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Simulated CueLoop CuePod")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--port", type=int, default=DEFAULT_UDP_PORT)
+    parser.add_argument("--port", type=int, default=DEFAULT_TCP_PORT)
+    parser.add_argument("--connect-timeout", type=float, default=5.0)
     parser.add_argument("--pod-id", type=int, default=0xC0E10001)
     parser.add_argument(
         "--sequence",
@@ -154,6 +185,8 @@ def validate_faults(args: argparse.Namespace) -> None:
         raise ValueError("loss and reorder-rate must be between 0 and 1")
     if args.jitter_ms < 0 or args.latency_ms < 0 or args.restart_interval < 0:
         raise ValueError("timing fault values cannot be negative")
+    if args.connect_timeout <= 0:
+        raise ValueError("connect-timeout must be positive")
     if not 0 <= args.battery_mv <= 0xFFFF:
         raise ValueError("battery-mv must fit uint16")
 
@@ -164,8 +197,10 @@ def main(argv: list[str] | None = None) -> int:
     rng = random.Random(args.seed)
     source = SyntheticAudio(seed=args.seed)
     wav_source = WavFrames(args.wav) if args.wav else None
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     destination = (args.host, args.port)
+    sock = socket.create_connection(destination, timeout=args.connect_timeout)
+    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+    sock.settimeout(None)
     started = time.monotonic()
     next_send = started + args.latency_ms / 1000.0
     next_restart = (
@@ -180,9 +215,11 @@ def main(argv: list[str] | None = None) -> int:
     sent = 0
     dropped = 0
     reordered = 0
+    acknowledgements = 0
+    ack_buffer = bytearray()
     current_name = "WAV replay" if wav_source else args.sequence[0].event
     print(
-        f"Simulated CuePod -> udp://{args.host}:{args.port}\n"
+        f"Simulated CuePod -> tcp://{args.host}:{args.port}\n"
         f"Input: {current_name}; loss={args.loss:.1%}, jitter={args.jitter_ms:.1f} ms, "
         f"latency={args.latency_ms:.1f} ms. Press Ctrl+C to stop."
     )
@@ -223,19 +260,21 @@ def main(argv: list[str] | None = None) -> int:
                 rssi_dbm=-42,
                 flags=flags,
             )
-            datagram = encode_audio(packet)
+            framed_packet = encode_stream_frame(encode_audio(packet))
             if rng.random() < args.loss:
                 dropped += 1
             elif held is None and rng.random() < args.reorder_rate:
-                held = datagram
+                held = framed_packet
             else:
-                sock.sendto(datagram, destination)
+                sock.sendall(framed_packet)
                 sent += 1
                 if held is not None:
-                    sock.sendto(held, destination)
+                    sock.sendall(held)
                     sent += 1
                     reordered += 1
                     held = None
+
+            acknowledgements += drain_acknowledgements(sock, ack_buffer)
 
             sequence = (sequence + 1) & 0xFFFFFFFF
             sample_clock += len(samples)
@@ -247,15 +286,17 @@ def main(argv: list[str] | None = None) -> int:
         pass
     finally:
         if held is not None:
-            sock.sendto(held, destination)
+            sock.sendall(held)
             sent += 1
         if wav_source is not None:
             wav_source.close()
         sock.close()
-    print(f"[simulator] stopped: sent={sent}, dropped={dropped}, reordered={reordered}")
+    print(
+        f"[simulator] stopped: sent={sent}, dropped={dropped}, "
+        f"reordered={reordered}, acknowledgements={acknowledgements}"
+    )
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

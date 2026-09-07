@@ -10,10 +10,13 @@ from cueloop.protocol import (
     PacketError,
     PacketFlags,
     ReceiverAck,
+    STREAM_LENGTH,
     decode_audio,
     decode_receiver_ack,
+    decode_stream_length,
     encode_audio,
     encode_receiver_ack,
+    encode_stream_frame,
 )
 
 
@@ -67,6 +70,21 @@ class ProtocolTests(unittest.TestCase):
         encoded[12] ^= 0x40
         with self.assertRaisesRegex(PacketError, "ACK CRC"):
             decode_receiver_ack(bytes(encoded))
+
+    def test_tcp_stream_frame_round_trip(self) -> None:
+        payload = encode_audio(self.make_packet())
+        framed = encode_stream_frame(payload)
+        length = decode_stream_length(framed[: STREAM_LENGTH.size])
+        self.assertEqual(length, len(payload))
+        self.assertEqual(framed[STREAM_LENGTH.size :], payload)
+
+    def test_tcp_stream_frame_rejects_invalid_lengths(self) -> None:
+        with self.assertRaisesRegex(ValueError, "stream payload length"):
+            encode_stream_frame(b"")
+        with self.assertRaisesRegex(PacketError, "prefix length mismatch"):
+            decode_stream_length(b"\x01")
+        with self.assertRaisesRegex(PacketError, "invalid stream payload length"):
+            decode_stream_length(b"\x00\x00")
 
 
 if __name__ == "__main__":

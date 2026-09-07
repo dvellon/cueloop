@@ -57,7 +57,7 @@
   <text class="h" x="780" y="165">UNO Q receiver · Arduino ABX00173</text>
   <rect class="sub" x="800" y="215" width="245" height="180" rx="10"/>
   <text class="h" x="825" y="250">U2A · Linux MPU</text>
-  <text class="t" x="825" y="280">UDP + jitter buffer</text>
+  <text class="t" x="825" y="280">TCP + bounded buffer</text>
   <text class="t" x="825" y="308">YAMNet + policy</text>
   <text class="t" x="825" y="336">SQLite metadata + UI</text>
   <text class="pin" x="825" y="370">USB-C power/data</text>
@@ -87,7 +87,7 @@
 
   <path class="logical" d="M610 335 C700 235 725 235 800 275" marker-end="url(#arrow)"/>
   <text class="h" x="620" y="235">trusted 2.4 GHz Wi-Fi</text>
-  <text class="t" x="630" y="260">UDP 57321 · PCM + CRC</text>
+  <text class="t" x="630" y="260">TCP 57321 · framed PCM + CRC</text>
 
   <rect class="note" x="50" y="735" width="1300" height="110" rx="12"/>
   <text class="h" x="80" y="772">Explicit non-connections and limits</text>

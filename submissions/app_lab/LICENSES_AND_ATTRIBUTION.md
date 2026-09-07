@@ -26,7 +26,7 @@ YAMNet is not presented as a model trained by CueLoop. Its AudioSet/YouTube-deri
 | Arduino Zephyr platform | `arduino:zephyr` 0.90.0 | build dependency; not vendored; retain upstream component notices |
 | Arduino Router Bridge | `Arduino_RouterBridge` 0.4.3 in App sketch profile | installed from pinned profile; do not relicense upstream library |
 | Arduino App Lab/App CLI | packaging and deployment environment | not distributed in the source archive; refer to Arduino’s official terms/docs |
-| Arduino/Seeed core libraries | Wi-Fi, I2S, NVS, UDP, board APIs | provided by pinned cores; not copied as project-authored code |
+| Arduino/Seeed core libraries | Wi-Fi/TCP, I2S, NVS, board APIs | provided by pinned cores; not copied as project-authored code |
 
 The compiled firmware and App archive can contain linked or bundled third-party components. Before public binary distribution, retain their generated notices/licenses and verify that the packaging path satisfies each license.
 

@@ -105,7 +105,7 @@ was generated from the intended source revision.
 | W-002 | Install current official Arduino App Lab for 64-bit Windows 10/11. | App Lab version and installer source recorded; no unofficial package used. |
 | W-003 | Install Arduino IDE 2 and Espressif Boards Manager URL `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`. | IDE version recorded; **esp32 by Espressif Systems 3.3.11** installed. |
 | W-004 | Verify known USB-C cables/path carry data before connecting the product. | Cable/path identity recorded; Windows Device Manager changes on attach. |
-| W-005 | Confirm a trusted 2.4 GHz-capable LAN permits client-to-client UDP/TCP. | No guest/IoT isolation; public/hostile Wi-Fi is not used; VPN/firewall constraints recorded without credentials. |
+| W-005 | Confirm a trusted 2.4 GHz-capable LAN permits client-to-client TCP. | No guest/IoT isolation; public/hostile Wi-Fi is not used; VPN/firewall constraints recorded without credentials. |
 
 If Windows prompts for `mdns-discovery.exe`, allow private-network access only as appropriate for this trusted LAN. Network discovery uses mDNS/UDP 5353 and may fail on isolated networks even when internet access works.
 
@@ -120,7 +120,7 @@ Keep the CuePod cell detached throughout this gate.
 | W-103 | Import the verified CueLoop ZIP, or extracted top-level `CueLoop` folder only if this App Lab version requests a directory. | `app.yaml`, `python/main.py`, requirements, sketch/profile, mapping, 4,126,810-byte model, and empty `data/` are present. |
 | W-104 | Select UNO Q and press **Run**. | App Lab resolves the complete pinned runtime set, deploys Linux, compiles/flashes STM32, and starts both. Full resolver/monitor output and App Lab/image versions recorded. |
 | W-105 | Observe health before and after Linux heartbeats. | LED4 may blink red while unhealthy, then becomes green; LED3 remains off until a confirmed cue. |
-| W-106 | Inspect monitor/model startup. | Retain `CueLoop runtime: Python ...; machine=...; libc=...; ai-edge-litert=...`; expected audited family is Python 3.13, ARM64/AArch64, LiteRT 2.2.0. Dashboard and UDP startup appear; no native-import, checksum, tensor, embedded-label, database, socket, or Bridge error. |
+| W-106 | Inspect monitor/model startup. | Retain `CueLoop runtime: Python ...; machine=...; libc=...; ai-edge-litert=...`; expected audited family is Python 3.13, ARM64/AArch64, LiteRT 2.2.0. Dashboard and TCP startup appear; no native-import, checksum, tensor, embedded-label, database, socket, or Bridge error. |
 | W-107 | Browse to `http://<UNO-Q-IP>:8080/` and `/api/status`. | Dashboard loads; local/no-recordings and model/input/connection states are visible; pod initially disconnected; Bridge status becomes connected. |
 | W-108 | Inspect App `data/` before activity. | Empty except App-managed placeholders; no previous database or audio. |
 | W-109 | Enable **Run at startup** only after the manual run and restart test pass. | Optional setting and resulting reboot behavior recorded. |

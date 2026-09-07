@@ -69,10 +69,10 @@ This means Bridge is unavailable or the Linux heartbeat is stale.
 ## Wi-Fi connects, but `reachable=no`
 
 1. Verify UNO Q's current IPv4 address and send `SET_RECEIVER<TAB>address<TAB>57321`.
-2. Confirm CueLoop App is running and UDP 57321 is not blocked.
-3. Confirm client isolation is off. The internet can work while LAN client-to-client UDP is blocked.
-4. Inspect `sent`, `send_failures`, `valid_acks`, `bad_acks`, `receiver_timeouts`, and RSSI.
-5. A valid ACK must return from the configured receiver IP/port with matching pod ID and CRC. Do not accept arbitrary sources to make the indicator green.
+2. Confirm CueLoop App is running and `app.yaml` declares TCP 57321 as well as 8080.
+3. Confirm client isolation/firewall policy permits client-to-client TCP 57321. Internet access alone does not prove local reachability.
+4. Inspect `receiver_connect_attempts`, `receiver_reconnects`, `sent`, `send_failures`, `valid_acks`, `bad_acks`, `receiver_timeouts`, and RSSI.
+5. A valid ACK must return on the configured receiver connection with matching pod ID and CRC. Do not accept arbitrary data to make the indicator green.
 
 ## Dashboard says disconnected while valid ACKs rise
 

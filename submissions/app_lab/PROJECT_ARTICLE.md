@@ -35,8 +35,8 @@ Arduino App Lab packages `app.yaml`, the Python app, pinned inference requiremen
 The system is intentionally one-way at its privacy-sensitive edge: the CuePod emits volatile PCM; no command enables recording.
 
 1. The integrated Seeed Sense PDM microphone is captured at 16 kHz, mono, signed 16-bit.
-2. XIAO emits one 684-byte CueLoop Protocol v1 datagram every 20 ms. Each packet contains version, flags, pod ID, sequence, sample clock, capture uptime, format, optional telemetry, and independent header/payload CRC32 values.
-3. UNO Q replies with a 24-byte CRC receiver heartbeat at most once per second. Five seconds without a valid reply makes receiver loss visible at the pod.
+2. XIAO emits one length-framed 684-byte CueLoop Protocol v1 packet every 20 ms over a persistent TCP connection. Each packet contains version, flags, pod ID, sequence, sample clock, capture uptime, format, optional telemetry, and independent header/payload CRC32 values.
+3. UNO Q replies on the same connection with a framed 24-byte CRC receiver heartbeat at most once per second. Five seconds of streaming without a valid reply makes receiver loss visible at the pod and triggers bounded reconnection.
 4. Linux strictly validates the packet, reorders a small bounded window, represents loss explicitly, and creates one-second overlapping inference windows.
 5. The checksum-pinned Google YAMNet LiteRT v1 model returns 521 AudioSet scores. A reviewed mapping aggregates only explicit labels into CueLoop classes; broad generic speech is excluded from “attention call.”
 6. The temporal engine combines evidence, applies cooldown/mute/priority, and creates a typed event only after confirmation.
@@ -151,13 +151,13 @@ The host benchmark proves that the pinned artifact and adapter execute; its synt
 
 Corrupt, wrong-version, wrong-length, wrong-format, or unknown-flag packets are dropped and counted. A small out-of-order window is repaired; missing frames become explicit bounded silence and a loss metric rather than an infinite wait. Huge sequence jumps do constant work. Wi-Fi retry backs off to 30 seconds. Receiver timeout is visible. Bridge calls have a one-second bound and failure counters, so a missing MCU cannot kill inference/dashboard. Model checksum/tensor failures stop real-model startup instead of inventing labels.
 
-Common setup failures are usually simpler: a charge-only USB cable, wrong COM port, XIAO not in bootloader mode, guest Wi-Fi client isolation, wrong UNO Q IP, blocked UDP 57321 or TCP 8080, App Lab/mDNS firewall restrictions, missing model, or dependency resolution on the target image. `submissions/app_lab/TROUBLESHOOTING.md` gives symptom-by-symptom diagnosis without recommending unsafe resets or synthetic fallbacks.
+Common setup failures are usually simpler: a charge-only USB cable, wrong COM port, XIAO not in bootloader mode, guest Wi-Fi client isolation, wrong UNO Q IP, blocked TCP 57321 or 8080, App Lab/mDNS firewall restrictions, missing model, or dependency resolution on the target image. `submissions/app_lab/TROUBLESHOOTING.md` gives symptom-by-symptom diagnosis without recommending unsafe resets or synthetic fallbacks.
 
 ## Privacy and security boundaries
 
 CueLoop is local-first, not magically private. There is no cloud SDK, account, telemetry endpoint, or audio-file writer in the runtime. PCM is held only in bounded working memory, then released; only a maximum of 500 structured event/feedback records is retained. The App Lab `data/` folder is visible and clearable.
 
-V1 UDP and dashboard traffic are unencrypted and unauthenticated. CRC detects accidental corruption, not a malicious sender. Use a private, trusted, client-visible LAN and never expose port 8080 or 57321 to the public internet. A hostile-network product version needs authenticated encryption, provisioning, access control, and a threat-model review.
+V1 TCP and dashboard traffic are unencrypted and unauthenticated. CRC detects accidental corruption, not a malicious sender. Use a private, trusted, client-visible LAN and never expose port 8080 or 57321 to the public internet. A hostile-network product version needs authenticated encryption, provisioning, access control, and a threat-model review.
 
 Always obtain consent before placing any microphone in a shared/private space, even when nothing is recorded. A user can stop streaming, erase CuePod Wi-Fi configuration, clear history, or remove power.
 

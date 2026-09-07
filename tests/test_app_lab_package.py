@@ -51,6 +51,7 @@ class AppLabPackageTests(unittest.TestCase):
         descriptor = (APP / "app.yaml").read_text(encoding="utf-8")
         self.assertIn("name: CueLoop", descriptor)
         self.assertIn("  - 8080", descriptor)
+        self.assertIn("  - 57321", descriptor)
         self.assertNotIn("password", descriptor.lower())
         entry_point = (APP / "python/main.py").read_text(encoding="utf-8")
         self.assertIn("CueLoop runtime: Python", entry_point)

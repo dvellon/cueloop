@@ -228,7 +228,7 @@ class CueLoopPipeline:
                 "privacy": {
                     "raw_audio_retained": False,
                     "cloud_connected": False,
-                    "transport_security": "trusted-LAN UDP; not encrypted",
+                    "transport_security": "trusted-LAN TCP; not encrypted",
                 },
                 "cue_output": self.cue_sink.snapshot(now=current),
                 "decision": self.engine.state_snapshot(),

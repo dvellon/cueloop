@@ -2,10 +2,11 @@
 // Raw microphone samples are packetized in RAM and never written to storage.
 
 #include <Arduino.h>
+#include <errno.h>
 #include <ESP_I2S.h>
 #include <Preferences.h>
 #include <WiFi.h>
-#include <WiFiUdp.h>
+#include <lwip/sockets.h>
 
 #include "cuepod_hardware.h"
 #include "cuepod_protocol.h"
@@ -13,12 +14,17 @@
 namespace {
 
 constexpr uint16_t kDefaultReceiverPort = 57321;
-constexpr uint16_t kLocalUdpPort = 57322;
 constexpr uint32_t kFrameDurationUs = 20000;
 constexpr uint32_t kReceiverTimeoutMs = 5000;
 constexpr uint32_t kDiagnosticsIntervalMs = 5000;
 constexpr uint32_t kMinimumWifiRetryMs = 1000;
 constexpr uint32_t kMaximumWifiRetryMs = 30000;
+constexpr uint32_t kMinimumReceiverRetryMs = 500;
+constexpr uint32_t kMaximumReceiverRetryMs = 5000;
+constexpr int32_t kReceiverConnectTimeoutMs = 250;
+constexpr uint32_t kTcpWriteTimeoutMs = 250;
+constexpr size_t kStreamPrefixBytes = 2;
+constexpr size_t kAckFrameBytes = kStreamPrefixBytes + cueloop::kAckBytes;
 constexpr size_t kMaximumSerialCommand = 196;
 
 struct Counters {
@@ -28,6 +34,8 @@ struct Counters {
   uint32_t capture_errors = 0;
   uint32_t wifi_attempts = 0;
   uint32_t wifi_reconnects = 0;
+  uint32_t receiver_connect_attempts = 0;
+  uint32_t receiver_reconnects = 0;
   uint32_t valid_acks = 0;
   uint32_t bad_acks = 0;
   uint32_t receiver_timeouts = 0;
@@ -36,7 +44,7 @@ struct Counters {
 
 Preferences preferences;
 I2SClass i2s;
-WiFiUDP udp;
+WiFiClient receiver_client;
 Counters counters;
 String wifi_ssid;
 String wifi_password;
@@ -47,7 +55,8 @@ bool usb_powered_mode = true;
 bool streaming_enabled = true;
 bool test_tone_enabled = false;
 bool microphone_ready = false;
-bool udp_started = false;
+bool receiver_connection_active = false;
+bool had_receiver_connection = false;
 bool receiver_reachable = false;
 bool receiver_timeout_reported = false;
 bool was_wifi_connected = false;
@@ -56,6 +65,8 @@ uint32_t sequence_number = 0;
 uint64_t sample_clock = 0;
 uint32_t last_wifi_attempt_ms = 0;
 uint32_t wifi_retry_ms = kMinimumWifiRetryMs;
+uint32_t last_receiver_attempt_ms = 0;
+uint32_t receiver_retry_ms = kMinimumReceiverRetryMs;
 uint32_t last_ack_ms = 0;
 uint32_t last_diagnostics_ms = 0;
 uint32_t next_test_frame_us = 0;
@@ -64,6 +75,8 @@ uint16_t last_audio_peak = 0;
 String serial_line;
 int16_t samples[cueloop::kSamplesPerFrame];
 uint8_t datagram[cueloop::kDatagramBytes];
+uint8_t ack_frame[kAckFrameBytes];
+size_t ack_frame_used = 0;
 
 uint32_t defaultPodId() {
   const uint64_t efuse = ESP.getEfuseMac();
@@ -76,6 +89,17 @@ void beginNewStream() {
   sequence_number = 0;
   sample_clock = 0;
   restart_frames_remaining = 3;
+}
+
+void closeReceiverConnection(bool announce) {
+  if (receiver_connection_active && announce) {
+    Serial.println("RECEIVER_DISCONNECTED");
+  }
+  receiver_client.stop();
+  receiver_connection_active = false;
+  receiver_reachable = false;
+  ack_frame_used = 0;
+  beginNewStream();
 }
 
 void loadConfiguration() {
@@ -103,10 +127,7 @@ void startWifiAttempt() {
   if (wifi_ssid.isEmpty()) {
     return;
   }
-  if (udp_started) {
-    udp.stop();
-    udp_started = false;
-  }
+  closeReceiverConnection(false);
   WiFi.disconnect();
   WiFi.mode(WIFI_STA);
   WiFi.setSleep(false);
@@ -116,10 +137,9 @@ void startWifiAttempt() {
 }
 
 void onWifiConnected() {
-  if (!udp_started) {
-    udp_started = udp.begin(kLocalUdpPort) == 1;
-  }
   wifi_retry_ms = kMinimumWifiRetryMs;
+  receiver_retry_ms = kMinimumReceiverRetryMs;
+  last_receiver_attempt_ms = millis() - receiver_retry_ms;
   last_ack_ms = millis();
   receiver_reachable = false;
   receiver_timeout_reported = false;
@@ -141,12 +161,7 @@ void maintainWifi() {
     }
   } else {
     if (previous_status == WL_CONNECTED) {
-      if (udp_started) {
-        udp.stop();
-        udp_started = false;
-      }
-      receiver_reachable = false;
-      beginNewStream();
+      closeReceiverConnection(false);
       Serial.println("WIFI_DISCONNECTED");
     }
     const uint32_t now = millis();
@@ -156,6 +171,43 @@ void maintainWifi() {
     }
   }
   previous_status = status;
+}
+
+void maintainReceiverConnection() {
+  if (!streaming_enabled || WiFi.status() != WL_CONNECTED) {
+    return;
+  }
+  if (receiver_connection_active && receiver_client.connected()) {
+    return;
+  }
+  if (receiver_connection_active) {
+    closeReceiverConnection(true);
+  }
+  const uint32_t now = millis();
+  if (now - last_receiver_attempt_ms < receiver_retry_ms) {
+    return;
+  }
+  last_receiver_attempt_ms = now;
+  counters.receiver_connect_attempts++;
+  receiver_client.stop();
+  if (receiver_client.connect(
+          receiver_ip, receiver_port, kReceiverConnectTimeoutMs) == 1) {
+    receiver_client.setNoDelay(true);
+    receiver_connection_active = true;
+    receiver_reachable = false;
+    receiver_timeout_reported = false;
+    ack_frame_used = 0;
+    last_ack_ms = now;
+    receiver_retry_ms = kMinimumReceiverRetryMs;
+    beginNewStream();
+    if (had_receiver_connection) {
+      counters.receiver_reconnects++;
+    }
+    had_receiver_connection = true;
+    Serial.println("RECEIVER_CONNECTED transport=tcp");
+  } else {
+    receiver_retry_ms = min(kMaximumReceiverRetryMs, receiver_retry_ms * 2u);
+  }
 }
 
 uint16_t readBatteryMillivolts() {
@@ -275,16 +327,44 @@ void buildDatagram(uint16_t battery_mv) {
   cueloop::putBe32(datagram + 40, cueloop::crc32(datagram, 40));
 }
 
+bool writeAll(const uint8_t* data, size_t length) {
+  size_t offset = 0;
+  const uint32_t started_ms = millis();
+  const int socket_fd = receiver_client.fd();
+  if (socket_fd < 0) {
+    return false;
+  }
+  while (offset < length && receiver_client.connected()) {
+    const int written = send(
+        socket_fd,
+        data + offset,
+        length - offset,
+        MSG_DONTWAIT);
+    if (written > 0) {
+      offset += static_cast<size_t>(written);
+      continue;
+    }
+    if (written < 0 && errno != EAGAIN && errno != EWOULDBLOCK) {
+      break;
+    }
+    if (millis() - started_ms >= kTcpWriteTimeoutMs) {
+      break;
+    }
+    delay(1);
+  }
+  return offset == length;
+}
+
 void sendFrame() {
   const uint16_t battery_mv = readBatteryMillivolts();
   buildDatagram(battery_mv);
   bool sent = false;
-  if (streaming_enabled && udp_started && WiFi.status() == WL_CONNECTED) {
-    if (udp.beginPacket(receiver_ip, receiver_port) == 1) {
-      const size_t written = udp.write(datagram, sizeof(datagram));
-      const bool packet_finished = udp.endPacket() == 1;
-      sent = written == sizeof(datagram) && packet_finished;
-    }
+  if (streaming_enabled && receiver_connection_active &&
+      receiver_client.connected() && WiFi.status() == WL_CONNECTED) {
+    uint8_t prefix[kStreamPrefixBytes];
+    cueloop::putBe16(prefix, static_cast<uint16_t>(sizeof(datagram)));
+    sent = writeAll(prefix, sizeof(prefix)) &&
+           writeAll(datagram, sizeof(datagram));
     if (sent) {
       counters.sent_frames++;
       if (restart_frames_remaining > 0) {
@@ -292,6 +372,7 @@ void sendFrame() {
       }
     } else {
       counters.send_failures++;
+      closeReceiverConnection(true);
     }
   }
   sequence_number++;
@@ -310,37 +391,47 @@ bool validateAck(const uint8_t* ack, size_t length) {
 }
 
 void pollAcknowledgements() {
-  if (!udp_started) {
+  if (!receiver_connection_active || !receiver_client.connected()) {
     return;
   }
-  int packet_size = udp.parsePacket();
-  while (packet_size > 0) {
-    uint8_t ack[cueloop::kAckBytes];
-    const bool expected_source =
-        udp.remoteIP() == receiver_ip && udp.remotePort() == receiver_port;
-    const int read_count = udp.read(ack, sizeof(ack));
-    while (udp.available()) {
-      udp.read();
+  while (receiver_client.available() > 0) {
+    const int value = receiver_client.read();
+    if (value < 0) {
+      break;
     }
-    if (expected_source && read_count == cueloop::kAckBytes &&
-        validateAck(ack, sizeof(ack))) {
-      counters.valid_acks++;
-      last_ack_ms = millis();
-      receiver_reachable = true;
-      receiver_timeout_reported = false;
-    } else {
+    if (ack_frame_used >= sizeof(ack_frame)) {
       counters.bad_acks++;
+      closeReceiverConnection(true);
+      return;
     }
-    packet_size = udp.parsePacket();
+    ack_frame[ack_frame_used++] = static_cast<uint8_t>(value);
+    if (ack_frame_used == kStreamPrefixBytes &&
+        cueloop::getBe16(ack_frame) != cueloop::kAckBytes) {
+      counters.bad_acks++;
+      closeReceiverConnection(true);
+      return;
+    }
+    if (ack_frame_used == sizeof(ack_frame)) {
+      if (validateAck(ack_frame + kStreamPrefixBytes, cueloop::kAckBytes)) {
+        counters.valid_acks++;
+        last_ack_ms = millis();
+        receiver_reachable = true;
+        receiver_timeout_reported = false;
+      } else {
+        counters.bad_acks++;
+      }
+      ack_frame_used = 0;
+    }
   }
 
-  if (WiFi.status() == WL_CONNECTED && millis() - last_ack_ms > kReceiverTimeoutMs) {
+  if (streaming_enabled && millis() - last_ack_ms > kReceiverTimeoutMs) {
     receiver_reachable = false;
     if (!receiver_timeout_reported) {
       counters.receiver_timeouts++;
       receiver_timeout_reported = true;
       restart_frames_remaining = 3;
       Serial.println("RECEIVER_TIMEOUT");
+      closeReceiverConnection(false);
     }
   }
 }
@@ -356,6 +447,7 @@ void printStatus() {
   Serial.print(receiver_ip);
   Serial.print(':');
   Serial.print(receiver_port);
+  Serial.print(" transport=tcp");
   Serial.print(" reachable=");
   Serial.print(receiver_reachable ? "yes" : "no");
   Serial.print(" source=");
@@ -376,6 +468,10 @@ void printStatus() {
   Serial.print(counters.wifi_attempts);
   Serial.print(" wifi_reconnects=");
   Serial.print(counters.wifi_reconnects);
+  Serial.print(" receiver_connect_attempts=");
+  Serial.print(counters.receiver_connect_attempts);
+  Serial.print(" receiver_reconnects=");
+  Serial.print(counters.receiver_reconnects);
   Serial.print(" valid_acks=");
   Serial.print(counters.valid_acks);
   Serial.print(" bad_acks=");
@@ -462,9 +558,9 @@ void handleCommand(const String& command) {
     receiver_port = static_cast<uint16_t>(port);
     preferences.putString("receiver_ip", ip_text);
     preferences.putUShort("receiver_port", receiver_port);
-    receiver_reachable = false;
-    last_ack_ms = millis();
-    beginNewStream();
+    closeReceiverConnection(false);
+    receiver_retry_ms = kMinimumReceiverRetryMs;
+    last_receiver_attempt_ms = millis() - receiver_retry_ms;
     Serial.println("RECEIVER_SAVED");
     return;
   }
@@ -503,6 +599,14 @@ void handleCommand(const String& command) {
     streaming_enabled = value;
     preferences.putBool("streaming", value);
     beginNewStream();
+    if (value) {
+      last_ack_ms = millis();
+      receiver_timeout_reported = false;
+      receiver_retry_ms = kMinimumReceiverRetryMs;
+      last_receiver_attempt_ms = millis() - receiver_retry_ms;
+    } else {
+      closeReceiverConnection(false);
+    }
     Serial.println(value ? "STREAM_ON" : "STREAM_OFF");
     return;
   }
@@ -572,6 +676,7 @@ void setup() {
 void loop() {
   pollSerial();
   maintainWifi();
+  maintainReceiverConnection();
   pollAcknowledgements();
 
   if (captureFrame()) {

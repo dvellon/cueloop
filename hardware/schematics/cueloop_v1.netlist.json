@@ -71,7 +71,7 @@
       "name": "TRUSTED_LAN_WIFI",
       "type": "wireless-logical",
       "endpoints": ["U1.WIFI", "U2A.WIFI"],
-      "protocol": "CueLoop UDP v1; destination 57321, pod local 57322"
+      "protocol": "CueLoop framed TCP v1; destination 57321"
     },
     {
       "name": "ARDUINO_ROUTER_BRIDGE",

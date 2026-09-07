@@ -1,4 +1,4 @@
-"""Bounded UDP reordering and audio window accumulation."""
+"""Bounded packet reordering and audio window accumulation."""
 
 from __future__ import annotations
 

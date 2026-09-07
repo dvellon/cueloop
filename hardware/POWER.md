@@ -33,16 +33,17 @@ The current Seeed page clearly documents battery power management and pad polari
 
 ## Network bandwidth
 
-Protocol v1 sends 50 audio datagrams per second:
+Protocol v1 sends 50 framed audio packets per second over one persistent TCP connection:
 
 | Layer | Arithmetic | Rate |
 |---|---:|---:|
 | PCM payload only | 640 B × 50 | 32,000 B/s = 256.0 kbit/s |
-| CueLoop UDP payload | 684 B × 50 | 34,200 B/s = 273.6 kbit/s |
-| IPv4 + UDP | (684 + 20 + 8) B × 50 | 35,600 B/s = 284.8 kbit/s |
-| Receiver ACK | 24 B once/s, plus headers | negligible |
+| CueLoop packet | 684 B × 50 | 34,200 B/s = 273.6 kbit/s |
+| Two-byte stream framing | 2 B × 50 | 100 B/s = 0.8 kbit/s |
+| IPv4 + TCP minimum | (686 + 20 + 20) B × 50 | 36,300 B/s = 290.4 kbit/s |
+| Framed receiver ACK | 26 B once/s, plus TCP/IP acknowledgement traffic | negligible relative to audio |
 
-802.11 framing, acknowledgements, contention, retries, and link-layer security add overhead, so measured airtime and interface throughput will be higher. The application stays well below the nominal capacity of a healthy private 2.4 GHz Wi-Fi link, but physical loss/jitter testing remains required.
+TCP acknowledgements/segmentation, 802.11 framing, contention, retries, and link-layer security add overhead, so measured airtime and interface throughput will be higher. The application stays well below the nominal capacity of a healthy private 2.4 GHz Wi-Fi link, but physical reconnect, gap, and latency testing remains required.
 
 ## Measurement plan
 

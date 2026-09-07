@@ -5,7 +5,7 @@
 ```mermaid
 flowchart LR
   MIC[PDM microphone<br/>16 kHz mono] --> POD[XIAO CuePod<br/>frame + CRC + telemetry]
-  POD -->|UDP PCM<br/>local Wi-Fi| RX[UNO Q Linux<br/>receiver + jitter buffer]
+  POD -->|framed TCP PCM<br/>local Wi-Fi| RX[UNO Q Linux<br/>receiver + bounded buffer]
   RX --> WIN[windowing + normalization]
   WIN --> MODEL[local model adapter]
   MODEL --> ENGINE[temporal evidence<br/>confirmation + cooldown]
@@ -21,7 +21,7 @@ flowchart LR
 | Component | Owns | Must not own by default |
 |---|---|---|
 | XIAO ESP32S3 Sense | PDM capture, framing, CRC, pod identity, local configuration, Wi-Fi reconnect, basic telemetry, test tone | Classification, raw-audio files, cloud upload |
-| UNO Q Linux MPU | UDP receive, loss/jitter accounting, bounded audio buffer, preprocessing, model inference, temporal policy, metadata/feedback, API/dashboard | Unbounded raw audio, safety guarantees, precise actuator timing |
+| UNO Q Linux MPU | TCP stream receive/framing, sequence-gap accounting, bounded audio buffer, preprocessing, model inference, temporal policy, metadata/feedback, API/dashboard | Unbounded raw audio, safety guarantees, precise actuator timing |
 | UNO Q STM32 MCU | Buttons, acknowledgement, LED/haptic/buzzer patterns, health heartbeat/watchdog indication | Audio inference, history database, network configuration |
 | Browser | Local presentation and user commands | Cloud analytics, raw-audio replay |
 
@@ -49,7 +49,7 @@ flowchart LR
 
 ## Trust boundary
 
-V1 UDP is designed for a trusted private LAN and provides corruption detection, not confidentiality or strong authentication. It must not be exposed to the public internet. Pairing uses an explicit locally configured receiver address and pod identifier. V2 should evaluate authenticated encryption after profiling and export review; V1 documentation makes the limitation prominent.
+V1 TCP is designed for a trusted private LAN and provides ordered delivery plus corruption detection, not confidentiality or strong authentication. It must not be exposed to the public internet. Pairing uses an explicit locally configured receiver address and pod identifier. V2 should evaluate authenticated encryption after profiling and export review; V1 documentation makes the limitation prominent.
 
 ## Deployment shapes
 

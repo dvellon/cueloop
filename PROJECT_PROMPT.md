@@ -253,7 +253,7 @@ Implement firmware that:
 - Keeps credentials out of source control
 - Documents exactly how to flash and configure the board
 
-Start with the simplest transport that can meet the demonstration: raw PCM over UDP may be acceptable on a local network. Add compression only if measurements justify the complexity.
+Use persistent length-framed TCP for raw PCM and ACK traffic because Arduino App Lab publishes declared ports as TCP. Add compression only if measurements justify the complexity.
 
 Design and document:
 

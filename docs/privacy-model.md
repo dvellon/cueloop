@@ -19,7 +19,7 @@ Event records contain event ID, pod ID/location label, class, confidence, timest
 
 ## Threats and controls
 
-- **LAN eavesdropping:** V1 raw UDP can be observed by a device already on the same network. Use a trusted isolated LAN, avoid guest/public networks, never port-forward. V2 must evaluate authenticated encryption.
+- **LAN eavesdropping:** V1 raw PCM over unencrypted TCP can be observed by a device already on the same network. Use a trusted isolated LAN, avoid guest/public networks, never port-forward. V2 must evaluate authenticated encryption.
 - **Accidental retention:** audio buffers are bounded memory objects without a file-writing interface; diagnostic capture is a separate explicit tool, ignored by Git, visibly indicated, and off by default.
 - **Sensitive metadata:** location labels should be generic (“workshop”), the dashboard should remain LAN-only, and history can be cleared.
 - **Unauthorized control:** bind to the intended interface, use local-network firewall rules, and treat V1 API controls as trusted-LAN only until authentication is implemented.

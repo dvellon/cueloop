@@ -20,7 +20,9 @@ HEADER_WITHOUT_CRC = struct.Struct(">4sBBHIIQIHHHbBI")
 HEADER = struct.Struct(">4sBBHIIQIHHHbBII")
 ACK_WITHOUT_CRC = struct.Struct(">4sBBHIII")
 ACK = struct.Struct(">4sBBHIIII")
+STREAM_LENGTH = struct.Struct(">H")
 MAX_SAMPLE_COUNT = 640
+MAX_STREAM_PAYLOAD_BYTES = HEADER.size + MAX_SAMPLE_COUNT * 2
 
 
 class MessageType(IntEnum):
@@ -39,6 +41,30 @@ class PacketFlags(IntFlag):
 
 class PacketError(ValueError):
     """Raised when a packet cannot be safely accepted."""
+
+
+def encode_stream_frame(payload: bytes) -> bytes:
+    """Prefix one protocol payload for transport over a TCP byte stream."""
+
+    if not 1 <= len(payload) <= MAX_STREAM_PAYLOAD_BYTES:
+        raise ValueError(
+            f"stream payload length must be 1..{MAX_STREAM_PAYLOAD_BYTES} bytes"
+        )
+    return STREAM_LENGTH.pack(len(payload)) + payload
+
+
+def decode_stream_length(prefix: bytes) -> int:
+    """Validate and decode a TCP stream-frame length prefix."""
+
+    if len(prefix) != STREAM_LENGTH.size:
+        raise PacketError(
+            f"stream prefix length mismatch: got {len(prefix)}, "
+            f"expected {STREAM_LENGTH.size}"
+        )
+    (length,) = STREAM_LENGTH.unpack(prefix)
+    if not 1 <= length <= MAX_STREAM_PAYLOAD_BYTES:
+        raise PacketError(f"invalid stream payload length {length}")
+    return length
 
 
 @dataclass(frozen=True, slots=True)

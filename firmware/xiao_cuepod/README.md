@@ -1,13 +1,13 @@
 # XIAO ESP32S3 Sense CuePod firmware
 
-This sketch captures the Sense expansion board's PDM microphone as 16 kHz mono PCM16, emits one checksummed 684-byte CueLoop UDP packet every 20 ms, validates receiver heartbeats, reconnects Wi-Fi with bounded backoff, and keeps diagnostic counters. It contains no filesystem or raw-audio recording path.
+This sketch captures the Sense expansion board's PDM microphone as 16 kHz mono PCM16, emits one checksummed 684-byte CueLoop packet every 20 ms over a persistent TCP connection, validates receiver heartbeats, reconnects Wi-Fi and the receiver with bounded backoff, and keeps diagnostic counters. It contains no filesystem or raw-audio recording path.
 
 ## Pinned build target
 
 - Arduino CLI 1.5.1
 - `esp32:esp32` 3.3.11
 - FQBN `esp32:esp32:XIAO_ESP32S3`
-- Core libraries only: `ESP_I2S`, `WiFi`, `NetworkUDP`, and `Preferences`
+- Core libraries only: `ESP_I2S`, `WiFi`, and `Preferences`
 - Default board options shown by Arduino CLI; no PSRAM dependency
 
 Build from the repository root:
@@ -33,9 +33,9 @@ STATUS
 
 `<TAB>` means an actual tab character. `HELP` prints the command list. `STREAM OFF` pauses transmission without recording anything; `ERASE` removes all saved CuePod configuration and restarts. Switch `TEST OFF` before microphone evaluation. Set `POWER BATTERY` after disconnecting USB so packet metadata remains honest; the installed board variant cannot automatically distinguish USB from battery power.
 
-The pod binds local UDP port 57322. The receiver replies from port 57321 once per second. Five seconds without a valid matching CRC heartbeat sets `reachable=no`, increments `receiver_timeouts`, and marks the next packets as a restarted stream. This is reachability diagnostics, not authentication or reliable delivery.
+The pod opens a persistent TCP connection to receiver port 57321. Each CueLoop protocol payload is preceded by a two-byte big-endian length, allowing complete packets and acknowledgements to be recovered from the TCP byte stream. The receiver returns a framed acknowledgement about once per second. Five seconds without a valid matching CRC heartbeat sets `reachable=no`, increments `receiver_timeouts`, reconnects with bounded backoff, and marks the next packets as a restarted stream. This is reachability diagnostics, not authentication or encryption.
 
-`STATUS` also reports the most recent 20 ms frame's integer RMS and peak plus a cumulative clipped-sample count. In test-tone mode RMS/peak should be approximately 8192 with zero clipping. In microphone mode, nonzero changing values confirm only that samples vary; they do not establish acoustic-model accuracy.
+`STREAM OFF` closes the receiver connection and suppresses reconnect attempts until streaming is enabled again. `STATUS` also reports the most recent 20 ms frame's integer RMS and peak plus a cumulative clipped-sample count. In test-tone mode RMS/peak should be approximately 8192 with zero clipping. In microphone mode, nonzero changing values confirm only that samples vary; they do not establish acoustic-model accuracy.
 
 ## Battery telemetry boundary
 
@@ -45,4 +45,4 @@ If the physical board schematic and multimeter confirm a battery divider, create
 
 ## Hardware test still required
 
-Compilation proves APIs and types only. The real board must confirm microphone waveform/non-clipping, pin orientation, Wi-Fi association, UDP heartbeat, receiver timeout/recovery, USB/battery metadata, and safe current/runtime. Append observations under the matching root `HARDWARE_TESTS.md` ID, then copy reviewed summaries to `HARDWARE_RESULTS.md`; do not reinterpret test-tone behavior as acoustic-model accuracy.
+Compilation proves APIs and types only. The real board must confirm microphone waveform/non-clipping, pin orientation, Wi-Fi association, TCP connection and heartbeat, receiver timeout/recovery, USB/battery metadata, and safe current/runtime. Append observations under the matching root `HARDWARE_TESTS.md` ID, then copy reviewed summaries to `HARDWARE_RESULTS.md`; do not reinterpret test-tone behavior as acoustic-model accuracy.

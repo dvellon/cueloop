@@ -3,3 +3,4 @@ description: Local-first acoustic event awareness with a wireless CuePod and unc
 icon: 🔔
 ports:
   - 8080
+  - 57321

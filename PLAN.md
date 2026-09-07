@@ -13,7 +13,7 @@ This plan is deadline-driven. A task is complete only when its artifact exists, 
 
 ## App Lab V1: September 1–13
 
-1. Define and test the versioned UDP PCM protocol and typed event records.
+1. Define and test the versioned length-framed TCP PCM protocol and typed event records.
 2. Build a simulator with synthetic event signatures, WAV replay, jitter, latency, loss, and reconnect scenarios.
 3. Implement a bounded receiver/jitter buffer, window normalization, model interface, temporal confirmation engine, priority/cooldown policy, local feedback log, and health metrics.
 4. Implement a local REST/dashboard experience and one-command simulated demonstration.

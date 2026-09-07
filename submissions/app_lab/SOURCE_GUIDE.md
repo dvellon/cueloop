@@ -8,7 +8,7 @@ This map is written for a reviewer or contributor starting from a clean checkout
 |---|---|---|
 | See the system locally | `./scripts/demo.sh` | `linux/cueloop/simulator.py`, dashboard under `linux/cueloop/dashboard/` |
 | Run all standard-library tests | `./scripts/test.sh` | `tests/` |
-| Understand UDP bytes | `shared/protocol.md` | `linux/cueloop/protocol.py`, `shared/cueloop_protocol.h`, `tests/test_protocol.py` |
+| Understand framed TCP bytes | `shared/protocol.md` | `linux/cueloop/protocol.py`, `shared/cueloop_protocol.h`, `tests/test_protocol.py` |
 | Flash the CuePod | `firmware/xiao_cuepod/xiao_cuepod.ino` | local hardware/protocol headers and firmware README |
 | Understand inference/policy | `linux/cueloop/yamnet.py`, `engine.py` | class mapping, model/evaluation tests |
 | Deploy UNO Q App | `app_lab/CueLoop/python/main.py` | `app.yaml`, pinned `sketch/sketch.yaml`, App README |
@@ -36,13 +36,13 @@ This map is written for a reviewer or contributor starting from a clean checkout
 | `pipeline.py` | decode → buffer → model → policy → store/output orchestration | shares one path for simulated/physical packets |
 | `bridge.py` | bounded compact Arduino Router Bridge calls and MCU status | exceptions become diagnostics, not receiver crashes |
 | `api.py` | local REST/static dashboard server | trusted-LAN/localhost only; no authentication in V1 |
-| `service.py` | CLI, UDP receive/ACK, HTTP lifecycle | real YAMNet selected explicitly |
+| `service.py` | CLI, framed TCP receive/ACK, HTTP lifecycle | real YAMNet selected explicitly |
 | `simulator.py` | signatures/WAV replay and loss/jitter/reorder/restart injection | WAV provenance remains operator responsibility |
 | `evaluation.py` | manifest gate and dataset-scoped metrics | refuses missing license/consent/checksum |
 
 ## Exact packet and event boundaries
 
-The 684-byte audio datagram and 24-byte heartbeat are documented byte-for-byte in `shared/protocol.md`. Python is the host reference encoder/decoder; the XIAO manually builds network-order headers and little-endian PCM with the same CRC algorithm. The event database accepts only the fields in `shared/event.schema.json`/`EVENT_COLUMNS`. That explicit schema is the privacy control: an audio blob cannot be accidentally added as an extra dictionary key.
+The two-byte stream prefix, 684-byte audio packet, and 24-byte heartbeat are documented byte-for-byte in `shared/protocol.md`. Python is the host reference encoder/decoder; the XIAO manually builds network-order headers and little-endian PCM with the same CRC algorithm. The event database accepts only the fields in `shared/event.schema.json`/`EVENT_COLUMNS`. That explicit schema is the privacy control: an audio blob cannot be accidentally added as an extra dictionary key.
 
 ## App Lab synchronization
 
