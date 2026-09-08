@@ -81,6 +81,11 @@ class AppLabPackageTests(unittest.TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_pending_event_remains_actionable_during_cooldown(self) -> None:
+        dashboard = (APP / "python/cueloop/dashboard/app.js").read_text(encoding="utf-8")
+        self.assertIn('const active = event?.user_action === "pending";', dashboard)
+        self.assertIn('const displayState = active ? "alerting" : decision.state;', dashboard)
+
     def test_local_model_matches_manifest_when_present(self) -> None:
         model = APP / "models" / "yamnet-classification-tflite-v1.tflite"
         if not model.exists():

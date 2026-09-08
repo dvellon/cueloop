@@ -26,6 +26,7 @@ constexpr uint32_t kTcpWriteTimeoutMs = 250;
 constexpr size_t kStreamPrefixBytes = 2;
 constexpr size_t kAckFrameBytes = kStreamPrefixBytes + cueloop::kAckBytes;
 constexpr size_t kMaximumSerialCommand = 196;
+constexpr int32_t kMicrophoneGain = 4;
 
 struct Counters {
   uint32_t captured_frames = 0;
@@ -253,6 +254,20 @@ void updateAudioDiagnostics() {
       static_cast<double>(sum_squares) / cueloop::kSamplesPerFrame));
 }
 
+void applyMicrophoneGain() {
+  // The Sense PDM microphone has modest raw output. Apply fixed gain before
+  // transport while saturating cleanly instead of allowing signed wraparound.
+  for (uint16_t index = 0; index < cueloop::kSamplesPerFrame; ++index) {
+    int32_t amplified = static_cast<int32_t>(samples[index]) * kMicrophoneGain;
+    if (amplified > 32767) {
+      amplified = 32767;
+    } else if (amplified < -32768) {
+      amplified = -32768;
+    }
+    samples[index] = static_cast<int16_t>(amplified);
+  }
+}
+
 bool captureFrame() {
   if (test_tone_enabled) {
     const uint32_t now_us = micros();
@@ -278,6 +293,7 @@ bool captureFrame() {
     counters.capture_errors++;
     return false;
   }
+  applyMicrophoneGain();
   updateAudioDiagnostics();
   counters.captured_frames++;
   return true;

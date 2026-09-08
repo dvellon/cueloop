@@ -35,7 +35,7 @@ class ClassPolicy:
 
 DEFAULT_POLICIES = {
     "door_knock": ClassPolicy(priority=2),
-    "alarm_beep": ClassPolicy(alert_threshold=0.78, priority=3),
+    "alarm_beep": ClassPolicy(alert_threshold=0.60, priority=3),
     "dog_bark": ClassPolicy(alert_threshold=0.76, priority=1),
     "attention_call": ClassPolicy(alert_threshold=0.78, priority=2),
 }

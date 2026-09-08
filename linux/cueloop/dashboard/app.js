@@ -43,7 +43,8 @@ function updateStatus(status) {
   currentEvent = event;
   const confidence = Math.round((event?.confidence ?? decision.confidence ?? 0) * 100);
   const candidate = event?.class_name || decision.candidate;
-  const active = decision.state === "alerting" && event?.user_action === "pending";
+  const active = event?.user_action === "pending";
+  const displayState = active ? "alerting" : decision.state;
   $("cue-orbit").className = `cue-orbit ${active ? "alerting" : "idle"}`;
   $("cue-symbol").textContent = active ? labels[candidate]?.[1] || "CUE" : "···";
   $("decision-state").textContent = {
@@ -53,7 +54,7 @@ function updateStatus(status) {
     alerting: event?.user_action === "pending" ? "Confirmed cue" : event?.user_action,
     cooldown: "Cooldown · duplicate cue suppressed",
     muted: `Muted · ${decision.muted_seconds_remaining}s remaining`,
-  }[decision.state] || decision.state;
+  }[displayState] || displayState;
   $("cue-title").textContent = active ? humanize(candidate) : decision.candidate ? `Checking ${humanize(decision.candidate)}` : "No confirmed event";
   $("cue-detail").textContent = active
     ? `Confirmed from ${event.evidence_windows} model windows at priority ${event.priority}. Raw audio was discarded.`
